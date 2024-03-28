@@ -490,8 +490,8 @@ public class PrintView2 extends VerticalLayout{
 	private void printPoliticalReports(List<Political> politicals, String reportType, String type) {
 		String reporttype=radioGroup1.getValue().trim();
 		String reportformat=radioGroup2.getValue().trim();
-		System.out.println("Type"+reporttype);
-		System.out.println("Format"+reportformat);
+		//System.out.println("Type"+reporttype);
+		//System.out.println("Format"+reportformat);
 		try {
 			Resource resource = null;
 			Resource resourceduplicate = null;
