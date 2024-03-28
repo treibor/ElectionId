@@ -1,0 +1,273 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Created with Jaspersoft Studio version 6.19.1.final using JasperReports Library version 6.19.1-867c00bf88cd4d784d404379d6c05e1b419e8a4c  -->
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="First" pageWidth="595" pageHeight="842" columnWidth="585" leftMargin="5" rightMargin="5" topMargin="5" bottomMargin="5" uuid="13acf49e-4913-4d1b-bccc-113817ad15d1">
+	<property name="com.jaspersoft.studio.data.sql.tables" value=""/>
+	<property name="com.jaspersoft.studio.data.defaultdataadapter" value="Postgres"/>
+	<property name="com.jaspersoft.studio.property.dataset.dialog.DatasetDialog.sash.w1" value="433"/>
+	<property name="com.jaspersoft.studio.property.dataset.dialog.DatasetDialog.sash.w2" value="557"/>
+	<style name="Title" forecolor="#FFFFFF" fontName="Times New Roman" fontSize="50" isBold="false"/>
+	<style name="SubTitle" forecolor="#CCCCCC" fontName="Times New Roman" fontSize="18" isBold="false"/>
+	<style name="Column header" forecolor="#666666" fontName="Times New Roman" fontSize="14" isBold="true"/>
+	<style name="Detail" mode="Transparent" fontName="Times New Roman"/>
+	<style name="Row" mode="Transparent" fontName="Times New Roman" pdfFontName="Times-Roman">
+		<conditionalStyle>
+			<conditionExpression><![CDATA[$V{REPORT_COUNT}%2 == 0]]></conditionExpression>
+			<style mode="Transparent" backcolor="#FFFFFF"/>
+		</conditionalStyle>
+	</style>
+	<parameter name="serialFrom" class="java.lang.Long" isForPrompting="false"/>
+	<parameter name="serialTo" class="java.lang.Long" isForPrompting="false"/>
+	<queryString language="SQL">
+		<![CDATA[Select
+constituency.constituency_name , constituency.constituency_colour , party.party_name ,
+  candidate.candidate_name ,  district.district_name,   state.state_name ,  cell.cell_name, cell.cell_colour from  political
+
+  Join district on political.district_id=district.district_id
+  Join party on  political.party_id=party.party_id
+  join cell on political.cid=cell.cid
+  Join constituency on political.constituency_id=constituency.const_id
+  Join candidate on political.cand_id=candidate.cand_id
+  Join districtmaster ON 	 district.district_id = districtmaster.district_district_id 
+  Join state ON 	 state.state_id = district.state_id]]>
+	</queryString>
+	<field name="serialNo" class="java.lang.Long">
+		<property name="com.jaspersoft.studio.field.name" value="serial_no"/>
+		<property name="com.jaspersoft.studio.field.label" value="serial_no"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="political"/>
+	</field>
+	<field name="firstName" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.name" value="first_name"/>
+		<property name="com.jaspersoft.studio.field.label" value="first_name"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="political"/>
+	</field>
+	<field name="lastName" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.name" value="last_name"/>
+		<property name="com.jaspersoft.studio.field.label" value="last_name"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="political"/>
+	</field>
+	<field name="picture" class="byte[]">
+		<property name="com.jaspersoft.studio.field.name" value="picture"/>
+		<property name="com.jaspersoft.studio.field.label" value="picture"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="political"/>
+	</field>
+	<field name="district.districtName" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.name" value="district_name"/>
+		<property name="com.jaspersoft.studio.field.label" value="district_name"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="district"/>
+	</field>
+	<field name="districtmaster.headerFirstLine" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.name" value="header_first_line"/>
+		<property name="com.jaspersoft.studio.field.label" value="header_first_line"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="districtmaster"/>
+	</field>
+	<field name="districtmaster.headerSecondLine" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.name" value="header_second_line"/>
+		<property name="com.jaspersoft.studio.field.label" value="header_second_line"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="districtmaster"/>
+	</field>
+	<field name="districtmaster.headerThirdLine" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.name" value="header_third_line"/>
+		<property name="com.jaspersoft.studio.field.label" value="header_third_line"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="districtmaster"/>
+	</field>
+	<field name="districtmaster.footerFirstLine" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.name" value="footer_first_line"/>
+		<property name="com.jaspersoft.studio.field.label" value="footer_first_line"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="districtmaster"/>
+	</field>
+	<field name="districtmaster.footerSecondLine" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.name" value="footer_second_line"/>
+		<property name="com.jaspersoft.studio.field.label" value="footer_second_line"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="districtmaster"/>
+	</field>
+	<field name="districtmaster.footerThirdLine" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.name" value="footer_third_line"/>
+		<property name="com.jaspersoft.studio.field.label" value="footer_third_line"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="districtmaster"/>
+	</field>
+	<field name="districtmaster.validity" class="java.time.LocalDate">
+		<property name="com.jaspersoft.studio.field.name" value="validity"/>
+		<property name="com.jaspersoft.studio.field.label" value="validity"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="districtmaster"/>
+	</field>
+	<field name="districtmaster.masterLabel" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.name" value="master_label"/>
+		<property name="com.jaspersoft.studio.field.label" value="master_label"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="districtmaster"/>
+	</field>
+	<field name="districtmaster.leftImage" class="byte[]">
+		<property name="com.jaspersoft.studio.field.name" value="left_image"/>
+		<property name="com.jaspersoft.studio.field.label" value="left_image"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="districtmaster"/>
+	</field>
+	<field name="districtmaster.rightImage" class="byte[]">
+		<property name="com.jaspersoft.studio.field.name" value="right_image"/>
+		<property name="com.jaspersoft.studio.field.label" value="right_image"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="districtmaster"/>
+	</field>
+	<field name="districtmaster.signatureImage" class="byte[]">
+		<property name="com.jaspersoft.studio.field.name" value="signature_image"/>
+		<property name="com.jaspersoft.studio.field.label" value="signature_image"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="districtmaster"/>
+	</field>
+	<field name="constituency.constituencyName" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.name" value="constituency_name"/>
+		<property name="com.jaspersoft.studio.field.label" value="constituency_name"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="constituency"/>
+	</field>
+	<field name="constituency.constituencyColour" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.name" value="constituency_colour"/>
+		<property name="com.jaspersoft.studio.field.label" value="constituency_colour"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="constituency"/>
+	</field>
+	<field name="party.partyName" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.name" value="party_name"/>
+		<property name="com.jaspersoft.studio.field.label" value="party_name"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="party"/>
+	</field>
+	<field name="candidate.candidateName" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.name" value="candidate_name"/>
+		<property name="com.jaspersoft.studio.field.label" value="candidate_name"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="candidate"/>
+	</field>
+	<field name="state.stateName" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.name" value="state_name"/>
+		<property name="com.jaspersoft.studio.field.label" value="state_name"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="state"/>
+	</field>
+	<field name="cell.cellName" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.name" value="cell_name"/>
+		<property name="com.jaspersoft.studio.field.label" value="cell_name"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="cell"/>
+	</field>
+	<field name="cell.cellColour" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.name" value="cell_colour"/>
+		<property name="com.jaspersoft.studio.field.label" value="cell_colour"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="cell"/>
+	</field>
+	<title>
+		<band splitType="Stretch"/>
+	</title>
+	<columnHeader>
+		<band height="26" splitType="Stretch"/>
+	</columnHeader>
+	<detail>
+		<band height="267" splitType="Stretch">
+			<frame>
+				<reportElement style="Row" mode="Opaque" x="-3" y="-26" width="590" height="236" uuid="b50221b5-8254-440b-8c6f-1f0b138c9259"/>
+				<textField textAdjust="ScaleFont">
+					<reportElement style="Detail" positionType="Float" x="14" y="74" width="274" height="54" uuid="34190c1e-7cb1-4a6a-b27f-482b5e6f25ab">
+						<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="e815b104-533d-42f2-bf71-72c750d9033b"/>
+						<property name="com.jaspersoft.studio.unit.height" value="px"/>
+					</reportElement>
+					<textElement markup="styled">
+						<font size="10"/>
+					</textElement>
+					<textFieldExpression><![CDATA["                    <style isBold=\"true\" isUnderline=\"true\" pdfFontName=\"Helvetica-Bold\">"+$F{candidate.candidateName} +"</style>   is a contesting candidate for election to the Legislative Assembly, 2023 from the  <style isBold=\"true\" isUnderline=\"true\" pdfFontName=\"Helvetica-Bold\">"+$F{constituency.constituencyName}+ "</style> constituency and is setup by the <style isBold=\"true\" isUnderline=\"true\" pdfFontName=\"Helvetica-Bold\">"+$F{party.partyName}+"</style> party."]]></textFieldExpression>
+				</textField>
+				<line>
+					<reportElement x="10" y="0" width="280" height="1" uuid="82a1a851-18b0-4988-b78a-ff854bee02ac">
+						<property name="com.jaspersoft.studio.unit.width" value="px"/>
+					</reportElement>
+				</line>
+				<line>
+					<reportElement x="10" y="222" width="280" height="1" uuid="831ef4ce-2366-47a2-a838-581f09ca6b3f">
+						<property name="com.jaspersoft.studio.unit.width" value="px"/>
+					</reportElement>
+				</line>
+				<line>
+					<reportElement x="290" y="0" width="1" height="223" uuid="da1cee7f-3e18-42ef-af57-5a9b361a7fd7"/>
+				</line>
+				<line>
+					<reportElement x="9" y="0" width="1" height="223" uuid="6b28f9b1-6211-4c80-aeb7-2b23d0c96b02">
+						<property name="com.jaspersoft.studio.unit.height" value="px"/>
+					</reportElement>
+				</line>
+				<staticText>
+					<reportElement style="Column header" x="171" y="156" width="104" height="12" forecolor="#000000" uuid="04b62ab2-e566-4f10-a9a3-e76b84834663">
+						<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="e815b104-533d-42f2-bf71-72c750d9033b"/>
+						<property name="com.jaspersoft.studio.unit.height" value="px"/>
+						<property name="com.jaspersoft.studio.unit.width" value="px"/>
+					</reportElement>
+					<textElement textAlignment="Center">
+						<font size="8" isBold="true" pdfFontName="Helvetica-Bold" isPdfEmbedded="true"/>
+					</textElement>
+					<text><![CDATA[Attested by]]></text>
+				</staticText>
+				<staticText>
+					<reportElement style="Column header" x="14" y="167" width="66" height="12" forecolor="#000000" uuid="996af8ee-477a-4def-9ea2-c5df94976ca7">
+						<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="e815b104-533d-42f2-bf71-72c750d9033b"/>
+						<property name="com.jaspersoft.studio.unit.height" value="px"/>
+						<property name="com.jaspersoft.studio.unit.width" value="px"/>
+					</reportElement>
+					<textElement textAlignment="Left">
+						<font fontName="Times New Roman" size="8" isBold="true" pdfFontName="Helvetica-Bold" isPdfEmbedded="true"/>
+					</textElement>
+					<text><![CDATA[Place:]]></text>
+				</staticText>
+				<textField textAdjust="ScaleFont">
+					<reportElement style="Detail" positionType="Float" x="14" y="4" width="274" height="14" uuid="f8db53f2-b7c0-4bd5-af8f-20cd99b6bcb3">
+						<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="b07b2a52-8da5-4edd-a2da-ed595a8440bd"/>
+						<property name="com.jaspersoft.studio.unit.height" value="px"/>
+					</reportElement>
+					<textElement textAlignment="Center">
+						<font size="12" isBold="false" isUnderline="true"/>
+					</textElement>
+					<textFieldExpression><![CDATA["CANDIDATE'S IDENTITY CARD"]]></textFieldExpression>
+				</textField>
+				<staticText>
+					<reportElement style="Column header" x="14" y="183" width="66" height="12" forecolor="#000000" uuid="4445f36f-e247-4b79-9612-9961feda0489">
+						<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="e815b104-533d-42f2-bf71-72c750d9033b"/>
+						<property name="com.jaspersoft.studio.unit.height" value="px"/>
+						<property name="com.jaspersoft.studio.unit.width" value="px"/>
+					</reportElement>
+					<textElement textAlignment="Left">
+						<font fontName="Times New Roman" size="8" isBold="true" pdfFontName="Helvetica-Bold" isPdfEmbedded="true"/>
+					</textElement>
+					<text><![CDATA[Date:]]></text>
+				</staticText>
+				<staticText>
+					<reportElement style="Column header" x="14" y="139" width="106" height="12" forecolor="#000000" uuid="d389a327-f68c-4819-874e-a22dee42b97c">
+						<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="e815b104-533d-42f2-bf71-72c750d9033b"/>
+						<property name="com.jaspersoft.studio.unit.height" value="px"/>
+						<property name="com.jaspersoft.studio.unit.width" value="px"/>
+					</reportElement>
+					<textElement textAlignment="Center">
+						<font size="8" isBold="true" pdfFontName="Helvetica-Bold" isPdfEmbedded="true"/>
+					</textElement>
+					<text><![CDATA[(signature of the candidate)]]></text>
+				</staticText>
+				<staticText>
+					<reportElement style="Column header" x="170" y="190" width="106" height="12" forecolor="#000000" uuid="01786d2f-f1ac-42be-8c69-a70bba0583a5">
+						<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="e815b104-533d-42f2-bf71-72c750d9033b"/>
+						<property name="com.jaspersoft.studio.unit.height" value="px"/>
+						<property name="com.jaspersoft.studio.unit.width" value="px"/>
+					</reportElement>
+					<textElement textAlignment="Center">
+						<font size="8" isBold="true" pdfFontName="Helvetica-Bold" isPdfEmbedded="true"/>
+					</textElement>
+					<text><![CDATA[Returning Officer]]></text>
+				</staticText>
+				<staticText>
+					<reportElement style="Column header" x="171" y="203" width="106" height="12" forecolor="#000000" uuid="860639cf-58b8-484e-827d-850f6488dc90">
+						<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="e815b104-533d-42f2-bf71-72c750d9033b"/>
+						<property name="com.jaspersoft.studio.unit.height" value="px"/>
+						<property name="com.jaspersoft.studio.unit.width" value="px"/>
+					</reportElement>
+					<textElement textAlignment="Center">
+						<font size="8" isBold="true" pdfFontName="Helvetica-Bold" isPdfEmbedded="true"/>
+					</textElement>
+					<text><![CDATA[(Seal)]]></text>
+				</staticText>
+				<rectangle>
+					<reportElement x="231" y="20" width="50" height="50" uuid="b28ad577-1f90-4009-8515-fa271a9f1144">
+						<property name="com.jaspersoft.studio.unit.width" value="px"/>
+					</reportElement>
+				</rectangle>
+			</frame>
+		</band>
+	</detail>
+	<columnFooter>
+		<band splitType="Stretch"/>
+	</columnFooter>
+</jasperReport>
