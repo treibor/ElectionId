@@ -398,6 +398,7 @@
     "lit": "$lit",
     "@polymer/polymer": "$@polymer/polymer",
     "chokidar": "$chokidar",
-    "date-fns": "$date-fns"
+    "date-fns": "$date-fns",
+    "@vaadin-component-factory/vcf-pdf-viewer": "$@vaadin-component-factory/vcf-pdf-viewer"
   }
 }

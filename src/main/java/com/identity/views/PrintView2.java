@@ -14,6 +14,7 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.io.OutputStream;
+import java.net.URL;
 import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.time.LocalDate;
@@ -443,12 +444,18 @@ public class PrintView2 extends VerticalLayout{
 		//System.out.println("Format:"+format);
 		
 		try {
+			long districtid = dbservice.getLoggedDistrict().getDistrictId();
+			URL res = getClass().getClassLoader().getResource("report/1_idp.jrxml");
+			File file = Paths.get(res.toURI()).toFile();
+			String absolutePath = file.getAbsolutePath();
+			String reportPath = absolutePath.substring(0, absolutePath.length() - 11);
+			//String reportPath = "D:";
 			Resource resource = null;
 			Resource resourceduplicate = null;
 			InputStream employeeReportStream=null;
 			removePdfViewer();
-			String reportPath = "D:";
-			long districtid = dbservice.getLoggedDistrict().getDistrictId();
+			
+			
 			if (reportType.equals("id")) {
 				if (format == "Portrait") {
 					resource = new ClassPathResource("report/" + districtid + "_idp.jrxml");
@@ -497,8 +504,13 @@ public class PrintView2 extends VerticalLayout{
 			Resource resourceduplicate = null;
 			InputStream employeeReportStream =null;
 			removePdfViewer();
-			String reportPath = "D:";
+			
 			long districtid = dbservice.getLoggedDistrict().getDistrictId();
+			URL res = getClass().getClassLoader().getResource("report/1_idp.jrxml");
+			File file = Paths.get(res.toURI()).toFile();
+			String absolutePath = file.getAbsolutePath();
+			String reportPath = absolutePath.substring(0, absolutePath.length() - 11);
+			//String reportPath = "D:";
 			if (reportType.equals("id_p")) {
 				if (reporttype == "Candidate") {
 					resource = new ClassPathResource("report/" + districtid + "_id_pc.jrxml");
