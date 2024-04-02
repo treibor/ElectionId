@@ -316,7 +316,7 @@ public class PrintView2 extends VerticalLayout{
 				} else {
 					// System.out.println("Hello");
 					List<Political> political = dbservice1.findPoliticalByRange(fromValue, toValue, type);
-					System.out.println("Hello:" + political);
+					//System.out.println("Hello:" + political);
 					printPoliticalReports(political, reportType, type);
 				}
 
