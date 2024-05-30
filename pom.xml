@@ -97,7 +97,7 @@
 	</dependencyManagement>
 
 	<build>
-	<finalName>election</finalName>
+	<finalName>elections</finalName>
 		<plugins>
 			<plugin>
 				<groupId>org.springframework.boot</groupId>
