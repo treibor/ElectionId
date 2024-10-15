@@ -160,13 +160,10 @@ district.district_name,
 	<title>
 		<band splitType="Stretch"/>
 	</title>
-	<columnHeader>
-		<band height="26" splitType="Stretch"/>
-	</columnHeader>
 	<detail>
-		<band height="298" splitType="Stretch">
+		<band height="339" splitType="Stretch">
 			<frame>
-				<reportElement style="Row" mode="Opaque" x="-3" y="-26" width="590" height="316" uuid="b50221b5-8254-440b-8c6f-1f0b138c9259"/>
+				<reportElement style="Row" mode="Opaque" x="-2" y="7" width="260" height="313" uuid="b50221b5-8254-440b-8c6f-1f0b138c9259"/>
 				<textField textAdjust="ScaleFont">
 					<reportElement style="Detail" positionType="Float" x="14" y="145" width="56" height="12" uuid="bb19698c-0485-415e-9323-86f67e1e80ce">
 						<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="b07b2a52-8da5-4edd-a2da-ed595a8440bd"/>

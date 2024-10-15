@@ -255,7 +255,7 @@ district.district_name,
 					</reportElement>
 					<imageExpression><![CDATA[$F{districtmaster.rightImage}]]></imageExpression>
 				</image>
-				<textField textAdjust="ScaleFont">
+				<textField textAdjust="StretchHeight">
 					<reportElement mode="Opaque" x="9" y="175" width="244" height="40" backcolor="#BDBBBB" uuid="96438a96-329e-4b9d-816c-e61be3a6ee22">
 						<property name="com.jaspersoft.studio.unit.width" value="px"/>
 						<property name="com.jaspersoft.studio.unit.height" value="px"/>

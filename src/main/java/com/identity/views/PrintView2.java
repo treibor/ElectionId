@@ -166,7 +166,7 @@ public class PrintView2 extends VerticalLayout{
 		
 		//radioGroup.addThemeVariants(RadioGroupVariant.LUMO_VERTICAL);
 		radioGroup.setLabel("Report Type");
-		radioGroup.setItems("Landscape", "Portrait", "Something");
+		radioGroup.setItems("Landscape", "Portrait", "OTHER");
 		radioGroup.setValue("Landscape");
 		reportFormat.add(radioGroup);
 		FormLayout fl1=new FormLayout();
@@ -287,9 +287,9 @@ public class PrintView2 extends VerticalLayout{
 					notify.show("Please Check  Values: 'From' cannot be Bigger than 'To'", 3000, Position.TOP_CENTER);
 				} else {
 					List<Employee> employees = dbservice.getEmployeesBetweenSerials(fromValue, toValue, type);
-					if(format=="Portrait") {
+					//if(format=="Portrait") {
 						printReports(employees, reportType, type, format);
-					}
+					//}
 				}
 
 			} catch (Exception e) {
@@ -445,7 +445,7 @@ public class PrintView2 extends VerticalLayout{
 		
 		try {
 			long districtid = dbservice.getLoggedDistrict().getDistrictId();
-			URL res = getClass().getClassLoader().getResource("report/1_idp.jrxml");
+			URL res = getClass().getClassLoader().getResource("report/1_id.jrxml");
 			File file = Paths.get(res.toURI()).toFile();
 			String absolutePath = file.getAbsolutePath();
 			String reportPath = absolutePath.substring(0, absolutePath.length() - 11);
@@ -459,6 +459,9 @@ public class PrintView2 extends VerticalLayout{
 			if (reportType.equals("id")) {
 				if (format == "Portrait") {
 					resource = new ClassPathResource("report/" + districtid + "_idp.jrxml");
+					resourceduplicate = new ClassPathResource("report/1_idp.jrxml");
+				}else if (format == "OTHER") {
+					resource = new ClassPathResource("report/" + districtid + "_id.jrxml");
 					resourceduplicate = new ClassPathResource("report/1_idp.jrxml");
 				}else {
 					resource = new ClassPathResource("report/" + districtid + "_id.jrxml");
@@ -488,7 +491,7 @@ public class PrintView2 extends VerticalLayout{
 			hl4.add(pdfViewerrange);
 
 		} catch (Exception e) {
-			notify.show("Unable TO Generate Report. Error:" + e, 5000, Position.TOP_CENTER);
+			Notification.show("Unable TO Generate Report. Error:" + e, 5000, Position.TOP_CENTER);
 			e.printStackTrace();
 
 		}
