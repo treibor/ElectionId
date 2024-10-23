@@ -78,7 +78,7 @@ public class PoliticalForm extends FormLayout {
 	MemoryBuffer buffer= new MemoryBuffer();
 	Upload upload= new Upload(buffer); 
 	private Political political;
-	Notification notify = new Notification();
+	
 	VerticalLayout imageContainer=new VerticalLayout();
 	BufferedImage inputImageoriginal=null;
 	public PoliticalForm(List<Party> parties, List<Constituency> constis, List <Candidate> candis, List<Cell> cells, DbServicePol dbservice, DbService dbservic) {
@@ -123,7 +123,7 @@ public class PoliticalForm extends FormLayout {
 		upload.setUploadButton(new Button ("Upload Photo"));
 		upload.setDropLabel(new Label("Drop Photo"));
 		upload.setAcceptedFileTypes("image/tiff", "image/jpeg", "image/jpg");
-		upload.addFileRejectedListener(e -> notify.show("Invalid File: Please select only image files less than 100kb",3000, Position.TOP_END));
+		upload.addFileRejectedListener(e -> Notification.show("Invalid File: Please select only image files less than 100kb",3000, Position.TOP_END));
 		upload.addSucceededListener(event -> showPicture());
 		return upload;
 	}
@@ -145,7 +145,7 @@ public class PoliticalForm extends FormLayout {
 			//imageContainer.get
 		} catch (Exception e) {
 			e.printStackTrace();
-			notify.show("Error" + e);
+			Notification.show("Error" + e);
 		}
 	}
 	
@@ -192,9 +192,7 @@ public class PoliticalForm extends FormLayout {
 
 	private Component createButtonsLayout() {
 		// TODO Auto-generated method stub
-		save.setWidthFull();
-		delete.setWidthFull();
-		close.setWidthFull();
+		
 		save.addThemeVariants(ButtonVariant.LUMO_PRIMARY);
 		save.addClickShortcut(Key.ENTER);
 		delete.addThemeVariants(ButtonVariant.LUMO_ERROR);
@@ -206,7 +204,7 @@ public class PoliticalForm extends FormLayout {
 
 	private void validatandSave() {
 		if (dbservice.getDistrictMasterByLabel("political") == null) {
-			notify.show("Please Initialise District-Printing Data Before Entering Any Political Agents", 5000, Position.TOP_CENTER);
+			Notification.show("Please Initialise District-Printing Data Before Entering Any Political Agents", 5000, Position.TOP_CENTER);
 		} else {
 			try {
 				binder.writeBean(political);
@@ -225,7 +223,7 @@ public class PoliticalForm extends FormLayout {
 				clearBuffer();
 
 			} catch (ValidationException e) {
-				Notification notification = Notification.show("Please Enter All Required Fields", 3000,
+				Notification.show("Please Enter All Required Fields", 3000,
 						Position.TOP_CENTER);
 			}
 		}

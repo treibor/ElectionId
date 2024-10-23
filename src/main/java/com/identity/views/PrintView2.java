@@ -1,45 +1,17 @@
 package com.identity.views;
 
 
-import java.awt.Window;
-import java.awt.image.BufferedImage;
-import java.io.BufferedReader;
-import java.io.ByteArrayInputStream;
-import java.io.ByteArrayOutputStream;
 import java.io.File;
-import java.io.FileInputStream;
 import java.io.FileNotFoundException;
-import java.io.FileOutputStream;
-import java.io.IOException;
 import java.io.InputStream;
-import java.io.InputStreamReader;
-import java.io.OutputStream;
 import java.net.URL;
-import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.time.LocalDate;
-import java.util.Arrays;
-import java.util.Date;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
-import javax.imageio.ImageIO;
-import javax.servlet.ServletContext;
-
-import org.apache.catalina.webresources.FileResource;
-import org.apache.commons.beanutils.locale.converters.DateLocaleConverter;
 import org.apache.commons.io.FileUtils;
-import org.apache.commons.io.IOUtils;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.io.ClassPathResource;
 import org.springframework.core.io.Resource;
-import org.springframework.data.jpa.convert.threeten.Jsr310JpaConverters.LocalDateConverter;
-import org.springframework.http.HttpHeaders;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
-import org.springframework.util.ResourceUtils;
-import org.springframework.util.StringUtils;
 
 import com.identity.dbservice.DbService;
 import com.identity.dbservice.DbServicePol;
@@ -50,50 +22,46 @@ import com.identity.entity.Employee;
 import com.identity.entity.Office;
 import com.identity.entity.Party;
 import com.identity.entity.Political;
-import com.identity.repository.EmployeeRepository;
-import com.identity.views.MainLayout;
 import com.vaadin.componentfactory.pdfviewer.PdfViewer;
 import com.vaadin.flow.component.Component;
 import com.vaadin.flow.component.accordion.Accordion;
 import com.vaadin.flow.component.button.Button;
 import com.vaadin.flow.component.combobox.ComboBox;
 import com.vaadin.flow.component.datepicker.DatePicker;
-import com.vaadin.flow.component.datetimepicker.DateTimePicker;
-import com.vaadin.flow.component.details.Details;
 import com.vaadin.flow.component.formlayout.FormLayout;
 import com.vaadin.flow.component.formlayout.FormLayout.ResponsiveStep;
-import com.vaadin.flow.component.html.Anchor;
 import com.vaadin.flow.component.html.Div;
+import com.vaadin.flow.component.html.Image;
+import com.vaadin.flow.component.html.Span;
 import com.vaadin.flow.component.notification.Notification;
 import com.vaadin.flow.component.notification.Notification.Position;
 import com.vaadin.flow.component.orderedlayout.HorizontalLayout;
 import com.vaadin.flow.component.orderedlayout.VerticalLayout;
 import com.vaadin.flow.component.radiobutton.RadioButtonGroup;
-import com.vaadin.flow.component.splitlayout.SplitLayout;
+import com.vaadin.flow.component.radiobutton.RadioGroupVariant;
 import com.vaadin.flow.component.textfield.NumberField;
-import com.vaadin.flow.component.textfield.TextField;
-import com.vaadin.flow.component.orderedlayout.FlexComponent.Alignment;
-import com.vaadin.flow.data.binder.BeanValidationBinder;
-import com.vaadin.flow.data.binder.Binder;
+import com.vaadin.flow.data.renderer.ComponentRenderer;
 import com.vaadin.flow.router.PageTitle;
 import com.vaadin.flow.router.Route;
 import com.vaadin.flow.server.StreamResource;
-import com.vaadin.flow.server.frontend.installer.DefaultFileDownloader;
 
+import jakarta.annotation.security.RolesAllowed;
 import net.sf.jasperreports.engine.JasperCompileManager;
 import net.sf.jasperreports.engine.JasperExportManager;
 import net.sf.jasperreports.engine.JasperFillManager;
 import net.sf.jasperreports.engine.JasperPrint;
 import net.sf.jasperreports.engine.JasperReport;
 import net.sf.jasperreports.engine.data.JRBeanCollectionDataSource;
-import net.sf.jasperreports.engine.export.JRPdfExporter;
-import net.sf.jasperreports.export.SimpleExporterInput;
-import net.sf.jasperreports.export.SimpleOutputStreamExporterOutput;
 
 
 @PageTitle("Reports")
 @Route(value="printing", layout=MainLayout.class)
+@RolesAllowed({ "USER", "SUPER", "ADMIN" })
 public class PrintView2 extends VerticalLayout{
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
 	ComboBox<Office> office = new ComboBox("Print Office-Wise");
 	ComboBox<Cell> cell = new ComboBox("Print Cell-Wise");
 	ComboBox<Party> party = new ComboBox("Print Party-Wise");
@@ -105,7 +73,7 @@ public class PrintView2 extends VerticalLayout{
 	NumberField toRangep=new NumberField("", "To");
 	DatePicker fromDate=new DatePicker("Print By Dates");
 	DatePicker toDate=new DatePicker();
-	Notification notify=new Notification();
+	//Notification Notification=new Notification();
 	private DbService dbservice;
 	private DbServicePol dbservice1;
 	HorizontalLayout hl4=new HorizontalLayout();
@@ -154,8 +122,8 @@ public class PrintView2 extends VerticalLayout{
 	}
 	public Component createFinalPanel() {
 		Accordion accordion=new Accordion();
-		accordion.add("Election Personnel", createGovtpanel());
-		accordion.add("Political Agents", createPoliticalpanel());
+		accordion.add("Personnel", createGovtpanel());
+		accordion.add("Election Agents", createPoliticalpanel());
 		//accordion.set
 		return accordion;
 	}
@@ -163,11 +131,14 @@ public class PrintView2 extends VerticalLayout{
 	
 	public Component createGovtpanel() {
 		HorizontalLayout reportFormat=new HorizontalLayout();
-		
+		reportFormat.setDefaultVerticalComponentAlignment(Alignment.CENTER);  
+		//reportFormat.setJustifyContentMode(JustifyContentMode.CENTER);
+		radioGroup.addClassName("buttons");
 		//radioGroup.addThemeVariants(RadioGroupVariant.LUMO_VERTICAL);
 		radioGroup.setLabel("Report Type");
 		radioGroup.setItems("Landscape", "Portrait", "OTHER");
 		radioGroup.setValue("Landscape");
+		radioGroup.setRenderer(new ComponentRenderer<>(item -> createItemWithImage(item)));
 		reportFormat.add(radioGroup);
 		FormLayout fl1=new FormLayout();
 		Button printRange=new Button("Print Id");
@@ -211,6 +182,44 @@ public class PrintView2 extends VerticalLayout{
 		//return details;
 		return fl1;
 	}
+	private Component createItemWithImage(String item) {
+        // Create an image based on the item value
+        Image image = new Image();
+        image.getStyle().set("width", "5px");
+        image.getStyle().set("height", "5px");
+        image.getStyle().set("object-fit", "contain");
+        // Set the image source based on the report type
+        switch (item) {
+            case "Landscape":
+            	image = new Image("images/landscape.png", "Landscape Image");
+            	//System.out.println("Landscape");
+                break;
+            case "Portrait":
+            	image = new Image("/images/portrait.jpg", "Image");
+                break;
+            case "OTHER":
+                image.setSrc("/images/other.png");
+                break;
+            default:
+                image.setSrc("/images/default.png");
+        }
+
+        Span label = new Span(item);
+
+        // Create a layout with the image and the text
+        HorizontalLayout layout = new HorizontalLayout(image);
+        
+        layout.setAlignItems(Alignment.CENTER);  // Align image and text vertically in the center
+
+        // Wrap the layout inside a Div for custom control
+        Div wrapper = new Div(layout);
+        wrapper.getStyle().set("display", "flex");
+        wrapper.getStyle().set("align-items", "center");  // Align items vertically
+        wrapper.getStyle().set("justify-content", "center");  // Center items horizontally
+        wrapper.getStyle().set("width", "100%");
+
+        return wrapper;
+    }
 	public Component createPoliticalpanel() {
 		HorizontalLayout reportType=new HorizontalLayout();
 		HorizontalLayout reportFormat=new HorizontalLayout();
@@ -276,7 +285,7 @@ public class PrintView2 extends VerticalLayout{
 	private void printRangeReport(String reportType, String type) {
 		String format=radioGroup.getValue().trim();
 		if(fromRange.getValue()==null || toRange.getValue()==null) {
-			notify.show("Please Enter Valid Values ", 3000, Position.TOP_CENTER);
+			Notification.show("Please Enter Valid Values ", 3000, Position.TOP_CENTER);
 		} else {
 			double dfrom = fromRange.getValue();
 			double dto = toRange.getValue();
@@ -284,7 +293,7 @@ public class PrintView2 extends VerticalLayout{
 			long toValue = (long) dto;
 			try {
 				if (fromValue > toValue) {
-					notify.show("Please Check  Values: 'From' cannot be Bigger than 'To'", 3000, Position.TOP_CENTER);
+					Notification.show("Please Check  Values: 'From' cannot be Bigger than 'To'", 3000, Position.TOP_CENTER);
 				} else {
 					List<Employee> employees = dbservice.getEmployeesBetweenSerials(fromValue, toValue, type);
 					//if(format=="Portrait") {
@@ -293,7 +302,7 @@ public class PrintView2 extends VerticalLayout{
 				}
 
 			} catch (Exception e) {
-				notify.show("Unable TO Generate Report", 5000, Position.TOP_CENTER);
+				Notification.show("Unable TO Generate Report", 5000, Position.TOP_CENTER);
 				e.printStackTrace();
 				// return "Error--> check the console log";
 			}
@@ -304,7 +313,7 @@ public class PrintView2 extends VerticalLayout{
 	private void printRangeReportPolitical(String reportType, String type) {
 
 		if (fromRangep.getValue() == null || toRangep.getValue() == null) {
-			notify.show("Please Enter Valid Values ", 3000, Position.TOP_CENTER);
+			Notification.show("Please Enter Valid Values ", 3000, Position.TOP_CENTER);
 		} else {
 			double dfrom = fromRangep.getValue();
 			double dto = toRangep.getValue();
@@ -312,7 +321,7 @@ public class PrintView2 extends VerticalLayout{
 			long toValue = (long) dto;
 			try {
 				if (fromValue > toValue) {
-					notify.show("Please Check  Values: 'From' cannot be Bigger than 'To'", 3000, Position.TOP_CENTER);
+					Notification.show("Please Check  Values: 'From' cannot be Bigger than 'To'", 3000, Position.TOP_CENTER);
 				} else {
 					// System.out.println("Hello");
 					List<Political> political = dbservice1.findPoliticalByRange(fromValue, toValue, type);
@@ -321,7 +330,7 @@ public class PrintView2 extends VerticalLayout{
 				}
 
 			} catch (Exception e) {
-				notify.show("Unable TO Generate Report", 5000, Position.TOP_CENTER);
+				Notification.show("Unable TO Generate Report", 5000, Position.TOP_CENTER);
 				e.printStackTrace();
 				// return "Error--> check the console log";
 			}
@@ -332,14 +341,14 @@ public class PrintView2 extends VerticalLayout{
 	private void printDatesReport(String reportType, String type) {
 		String format=radioGroup.getValue().trim();
 		if (fromDate.getValue() == null || toDate.getValue() == null) {
-			notify.show("Please Enter Valid Dates ", 3000, Position.TOP_CENTER);
+			Notification.show("Please Enter Valid Dates ", 3000, Position.TOP_CENTER);
 		} else {
 			LocalDate dfrom = fromDate.getValue();
 			LocalDate dto = toDate.getValue();
 			try {
 				// boolean dfs=dfrom.
 				if (dfrom.isAfter(dto)) {
-					notify.show("Please Check  Values: 'From' cannot be Bigger than 'To'", 3000, Position.TOP_CENTER);
+					Notification.show("Please Check  Values: 'From' cannot be Bigger than 'To'", 3000, Position.TOP_CENTER);
 				} else {
 					// ate dt= new LocalDateConverter(dfrom);
 					List<Employee> employees = dbservice.getEmployeesBetweenDates(dfrom, dto, type);
@@ -347,7 +356,7 @@ public class PrintView2 extends VerticalLayout{
 				}
 
 			} catch (Exception e) {
-				notify.show("Unable TO Generate Report", 5000, Position.TOP_CENTER);
+				Notification.show("Unable TO Generate Report", 5000, Position.TOP_CENTER);
 				e.printStackTrace();
 				// return "Error--> check the console log";
 			}
@@ -357,14 +366,14 @@ public class PrintView2 extends VerticalLayout{
 	
 	private void printDatesReportPolitical(String reportType, String type) {
 		if (fromDatep.getValue() == null || toDatep.getValue() == null) {
-			notify.show("Please Enter Valid Dates ", 3000, Position.TOP_CENTER);
+			Notification.show("Please Enter Valid Dates ", 3000, Position.TOP_CENTER);
 		} else {
 			LocalDate dfrom = fromDatep.getValue();
 			LocalDate dto = toDatep.getValue();
 			try {
 				// boolean dfs=dfrom.
 				if (dfrom.isAfter(dto)) {
-					notify.show("Please Check  Values: 'From' cannot be Bigger than 'To'", 3000, Position.TOP_CENTER);
+					Notification.show("Please Check  Values: 'From' cannot be Bigger than 'To'", 3000, Position.TOP_CENTER);
 				} else {
 					// ate dt= new LocalDateConverter(dfrom);
 					List<Political> political = dbservice1.findPoliticalByDate(dfrom, dto, type);
@@ -372,7 +381,7 @@ public class PrintView2 extends VerticalLayout{
 				}
 
 			} catch (Exception e) {
-				notify.show("Unable TO Generate Report", 5000, Position.TOP_CENTER);
+				Notification.show("Unable TO Generate Report", 5000, Position.TOP_CENTER);
 				e.printStackTrace();
 				// return "Error--> check the console log";
 			}
@@ -391,7 +400,7 @@ public class PrintView2 extends VerticalLayout{
 	private void printCellReport(String reportType, String type) {
 		String format=radioGroup.getValue().trim();
 		if(cell.getValue()==null) {
-			notify.show("Please Select a Cell", 3000, Position.TOP_CENTER);
+			Notification.show("Please Select a Cell", 3000, Position.TOP_CENTER);
 		}else {
 				List<Employee> employees= dbservice.getEmployeesByCell(cell.getValue(), type);
 				printReports(employees, reportType, type, format);
@@ -402,7 +411,7 @@ public class PrintView2 extends VerticalLayout{
 	private void printOfficeReport(String reportType, String type) {
 		String format=radioGroup.getValue().trim();
 		if(office.getValue()==null) {
-			notify.show("Please Select an Office", 3000, Position.TOP_CENTER);
+			Notification.show("Please Select an Office", 3000, Position.TOP_CENTER);
 		}else {
 				List<Employee> employees= dbservice.getEmployeesByOffice(office.getValue(), type);
 				printReports(employees, reportType, type, format);
@@ -412,7 +421,7 @@ public class PrintView2 extends VerticalLayout{
 	
 	private void printPartyReport(String reportType, String type) {
 		if(party.getValue()==null) {
-			notify.show("Please Select a Cell", 3000, Position.TOP_CENTER);
+			Notification.show("Please Select a Cell", 3000, Position.TOP_CENTER);
 		}else {
 				List<Political> political= dbservice1.findPoliticalByParty(party.getValue(), type);
 				printPoliticalReports(political, reportType, type);
@@ -421,7 +430,7 @@ public class PrintView2 extends VerticalLayout{
 	}
 	private void printCandidateReport(String reportType, String type) {
 		if(candi.getValue()==null) {
-			notify.show("Please Select a Cell", 3000, Position.TOP_CENTER);
+			Notification.show("Please Select a Cell", 3000, Position.TOP_CENTER);
 		}else {
 				List<Political> political= dbservice1.findPoliticalByCandidate(candi.getValue(), type);
 				printPoliticalReports(political, reportType, type);
@@ -431,7 +440,7 @@ public class PrintView2 extends VerticalLayout{
 
 	private void printConstituencyReport(String reportType, String type) {
 		if(consti.getValue()==null) {
-			notify.show("Please Select a Cell", 3000, Position.TOP_CENTER);
+			Notification.show("Please Select a Cell", 3000, Position.TOP_CENTER);
 		}else {
 				List<Political> political= dbservice1.findPoliticalByConstituency(consti.getValue(), type);
 				printPoliticalReports(political, reportType, type);
@@ -553,7 +562,7 @@ public class PrintView2 extends VerticalLayout{
 			hl4.add(pdfViewerrange);
 
 		} catch (Exception e) {
-			notify.show("Unable TO Generate Report. Error:" + e, 5000, Position.TOP_CENTER);
+			Notification.show("Unable TO Generate Report. Error:" + e, 5000, Position.TOP_CENTER);
 			e.printStackTrace();
 
 		}

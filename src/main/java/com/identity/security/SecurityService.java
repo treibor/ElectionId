@@ -1,32 +1,65 @@
 package com.identity.security;
-import com.vaadin.flow.component.UI;
-import com.vaadin.flow.server.VaadinServletRequest;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContext;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
-import org.springframework.security.web.authentication.logout.SecurityContextLogoutHandler;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Component;
+
+import com.vaadin.flow.spring.security.AuthenticationContext;
 
 @Component
 public class SecurityService {
+	private final AuthenticationContext authenticationContext;
+	@Autowired UserDetailsServiceImpl userdetails;
+	@Autowired BCryptPasswordEncoder passwordEncoder;	
+	//@Autowired Audit audit;
+	public SecurityService(AuthenticationContext authenticationContext) {
+		this.authenticationContext = authenticationContext;
+	}
+	
+	public UserDetails getAuthenticatedUser1() {
+		//System.out.println("USER"+authenticationContext.getAuthenticatedUser(UserDetails.class).get());
+		return authenticationContext.getAuthenticatedUser(UserDetails.class).get();
+	}
+	public UserDetails getAuthenticatedUser2() {
+		//System.out.println("USER"+authenticationContext.getAuthenticatedUser(UserDetails.class).get());
+		Object principal = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+		return (UserDetails) principal;
+		//SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+	}
+	
+	public boolean canLogin(String user, String password) {
+		return true;
+	}
+	public void logout() {
+		//authenticationContext.
+		authenticationContext.logout();
+	}
 
-    private static final String LOGOUT_SUCCESS_URL = "./";
+	public UserDetails getAuthenticatedUser() {
+		Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+		if (auth != null && auth.isAuthenticated()) {
+			Object principal = auth.getPrincipal();
+			if (principal instanceof UserDetails) {
+				//audit.saveLoginAudit("Login Success", "");
+				return (UserDetails) principal;
+			}
+		}
+		return null;
+	}
 
-    public UserDetails getAuthenticatedUser() {
-        SecurityContext context = SecurityContextHolder.getContext();
-        Object principal = context.getAuthentication().getPrincipal();
-        if (principal instanceof UserDetails) {
-            return (UserDetails) context.getAuthentication().getPrincipal();
-        }
-        // Anonymous or no authentication.
-        return null;
-    }
+	public UserDetails getUser() {
+		final SecurityContext securityContext = SecurityContextHolder.getContext();
+		final Object principal = securityContext.getAuthentication().getPrincipal();
+		if (principal == null) {
+				return null;
+		}
 
-    public void logout() {
-        UI.getCurrent().getPage().setLocation(LOGOUT_SUCCESS_URL);
-        SecurityContextLogoutHandler logoutHandler = new SecurityContextLogoutHandler();
-        logoutHandler.logout(
-                VaadinServletRequest.getCurrent().getHttpServletRequest(), null,
-                null);
-    }
+		return (UserDetails) principal;
+	}
+	
+
 }

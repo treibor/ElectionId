@@ -2,10 +2,6 @@ package com.identity.views;
 
 import com.identity.dbservice.DbService;
 import com.identity.entity.Cell;
-import com.identity.views.CellForm;
-import com.identity.views.CellForm.CellFormEvent;
-import com.identity.views.CellForm.DeleteEvent;
-import com.identity.views.CellForm.SaveEvent;
 import com.vaadin.flow.component.Component;
 import com.vaadin.flow.component.ComponentEvent;
 import com.vaadin.flow.component.ComponentEventListener;
@@ -43,6 +39,7 @@ public class CellForm extends FormLayout{
 		anchor.setTarget("https://www.w3schools.com/colors/colors_picker.asp\", \"Reference for HEX Colour");
 		this.dbservice=dbservice;
 		binder.bindInstanceFields(this);
+		
 		add(cellName,cellColour, anchor,createButtonsLayout());
 	}
 	

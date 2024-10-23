@@ -16,8 +16,11 @@ import com.vaadin.flow.component.orderedlayout.VerticalLayout;
 import com.vaadin.flow.router.PageTitle;
 import com.vaadin.flow.router.Route;
 
+import jakarta.annotation.security.RolesAllowed;
+
 @PageTitle("Master Data")
 @Route(value = "master", layout=MainLayout.class)
+@RolesAllowed({"USER","SUPER", "ADMIN" })
 public class OfficeView extends VerticalLayout {
 	Grid <Office> officegrid=new Grid<>(Office.class);
 	Grid <Cell> cellgrid=new Grid<>(Cell.class);

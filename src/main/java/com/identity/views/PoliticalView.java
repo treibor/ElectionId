@@ -23,9 +23,11 @@ import com.vaadin.flow.router.PageTitle;
 import com.vaadin.flow.router.Route;
 import com.vaadin.flow.server.StreamResource;
 
+import jakarta.annotation.security.RolesAllowed;
+
 @PageTitle("Political")
 @Route(value = "political", layout=MainLayout.class)
-
+@RolesAllowed({ "USER", "SUPER", "ADMIN" })
 public class PoliticalView extends VerticalLayout {
 	Grid<Political> grid = new Grid<>(Political.class);
 	//Grid<Political> grid = new Grid<>();
@@ -98,6 +100,7 @@ public class PoliticalView extends VerticalLayout {
 		filterText.setClearButtonVisible(true);
 		filterText.setValueChangeMode(ValueChangeMode.LAZY);
 		filterText.addValueChangeListener(e-> updateList());
+		filterText.setWidth("350px");
 		Button addButton=new  Button("Add New");
 		addButton.setIcon(new Icon(VaadinIcon.PLUS_CIRCLE));
 		addButton.addClickListener(e-> addContact());

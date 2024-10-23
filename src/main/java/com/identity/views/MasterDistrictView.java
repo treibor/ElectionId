@@ -48,8 +48,11 @@ import com.vaadin.flow.router.Route;
 import com.vaadin.flow.server.StreamResource;
 import com.vaadin.flow.shared.Registration;
 
+import jakarta.annotation.security.RolesAllowed;
+
 @PageTitle("Printing Master")
 @Route(value="masterprinting", layout=MainLayout.class)
+@RolesAllowed({"SUPER", "ADMIN" })
 public class MasterDistrictView extends VerticalLayout{
 	MenuBar menu=new MenuBar();
 	ComboBox select=new ComboBox("Select");

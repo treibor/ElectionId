@@ -2,19 +2,14 @@ package com.identity.entity;
 
 import java.time.LocalDate;
 import java.util.Arrays;
-import java.util.Date;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
-import javax.persistence.OneToMany;
-import javax.persistence.SequenceGenerator;
-import javax.validation.constraints.NotNull;
-
-import org.hibernate.validator.constraints.NotEmpty;
+import jakarta.persistence.Entity;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
+import jakarta.persistence.Id;
+import jakarta.persistence.ManyToOne;
+import jakarta.persistence.SequenceGenerator;
+import jakarta.validation.constraints.NotEmpty;
 
 @Entity
 public class Districtmaster {
@@ -26,7 +21,7 @@ public class Districtmaster {
 	private byte[] leftImage;
 	private byte[] rightImage;
 	private byte[] signatureImage;
-	@javax.validation.constraints.NotEmpty
+	@NotEmpty
 	private String headerFirstLine;
 	private String headerSecondLine;
 	private String headerThirdLine;

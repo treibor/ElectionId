@@ -72,7 +72,7 @@ public class EmployeeForm extends FormLayout {
 	Upload upload= new Upload(buffer); 
 	private Employee employee;
 	private LocalDate dt;
-	Notification notify = new Notification();
+	
 	VerticalLayout imageContainer=new VerticalLayout();
 	BufferedImage inputImageoriginal=null;
 	boolean admin;
@@ -88,14 +88,13 @@ public class EmployeeForm extends FormLayout {
 		add(firstName, lastName, designation, office, cell, createUpload(), createButtonsLayout(), imageContainer);
 	}
 	
-	
 	private Component createUpload() {
 		upload.setMaxFiles(1);
 		upload.setMaxFileSize(100000);
 		upload.setUploadButton(new Button ("Upload Photo"));
 		upload.setDropLabel(new Label("Drop Photo"));
 		upload.setAcceptedFileTypes("image/tiff", "image/jpeg", "image/jpg");
-		upload.addFileRejectedListener(e -> notify.show("Invalid File: Please select only image files less than 100kb",3000, Position.TOP_END));
+		upload.addFileRejectedListener(e -> Notification.show("Invalid File: Please select only image files less than 100kb",3000, Position.TOP_END));
 		upload.addSucceededListener(event -> showPicture());
 		return upload;
 	}
@@ -117,7 +116,7 @@ public class EmployeeForm extends FormLayout {
 			//imageContainer.get
 		} catch (Exception e) {
 			e.printStackTrace();
-			notify.show("Error" + e);
+			Notification.show("Error" + e);
 		}
 	}
 	
@@ -164,10 +163,6 @@ public class EmployeeForm extends FormLayout {
 
 	private Component createButtonsLayout() {
 		// TODO Auto-generated method stub
-		save.setWidthFull();
-		//save.setIcon(new Icon(VaadinIcon.USER_STAR));
-		delete.setWidthFull();
-		close.setWidthFull();
 		save.addThemeVariants(ButtonVariant.LUMO_PRIMARY);
 		delete.addThemeVariants(ButtonVariant.LUMO_ERROR);
 		save.addClickShortcut(Key.ENTER);
@@ -175,12 +170,18 @@ public class EmployeeForm extends FormLayout {
 		delete.addClickListener(event -> fireEvent(new DeleteEvent(this, employee)));
 		//delete.setEnabled(admin);
 		close.addClickListener(event -> fireEvent(new CloseEvent(this)));
-		return new HorizontalLayout(save, delete, close);
+		HorizontalLayout hl1=new HorizontalLayout(save, delete, close);
+		hl1.setFlexGrow(1, save);
+		hl1.setFlexGrow(1, delete);
+		hl1.setFlexGrow(1, close);
+		hl1.setWidthFull();
+		hl1.setWidthFull();
+		return hl1;
 	}
 
 	private void validatandSave() {
 		if (dbservice.getDistrictMasterByLabel("employee") == null) {
-			notify.show("Please Initialise District-Printing Data Before Entering Any Employees", 3000, Position.TOP_CENTER);
+			Notification.show("Please Initialise District-Printing Data Before Entering Any Employees", 3000, Position.TOP_CENTER);
 		} else {
 			try {
 				// LocalDate lt=new LocalDate().now();
@@ -205,7 +206,7 @@ public class EmployeeForm extends FormLayout {
 
 			} catch (ValidationException e) {
 				// TODO Auto-generated catch block
-				Notification notification = Notification.show("Please Enter All Required Fields", 3000,
+				Notification.show("Please Enter All Required Fields", 3000,
 						Position.TOP_CENTER);
 			}
 		}
