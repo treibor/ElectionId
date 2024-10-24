@@ -135,8 +135,8 @@ public class PrintView2 extends VerticalLayout{
 		//reportFormat.setJustifyContentMode(JustifyContentMode.CENTER);
 		radioGroup.addClassName("buttons");
 		//radioGroup.addThemeVariants(RadioGroupVariant.LUMO_VERTICAL);
-		radioGroup.setLabel("Report Type");
-		radioGroup.setItems("Landscape", "Portrait", "OTHER");
+		radioGroup.setLabel("Id Type");
+		radioGroup.setItems("Landscape", "Landscape2","Portrait");
 		radioGroup.setValue("Landscape");
 		radioGroup.setRenderer(new ComponentRenderer<>(item -> createItemWithImage(item)));
 		reportFormat.add(radioGroup);
@@ -194,6 +194,10 @@ public class PrintView2 extends VerticalLayout{
             	image = new Image("images/landscape.png", "Landscape Image");
             	//System.out.println("Landscape");
                 break;
+            case "Landscape2":
+            	image = new Image("images/landscape2.jpg", "Landscape Image 2");
+            	//System.out.println("Landscape");
+                break;
             case "Portrait":
             	image = new Image("/images/portrait.jpg", "Image");
                 break;
@@ -204,14 +208,14 @@ public class PrintView2 extends VerticalLayout{
                 image.setSrc("/images/default.png");
         }
 
-        Span label = new Span(item);
+        //Span label = new Span(item);
 
-        // Create a layout with the image and the text
+       
         HorizontalLayout layout = new HorizontalLayout(image);
         
         layout.setAlignItems(Alignment.CENTER);  // Align image and text vertically in the center
 
-        // Wrap the layout inside a Div for custom control
+        
         Div wrapper = new Div(layout);
         wrapper.getStyle().set("display", "flex");
         wrapper.getStyle().set("align-items", "center");  // Align items vertically
@@ -454,6 +458,7 @@ public class PrintView2 extends VerticalLayout{
 		
 		try {
 			long districtid = dbservice.getLoggedDistrict().getDistrictId();
+			//This is to get The path of reports folder.
 			URL res = getClass().getClassLoader().getResource("report/1_id.jrxml");
 			File file = Paths.get(res.toURI()).toFile();
 			String absolutePath = file.getAbsolutePath();
@@ -466,11 +471,14 @@ public class PrintView2 extends VerticalLayout{
 			
 			
 			if (reportType.equals("id")) {
-				if (format == "Portrait") {
-					resource = new ClassPathResource("report/" + districtid + "_idp.jrxml");
-					resourceduplicate = new ClassPathResource("report/1_idp.jrxml");
-				}else if (format == "OTHER") {
+				if (format == "Landscape") {
 					resource = new ClassPathResource("report/" + districtid + "_id.jrxml");
+					resourceduplicate = new ClassPathResource("report/1_id.jrxml");
+				}else if (format == "Landscape2") {
+					resource = new ClassPathResource("report/" + districtid + "_id2.jrxml");
+					resourceduplicate = new ClassPathResource("report/1_id2.jrxml");
+				}else if (format == "Portrait") {
+					resource = new ClassPathResource("report/" + districtid + "_idp.jrxml");
 					resourceduplicate = new ClassPathResource("report/1_idp.jrxml");
 				}else {
 					resource = new ClassPathResource("report/" + districtid + "_id.jrxml");

@@ -24,6 +24,7 @@ import com.vaadin.flow.router.Route;
 import com.vaadin.flow.server.StreamResource;
 
 import jakarta.annotation.security.RolesAllowed;
+import software.xdev.vaadin.grid_exporter.GridExporter;
 
 @PageTitle("Political")
 @Route(value = "political", layout=MainLayout.class)
@@ -104,8 +105,14 @@ public class PoliticalView extends VerticalLayout {
 		Button addButton=new  Button("Add New");
 		addButton.setIcon(new Icon(VaadinIcon.PLUS_CIRCLE));
 		addButton.addClickListener(e-> addContact());
-		HorizontalLayout toolbar=new HorizontalLayout(filterText, addButton);
+		Button expButton=new  Button("Export");
+		expButton.setIcon(new Icon(VaadinIcon.EXTERNAL_LINK));
+		expButton.addClickListener(e-> export());
+		HorizontalLayout toolbar=new HorizontalLayout(filterText, addButton, expButton);
 		return toolbar;
+	}
+	private void export() {
+		GridExporter.newWithDefaults(grid).open();
 	}
 	private void addContact() {
 		CandidateForm candform =new CandidateForm(dbservice);
@@ -121,7 +128,7 @@ public class PoliticalView extends VerticalLayout {
 		grid.addColumn(political -> political.getCandidate().getCandidateName()).setHeader("Candidate").setSortable(true);
     	grid.addColumn(political -> political.getParty().getPartyName()).setHeader("Party").setSortable(true);
     	grid.addColumn(political -> political.getConstituency().getConstituencyName()).setHeader("Constituency").setSortable(true).setFooter("Total Entries: "+ dbservice.getPoliticalCount());
-    	grid.addColumn(political -> political.getCandidate().getCandidateName()).setHeader("Candidate").setSortable(true);
+    	//grid.addColumn(political -> political.getCandidate().getCandidateName()).setHeader("Candidate").setSortable(true);
     	grid.addColumns("enteredOn", "enteredBy");
     	//grid.addThemeVariants(GridVariant.LUMO_COLUMN_BORDERS);
     	grid.addThemeVariants(GridVariant.LUMO_ROW_STRIPES);

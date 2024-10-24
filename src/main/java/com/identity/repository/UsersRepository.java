@@ -10,8 +10,8 @@ import com.identity.entity.Users;
 
 @Repository
 public interface UsersRepository extends JpaRepository<Users, Long> {
-	Users findByUserName(String username);
-	
+	//Users findByUserName(String username);
+	Users findByUserNameAndEnabled(String username, boolean enabled);
 	
 	@Query("select Max(c.userId) from Users c ")
 	Long findMaxSerial();

@@ -95,10 +95,11 @@ vaadin-radio-group.buttons vaadin-radio-button {
     align-items: center;
     justify-content: center;
     cursor: pointer;
+    margin: 10px;
 }
 
 vaadin-radio-group.buttons vaadin-radio-button[checked] {
-    background: rgb(242, 242, 242);
+    background: rgb(151, 203, 255);
 }
 
 vaadin-radio-group.buttons vaadin-radio-button::part(radio) {
@@ -106,4 +107,13 @@ vaadin-radio-group.buttons vaadin-radio-button::part(radio) {
 }
 vaadin-radio-group.buttons vaadin-radio-button::part(label) {
     display: none; /* Hides the label (text) */
+}
+vaadin-radio-group.buttons vaadin-radio-button:hover::part(label) {
+    display: block; /* Shows the label when the radio button is hovered */
+    position: absolute;
+    background: white;
+    border: 1pt solid black;
+    padding: 5px;
+    border-radius: 4px;
+    z-index: 10;
 }

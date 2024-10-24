@@ -162,13 +162,13 @@ public class DbServicePol {
 	public District getLoggedDistrict() {
 		Authentication auth=SecurityContextHolder.getContext().getAuthentication();
 		String user=auth.getName();
-		Users userobject=urepo.findByUserName(user);
+		Users userobject=urepo.findByUserNameAndEnabled(user, true);
 		return userobject.getDistrict();
 		//auth=null;
 	}
 	public State getLoggedState() {
 		Authentication auth=SecurityContextHolder.getContext().getAuthentication();
-		Users userobject=urepo.findByUserName(auth.getName());
+		Users userobject=urepo.findByUserNameAndEnabled(auth.getName(), true);
 		return userobject.getState();
 	}
 	

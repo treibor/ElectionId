@@ -23,6 +23,7 @@ import com.vaadin.flow.server.PWA;
 import com.vaadin.flow.server.StreamResource;
 
 import jakarta.annotation.security.RolesAllowed;
+import software.xdev.vaadin.grid_exporter.GridExporter;
 
 
 @PageTitle("Personnel")
@@ -102,10 +103,16 @@ public class EmployeeView extends VerticalLayout {
 		filterText.addValueChangeListener(e-> updateList());
 		filterText.setWidth("350px");
 		Button addButton=new  Button("Add New");
+		Button expButton=new  Button("Export");
 		addButton.setIcon(new Icon(VaadinIcon.PLUS_CIRCLE));
+		expButton.setIcon(new Icon(VaadinIcon.EXTERNAL_LINK));
 		addButton.addClickListener(e-> addContact());
-		HorizontalLayout toolbar=new HorizontalLayout(filterText, addButton);
+		expButton.addClickListener(e-> export());
+		HorizontalLayout toolbar=new HorizontalLayout(filterText, addButton, expButton);
 		return toolbar;
+	}
+	private void export() {
+		GridExporter.newWithDefaults(grid).open();
 	}
 	private void addContact() {
 		grid.asSingleSelect().clear();

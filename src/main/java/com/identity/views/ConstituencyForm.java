@@ -1,5 +1,8 @@
 package com.identity.views;
 
+import org.vaadin.addons.tatu.ColorPicker;
+import org.vaadin.addons.tatu.ColorPickerVariant;
+
 import com.identity.dbservice.DbService;
 import com.identity.dbservice.DbServicePol;
 import com.identity.entity.Constituency;
@@ -40,7 +43,23 @@ public class ConstituencyForm extends FormLayout{
 		this.dbservice=dbservice;
 		anchor.setTarget("https://www.w3schools.com/colors/colors_picker.asp\", \"Reference for HEX Colour");
 		binder.bindInstanceFields(this);
-		add(constituencyName,constituencyColour, anchor,createButtonsLayout());
+		ColorPicker colorPicker = new ColorPicker();
+        colorPicker.setLabel("Select Colour");
+        colorPicker.addThemeVariants(ColorPickerVariant.COMPACT);
+        //colorPicker.setPresets(Arrays.asList(new ColorPreset("#00ff00", "Color 1"), new ColorPreset("#ff0000", "Color 2")));
+        colorPicker.setValue("#ffffff");
+        colorPicker.addValueChangeListener(event -> {
+            //Notification.show(event.getValue());
+        	constituencyColour.setValue(event.getValue());
+        });
+        constituencyColour.addValueChangeListener(e->{
+        		try {
+        			colorPicker.setValue(constituencyColour.getValue());
+        		}catch(Exception ex) {
+        			constituencyColour.setValue("#ffffff");
+                }
+        });	
+		add(constituencyName,colorPicker,constituencyColour, anchor,createButtonsLayout());
 	}
 	
 	

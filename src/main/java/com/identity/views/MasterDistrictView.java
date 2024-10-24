@@ -19,6 +19,7 @@ import com.identity.entity.Districtmaster;
 import com.identity.entity.Employee;
 import com.identity.views.EmployeeForm.EmployeeFormEvent;
 import com.identity.views.EmployeeForm.SaveEvent;
+import com.lowagie.text.alignment.HorizontalAlignment;
 import com.vaadin.flow.component.ClickEvent;
 import com.vaadin.flow.component.Component;
 import com.vaadin.flow.component.ComponentEvent;
@@ -97,17 +98,20 @@ public class MasterDistrictView extends VerticalLayout{
 		updateButton.addClickListener(event-> updateDetails());
 		add ( createTextFields());
 		//populateDetails();
+		this.setJustifyContentMode(JustifyContentMode.CENTER);
+		this.setAlignItems(Alignment.CENTER);
+		setSizeFull();
 		isadmin=dbService.isAdmin();
 		updateButton.setEnabled(isadmin);
 	}
 	public void populateDetails(String selected) {
 		Districtmaster dist=null;
-		if(selected=="Election Personnel") {
-			System.out.println("Selected:"+selected);
+		if(selected=="Personnel") {
+			//System.out.println("Selected:"+selected);
 			dist=dbService.getDistrictMasterByLabel("employee");
 		}else {
 			dist=dbService.getDistrictMasterByLabel("political");
-			System.out.println("Selected:"+selected);
+			//System.out.println("Selected:"+selected);
 		}
 		if (dist != null) {
 			removeImageContainers();
@@ -181,7 +185,7 @@ public class MasterDistrictView extends VerticalLayout{
 			if (dist == null) {
 				dist = new Districtmaster();
 				//dist.setDistrict(dbService.getLoggedDistrict());
-				if(select.getValue().equals("Election Personnel")) {
+				if(select.getValue().equals("Personnel")) {
 					dist.setMasterLabel("employee");
 				}else {
 					dist.setMasterLabel("political");
@@ -236,7 +240,7 @@ public class MasterDistrictView extends VerticalLayout{
 	private Component createTextFields() {
 		FormLayout fl1=new FormLayout();
 		
-		select.setItems("Election Personnel","Political Agents");
+		select.setItems("Personnel","Political");
 		select.setRequired(true);
 		fl1.add(select, 3);
 		fl1.add(new Label(), 3);;
@@ -261,7 +265,12 @@ public class MasterDistrictView extends VerticalLayout{
 		);
 		//Details detail=new Details("Govt. Employees", fl1);
 		//detail.setOpened(false);
-		return fl1;
+		
+		var vert=new VerticalLayout(fl1);
+		vert.setSizeFull();
+		vert.setAlignItems(Alignment.CENTER);
+		vert.setJustifyContentMode(JustifyContentMode.CENTER);
+		return vert;
 	}
 	
 	private Component createleftUploads() {

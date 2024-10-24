@@ -1,5 +1,11 @@
 package com.identity.views;
 
+import java.util.Arrays;
+
+import org.vaadin.addons.tatu.ColorPicker;
+import org.vaadin.addons.tatu.ColorPickerVariant;
+import org.vaadin.addons.tatu.ColorPicker.ColorPreset;
+
 import com.identity.dbservice.DbService;
 import com.identity.entity.Cell;
 import com.vaadin.flow.component.Component;
@@ -22,6 +28,10 @@ import com.vaadin.flow.shared.Registration;
 public class CellForm extends FormLayout{
 	
 	
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
 	Binder<Cell> binder=new BeanValidationBinder<>(Cell.class);
 	TextField cellName=new TextField("Cell Name");
 	TextField cellColour=new TextField("Cell Colour");
@@ -39,8 +49,24 @@ public class CellForm extends FormLayout{
 		anchor.setTarget("https://www.w3schools.com/colors/colors_picker.asp\", \"Reference for HEX Colour");
 		this.dbservice=dbservice;
 		binder.bindInstanceFields(this);
-		
-		add(cellName,cellColour, anchor,createButtonsLayout());
+		ColorPicker colorPicker = new ColorPicker();
+        colorPicker.setLabel("Select Colour");
+        colorPicker.addThemeVariants(ColorPickerVariant.COMPACT);
+        //colorPicker.setPresets(Arrays.asList(new ColorPreset("#00ff00", "Color 1"), new ColorPreset("#ff0000", "Color 2")));
+        colorPicker.setValue("#ffffff");
+        colorPicker.addValueChangeListener(event -> {
+            //Notification.show(event.getValue());
+        	cellColour.setValue(event.getValue());
+        });
+        cellColour.addValueChangeListener(e->{
+        		try {
+        			colorPicker.setValue(cellColour.getValue());
+        		}catch(Exception ex) {
+        			cellColour.setValue("#ffffff");
+                }
+        });	
+        
+		add(cellName,colorPicker,cellColour, anchor,createButtonsLayout());
 	}
 	
 	

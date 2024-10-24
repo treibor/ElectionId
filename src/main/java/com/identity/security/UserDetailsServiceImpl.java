@@ -31,7 +31,7 @@ public class UserDetailsServiceImpl implements UserDetailsService {
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
     	//stem.out.println(loginform.code.getValue());
 		//Users user = userRepository.findByUserName(username);
-    	Users user = userRepository.findByUserName(username);
+    	Users user = userRepository.findByUserNameAndEnabled(username, true);
 		if (user == null) {
 			//audit.saveAudit("Login Failure", username);
 			throw new UsernameNotFoundException("No user present with username: " + username);

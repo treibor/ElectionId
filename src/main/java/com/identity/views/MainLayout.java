@@ -74,7 +74,7 @@ public class MainLayout extends AppLayout {
 		SideNavItemWithHelperText personnel = new SideNavItemWithHelperText("", "Personnel", EmployeeView.class,LineAwesomeIcon.USER_TIE_SOLID.create());
 		SideNavItemWithHelperText political = new SideNavItemWithHelperText("", "Political", PoliticalView.class,LineAwesomeIcon.GHOST_SOLID.create());
 		SideNavItemWithHelperText reports = new SideNavItemWithHelperText("", "Reports", PrintView2.class,LineAwesomeIcon.PRINT_SOLID.create());
-		SideNavItemWithHelperText master = new SideNavItemWithHelperText("", "Offices & Cells", OfficeView.class,LineAwesomeIcon.BUILDING_SOLID.create());
+		SideNavItemWithHelperText master = new SideNavItemWithHelperText("", "Offices & Cells", MasterView.class,LineAwesomeIcon.BUILDING_SOLID.create());
 		SideNavItemWithHelperText omaster = new SideNavItemWithHelperText("", "Political Master", PoliticalMasterView.class,LineAwesomeIcon.SNOWFLAKE.create());
 		SideNavItemWithHelperText distMaster = new SideNavItemWithHelperText("", "Printing Master", MasterDistrictView.class,LineAwesomeIcon.KEYBOARD.create());
 		
@@ -100,7 +100,7 @@ public class MainLayout extends AppLayout {
 		subMenu.addItem("Logout", e -> securityService.logout());
 		H2 logo = new H2("Identity Card Management : "
 
-				+ dbservice.getLoggedDistrict().getDistrictName() + " DISTRICT" + ", "
+				+ dbservice.getLoggedDistrict().getDistrictName() +", "
 				+ dbservice.getLoggedState().getStateName());
 		logo.addClassNames("text-s", "m-m");
 		// Image img = new Image("images/logo.png", "placeholder plant");
@@ -174,7 +174,7 @@ public class MainLayout extends AppLayout {
 				try {
 					if (dbservice.getUserByName(userName.getValue()) == null) {
 						Users users = new Users();
-						System.out.println("UserID:" + dbservice.getMaxUserId());
+						//System.out.println("UserID:" + dbservice.getMaxUserId());
 						users.setUserId(dbservice.getMaxUserId() + 1);
 						users.setDistrict(district.getValue());
 						users.setState(state.getValue());

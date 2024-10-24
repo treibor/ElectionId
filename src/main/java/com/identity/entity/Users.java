@@ -31,7 +31,14 @@ public class Users {
 	@JoinColumn(name="stateId")
 	@NotNull
 	private State state;
+	private boolean enabled=true;
 	
+	public boolean isEnabled() {
+		return enabled;
+	}
+	public void setEnabled(boolean enabled) {
+		this.enabled = enabled;
+	}
 	public Users() {
 		
 	}

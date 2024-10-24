@@ -25,7 +25,7 @@ public class AuthenticatedUser {
     @Transactional
     public Optional<Users> get() {
         return authenticationContext.getAuthenticatedUser(UserDetails.class)
-                .map(userDetails -> userRepository.findByUserName(userDetails.getUsername()));
+                .map(userDetails -> userRepository.findByUserNameAndEnabled(userDetails.getUsername(),true));
     }
 
     public void logout() {
