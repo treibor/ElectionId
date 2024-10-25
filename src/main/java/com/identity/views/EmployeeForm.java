@@ -9,41 +9,32 @@ import java.io.InputStream;
 import java.time.LocalDate;
 //import java.util.Date;
 import java.util.List;
-import java.time.LocalDate;
+
 import javax.imageio.ImageIO;
 
 import org.apache.commons.io.IOUtils;
 
 import com.identity.dbservice.DbService;
 import com.identity.entity.Cell;
-import com.identity.entity.District;
 import com.identity.entity.Employee;
 import com.identity.entity.Office;
-import com.identity.views.EmployeeForm;
-import com.identity.views.EmployeeForm.CloseEvent;
-import com.identity.views.EmployeeForm.EmployeeFormEvent;
-import com.identity.views.EmployeeForm.DeleteEvent;
-import com.identity.views.EmployeeForm.SaveEvent;
 import com.vaadin.flow.component.Component;
 import com.vaadin.flow.component.ComponentEvent;
 import com.vaadin.flow.component.ComponentEventListener;
 import com.vaadin.flow.component.Key;
-import com.vaadin.flow.component.UI;
+import com.vaadin.flow.component.Text;
 import com.vaadin.flow.component.button.Button;
 import com.vaadin.flow.component.button.ButtonVariant;
 import com.vaadin.flow.component.combobox.ComboBox;
 import com.vaadin.flow.component.formlayout.FormLayout;
+import com.vaadin.flow.component.html.Div;
 import com.vaadin.flow.component.html.Image;
-import com.vaadin.flow.component.html.Label;
-import com.vaadin.flow.component.icon.Icon;
-import com.vaadin.flow.component.icon.VaadinIcon;
 import com.vaadin.flow.component.notification.Notification;
 import com.vaadin.flow.component.notification.Notification.Position;
 import com.vaadin.flow.component.orderedlayout.HorizontalLayout;
 import com.vaadin.flow.component.orderedlayout.VerticalLayout;
 import com.vaadin.flow.component.textfield.TextField;
 import com.vaadin.flow.component.upload.Upload;
-import com.vaadin.flow.component.upload.receivers.FileBuffer;
 import com.vaadin.flow.component.upload.receivers.MemoryBuffer;
 import com.vaadin.flow.data.binder.BeanValidationBinder;
 import com.vaadin.flow.data.binder.Binder;
@@ -54,6 +45,10 @@ import com.vaadin.flow.shared.Registration;
 import elemental.json.Json;
 
 public class EmployeeForm extends FormLayout {
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
 	DbService dbservice;
 	MainLayout mlayout;
 	//MainLayout mainlayout=new MainLayout(DbService);
@@ -71,7 +66,7 @@ public class EmployeeForm extends FormLayout {
 	MemoryBuffer buffer= new MemoryBuffer();
 	Upload upload= new Upload(buffer); 
 	private Employee employee;
-	private LocalDate dt;
+	//private LocalDate dt;
 	
 	VerticalLayout imageContainer=new VerticalLayout();
 	BufferedImage inputImageoriginal=null;
@@ -92,7 +87,7 @@ public class EmployeeForm extends FormLayout {
 		upload.setMaxFiles(1);
 		upload.setMaxFileSize(100000);
 		upload.setUploadButton(new Button ("Upload Photo"));
-		upload.setDropLabel(new Label("Drop Photo"));
+		upload.setDropLabel(new Div(new Text("Drop Photo")));
 		upload.setAcceptedFileTypes("image/tiff", "image/jpeg", "image/jpg");
 		upload.addFileRejectedListener(e -> Notification.show("Invalid File: Please select only image files less than 100kb",3000, Position.TOP_END));
 		upload.addSucceededListener(event -> showPicture());
@@ -194,7 +189,7 @@ public class EmployeeForm extends FormLayout {
 				employee.setDistrict(dbservice.getLoggedDistrict());
 				employee.setState(dbservice.getLoggedState());
 				employee.setEnteredBy(dbservice.getloggeduser());
-				employee.setEnteredOn(dt.now());
+				employee.setEnteredOn(LocalDate.now());
 				employee.setDistrictmaster(dbservice.getDistrictMasterByLabel("employee"));
 				if (getImageAsByteArray() != null) {
 					employee.setPicture(getImageAsByteArray());

@@ -123,7 +123,7 @@ public class PrintView2 extends VerticalLayout{
 	public Component createFinalPanel() {
 		Accordion accordion=new Accordion();
 		accordion.add("Personnel", createGovtpanel());
-		accordion.add("Election Agents", createPoliticalpanel());
+		accordion.add("Political", createPoliticalpanel());
 		//accordion.set
 		return accordion;
 	}

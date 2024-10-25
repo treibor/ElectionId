@@ -77,11 +77,12 @@ public class MainLayout extends AppLayout {
 		SideNavItemWithHelperText master = new SideNavItemWithHelperText("", "Offices & Cells", MasterView.class,LineAwesomeIcon.BUILDING_SOLID.create());
 		SideNavItemWithHelperText omaster = new SideNavItemWithHelperText("", "Political Master", PoliticalMasterView.class,LineAwesomeIcon.SNOWFLAKE.create());
 		SideNavItemWithHelperText distMaster = new SideNavItemWithHelperText("", "Printing Master", MasterDistrictView.class,LineAwesomeIcon.KEYBOARD.create());
-		
+		SideNavItemWithHelperText users = new SideNavItemWithHelperText("", "Users", UsersView.class,LineAwesomeIcon.PEOPLE_CARRY_SOLID.create());
+		SideNavItemWithHelperText districts = new SideNavItemWithHelperText("", "Districts", DistrictView.class,LineAwesomeIcon.XBOX.create());
 		// Set visibility based on roles
 		
 		// Add all the navigation items to the drawer content
-		drawerContent.add(personnel,political,  master,omaster, distMaster, reports);
+		drawerContent.add(personnel,political,  master,omaster, distMaster, reports, districts,users);
 
 		// Add the content to the drawer
 		addToDrawer(drawerContent);

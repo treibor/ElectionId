@@ -156,6 +156,17 @@ public class DbService {
 		 return urepo.findByUserNameAndEnabled(getloggeduser(), true);
 	 }
 	 
+	 public List<Users> getUsersByDistrict() {
+		 if(getUser().getRole().equals("SUPER")){
+			 return urepo.findAll();
+		 }else {
+			 return urepo.findByDistrict(getLoggedDistrict());
+		 }
+		 
+	 } 
+	 public List<District> getDistricts(){
+		 return drepo.findAll();
+	 }
 	 public Users getUserByName(String username) {
 		 return urepo.findByUserNameAndEnabled(username, true);
 	 }

@@ -6,32 +6,25 @@ import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
-import java.util.Collection;
-import java.util.Locale;
 
 import javax.imageio.ImageIO;
 
 import org.apache.commons.io.IOUtils;
 
 import com.identity.dbservice.DbService;
-import com.identity.entity.District;
 import com.identity.entity.Districtmaster;
-import com.identity.entity.Employee;
-import com.identity.views.EmployeeForm.EmployeeFormEvent;
-import com.identity.views.EmployeeForm.SaveEvent;
-import com.lowagie.text.alignment.HorizontalAlignment;
-import com.vaadin.flow.component.ClickEvent;
 import com.vaadin.flow.component.Component;
 import com.vaadin.flow.component.ComponentEvent;
 import com.vaadin.flow.component.ComponentEventListener;
+import com.vaadin.flow.component.Text;
 import com.vaadin.flow.component.button.Button;
 import com.vaadin.flow.component.combobox.ComboBox;
 import com.vaadin.flow.component.datepicker.DatePicker;
-import com.vaadin.flow.component.details.Details;
 import com.vaadin.flow.component.formlayout.FormLayout;
 import com.vaadin.flow.component.formlayout.FormLayout.ResponsiveStep;
+import com.vaadin.flow.component.html.Div;
 import com.vaadin.flow.component.html.Image;
-import com.vaadin.flow.component.html.Label;
+import com.vaadin.flow.component.html.Span;
 import com.vaadin.flow.component.menubar.MenuBar;
 import com.vaadin.flow.component.notification.Notification;
 import com.vaadin.flow.component.notification.Notification.Position;
@@ -43,7 +36,6 @@ import com.vaadin.flow.component.upload.receivers.MemoryBuffer;
 import com.vaadin.flow.data.binder.BeanValidationBinder;
 import com.vaadin.flow.data.binder.Binder;
 import com.vaadin.flow.data.binder.ValidationException;
-import com.vaadin.flow.data.converter.LocalDateToDateConverter;
 import com.vaadin.flow.router.PageTitle;
 import com.vaadin.flow.router.Route;
 import com.vaadin.flow.server.StreamResource;
@@ -55,10 +47,14 @@ import jakarta.annotation.security.RolesAllowed;
 @Route(value="masterprinting", layout=MainLayout.class)
 @RolesAllowed({"SUPER", "ADMIN" })
 public class MasterDistrictView extends VerticalLayout{
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
 	MenuBar menu=new MenuBar();
-	ComboBox select=new ComboBox("Select");
+	ComboBox<String> select=new ComboBox<String>("Select");
 	Binder<Districtmaster> binder=new BeanValidationBinder<>(Districtmaster.class); 
-	Notification notify=new Notification();
+	
 	MemoryBuffer buffer1=new MemoryBuffer();
 	MemoryBuffer buffer2=new MemoryBuffer();
 	MemoryBuffer buffer3=new MemoryBuffer();
@@ -179,7 +175,7 @@ public class MasterDistrictView extends VerticalLayout{
 	private void updateDetails() {
 		//System.out.println("Bean:"+dist);
 		if(select.getValue()==null) {
-			notify.show("Please Select A Valid Value", 3000, Position.TOP_CENTER);
+			Notification.show("Please Select A Valid Value", 3000, Position.TOP_CENTER);
 			select.setAutofocus(true);
 		} else {
 			if (dist == null) {
@@ -208,9 +204,9 @@ public class MasterDistrictView extends VerticalLayout{
 
 				dbService.saveDistrictMaster(dist);
 				clearBuffer();
-				notify.show("Updated Successfully", 3000, Position.TOP_CENTER);
+				Notification.show("Updated Successfully", 3000, Position.TOP_CENTER);
 			} catch (ValidationException e) {
-				notify.show("Please Enter All Fields");
+				Notification.show("Please Enter All Fields");
 				e.printStackTrace();
 			}
 		}
@@ -230,7 +226,7 @@ public class MasterDistrictView extends VerticalLayout{
 		rightupload.clearFileList();
 		}
 		catch(Exception e) {
-			notify.show("Unexpected Error While Processing Images");
+			Notification.show("Unexpected Error While Processing Images");
 		}
 		signupload.clearFileList();
 	}
@@ -243,7 +239,7 @@ public class MasterDistrictView extends VerticalLayout{
 		select.setItems("Personnel","Political");
 		select.setRequired(true);
 		fl1.add(select, 3);
-		fl1.add(new Label(), 3);;
+		fl1.add(new Span(), 3);;
 		fl1.setMaxWidth("800px");
 		////vl1.add(headerFirstLine, headerSecondLine);
 		fl1.add(headerFirstLine, 3 );
@@ -256,7 +252,7 @@ public class MasterDistrictView extends VerticalLayout{
 		fl1.add(createleftUploads(), 6);
 		fl1.add(createrightUploads(),6);
 		fl1.add(createSignUploads(),6);
-		fl1.add(new Label(), new Label());
+		fl1.add(new Span(), new Span());
 		fl1.add(updateButton, 2);
 		fl1.setResponsiveSteps(
 		        new ResponsiveStep("0", 6),
@@ -266,7 +262,7 @@ public class MasterDistrictView extends VerticalLayout{
 		//Details detail=new Details("Govt. Employees", fl1);
 		//detail.setOpened(false);
 		
-		var vert=new VerticalLayout(fl1);
+		var vert=new HorizontalLayout(fl1);
 		vert.setSizeFull();
 		vert.setAlignItems(Alignment.CENTER);
 		vert.setJustifyContentMode(JustifyContentMode.CENTER);
@@ -280,9 +276,9 @@ public class MasterDistrictView extends VerticalLayout{
 		leftupload.setWidthFull();
 		leftupload.setMaxFileSize(1000000);
 		leftupload.setUploadButton(new Button("Upload Left Image"));
-		leftupload.setDropLabel(new Label("Drop Left Image"));
+		leftupload.setDropLabel(new Div(new Text("Drop Left Image")));
 		leftupload.setAcceptedFileTypes("image/tiff", "image/jpeg", "image/jpg","image/jpeg", "image/png");
-		leftupload.addFileRejectedListener(e -> notify.show("Invalid File: Please select only image files less than 1Mb",	3000, Position.TOP_END));
+		leftupload.addFileRejectedListener(e -> Notification.show("Invalid File: Please select only image files less than 1Mb",	3000, Position.TOP_END));
 		leftupload.addSucceededListener(event -> showPicture1());
 		h1.add(leftupload);
 		h1.setPadding(isVisible());
@@ -295,9 +291,9 @@ public class MasterDistrictView extends VerticalLayout{
 		rightupload.setWidthFull();
 		rightupload.setMaxFileSize(1000000);
 		rightupload.setUploadButton(new Button("Upload Right Image"));
-		rightupload.setDropLabel(new Label("Drop right Image"));
+		rightupload.setDropLabel(new Div(new Text("Drop Right Image")));
 		rightupload.setAcceptedFileTypes("image/tiff", "image/jpeg", "image/jpg", "image/jpeg","image/png");
-		rightupload.addFileRejectedListener(e -> notify.show("Invalid File: Please select only image files less than 1Mb",	3000, Position.TOP_END));
+		rightupload.addFileRejectedListener(e -> Notification.show("Invalid File: Please select only image files less than 1Mb",	3000, Position.TOP_END));
 		rightupload.addSucceededListener(event -> showPicture2());
 		h2.add(rightupload);
 		h2.setPadding(isVisible());
@@ -308,9 +304,9 @@ public class MasterDistrictView extends VerticalLayout{
 		signupload.setWidthFull();
 		signupload.setMaxFileSize(1000000);
 		signupload.setUploadButton(new Button("Upload Signature Image"));
-		signupload.setDropLabel(new Label("Drop Signature Image"));
+		signupload.setDropLabel(new Div(new Text("Drop Signature Image")));
 		signupload.setAcceptedFileTypes("image/tiff", "image/jpeg", "image/jpg","image/jpeg","image/png");
-		signupload.addFileRejectedListener(e -> notify.show("Invalid File: Please select only image files less than 1Mb",	3000, Position.TOP_END));
+		signupload.addFileRejectedListener(e -> Notification.show("Invalid File: Please select only image files less than 1Mb",	3000, Position.TOP_END));
 		signupload.addSucceededListener(event -> showPicture3());
 		h3.add(signupload);
 		h3.setPadding(true);
@@ -332,7 +328,7 @@ public class MasterDistrictView extends VerticalLayout{
 			h2.add(imageContainer2);
 		} catch (Exception e) {
 			e.printStackTrace();
-			notify.show("Error" + e);
+			Notification.show("Error" + e);
 		}
 	}
 	private void showPicture3() {
@@ -351,7 +347,7 @@ public class MasterDistrictView extends VerticalLayout{
 			h3.add(imageContainer3);
 		} catch (Exception e) {
 			e.printStackTrace();
-			notify.show("Error" + e);
+			Notification.show("Error" + e);
 		}
 	}
 	
@@ -373,7 +369,7 @@ public class MasterDistrictView extends VerticalLayout{
 			h1.add(imageContainer1);
 		} catch (Exception e) {
 			e.printStackTrace();
-			notify.show("Error" + e);
+			Notification.show("Error" + e);
 		}
 		
 	}
