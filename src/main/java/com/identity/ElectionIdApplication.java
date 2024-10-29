@@ -9,8 +9,10 @@ import com.vaadin.flow.component.page.AppShellConfigurator;
 import com.vaadin.flow.server.AppShellSettings;
 import com.vaadin.flow.server.PWA;
 import com.vaadin.flow.theme.Theme;
+import com.vaadin.flow.theme.lumo.Lumo;
 
 @SpringBootApplication(exclude = ErrorMvcAutoConfiguration.class)
+//@Theme(value = "megid", variant = Lumo.DARK)
 @Theme(value = "megid")
 @PWA(name = "megid", shortName = "Meg ID", iconPath = "/icons/icon.png")
 public class ElectionIdApplication extends SpringBootServletInitializer implements AppShellConfigurator{

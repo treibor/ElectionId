@@ -35,7 +35,7 @@ public class DbService {
 	private final UsersRepository urepo;
 	private final DistrictmasterRepository dmrepo;
 	
-	Notification notify=new Notification();
+	//Notification notify=new Notification();
 	public DbService(EmployeeRepository erepo, OfficeRepository orepo, CellRepository crepo, DistrictRepository drepo, StateRepository srepo, UsersRepository urepo, DistrictmasterRepository dmrepo) {
 		this.erepo = erepo;
 		this.orepo = orepo;
@@ -98,7 +98,7 @@ public class DbService {
 	}
 	public void saveDistrict(District district) {
 		if (district==null) {
-			Notification notification = Notification.show("No Employee To Save");
+			Notification.show("No Entity To Save");
 			return;
 		}
 		drepo.save(district);
@@ -106,7 +106,7 @@ public class DbService {
 	}
 	public void saveDistrictMaster(Districtmaster districtmaster) {
 		if (districtmaster==null) {
-			Notification notification = Notification.show("No Employee To Save");
+			Notification.show("No Employee To Save");
 			return;
 		}
 		dmrepo.save(districtmaster);
@@ -191,7 +191,7 @@ public class DbService {
 	
 	public void saveUser(Users user) {
 		if (user==null) {
-			Notification notification = Notification.show("Fail Fail Fail-7734");
+			Notification.show("Fail Fail Fail-7734");
 			return;
 		}
 		urepo.save(user);
@@ -203,7 +203,7 @@ public class DbService {
 	
 	public void saveEmployee(Employee employee) {
 		if (employee==null) {
-			Notification notification = Notification.show("No Employee To Save");
+			Notification.show("No Employee To Save");
 			return;
 		}
 		erepo.save(employee);
@@ -211,7 +211,7 @@ public class DbService {
 	}
 	public void saveOffice(Office office) {
 		if (office==null) {
-			Notification notification = Notification.show("No Office To Save");
+			Notification.show("No Office To Save");
 			return;
 		}
 		orepo.save(office);
@@ -222,7 +222,7 @@ public class DbService {
 		orepo.delete(office);
 		}catch (Exception e) {
 			// TODO: handle exception
-			notify.show("Unable to Delete Office. Error Code: "+e, 5000, Position.TOP_CENTER);
+			Notification.show("Unable to Delete Office. Error Code: "+e, 5000, Position.TOP_CENTER);
 		}
 	}
 	
@@ -231,7 +231,7 @@ public class DbService {
 	}
 	public void saveCell(Cell cell) {
 		if(cell==null) {
-			Notification notification=Notification.show("No Cell Entered");
+			Notification.show("No Cell Entered");
 			return;
 		}
 		crepo.save(cell);
@@ -242,7 +242,7 @@ public class DbService {
 			crepo.delete(cell);
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
-			notify.show("Unable to Delete Cell. Error Code: "+e, 5000, Position.TOP_CENTER);
+			Notification.show("Unable to Delete Cell. Error Code: "+e, 5000, Position.TOP_CENTER);
 			//e.printStackTrace();
 		}
 	}

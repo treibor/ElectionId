@@ -14,8 +14,8 @@ import jakarta.validation.constraints.NotNull;
 @Entity
 public class Party {
 	@Id
-	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "office_generator")
-	@SequenceGenerator(name="office_generator", sequenceName = "office_seq", allocationSize=1)
+	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "party_generator")
+	@SequenceGenerator(name="party_generator", sequenceName = "party_seq", allocationSize=1)
 	@Column(name = "partyId", updatable = false, nullable = false)
 	private long partyId;
 	@NotEmpty

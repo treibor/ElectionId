@@ -56,8 +56,8 @@ public class EmployeeForm extends FormLayout {
 	TextField firstName = new TextField("First Name");
 	TextField lastName = new TextField("Last Name");
 	TextField designation = new TextField("Designation");
-	ComboBox<Office> office = new ComboBox("Offices");
-	ComboBox<Cell> cell = new ComboBox("Cells");
+	ComboBox<Office> office = new ComboBox<Office>("Offices");
+	ComboBox<Cell> cell = new ComboBox<Cell>("Cells");
 	Image image;
 	Button save = new Button("Save");
 	Button delete = new Button("Delete");

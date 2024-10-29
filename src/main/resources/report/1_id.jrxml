@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<!-- Created with Jaspersoft Studio version 6.19.1.final using JasperReports Library version 6.19.1-867c00bf88cd4d784d404379d6c05e1b419e8a4c  -->
+<!-- Created with Jaspersoft Studio version 6.20.6.final using JasperReports Library version 6.20.6-5c96b6aa8a39ac1dc6b6bea4b81168e16dd39231  -->
 <jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="First" pageWidth="595" pageHeight="842" columnWidth="585" leftMargin="5" rightMargin="5" topMargin="5" bottomMargin="5" uuid="13acf49e-4913-4d1b-bccc-113817ad15d1">
 	<property name="com.jaspersoft.studio.data.sql.tables" value=""/>
 	<property name="com.jaspersoft.studio.data.defaultdataadapter" value="Postgres"/>
@@ -173,7 +173,7 @@ ORDER BY employee.serial_no DESC]]>
 						<property name="com.jaspersoft.studio.unit.height" value="px"/>
 					</reportElement>
 					<textElement textAlignment="Left">
-						<font size="6" isBold="false"/>
+						<font fontName="Arial" size="6" isBold="false"/>
 					</textElement>
 					<textFieldExpression><![CDATA["NAME"]]></textFieldExpression>
 				</textField>
@@ -183,7 +183,7 @@ ORDER BY employee.serial_no DESC]]>
 						<property name="com.jaspersoft.studio.unit.height" value="px"/>
 					</reportElement>
 					<textElement>
-						<font size="6" pdfFontName="Helvetica-Bold" isPdfEmbedded="true"/>
+						<font fontName="Arial" size="6" pdfFontName="Helvetica-Bold" isPdfEmbedded="true"/>
 					</textElement>
 					<textFieldExpression><![CDATA[": "+$F{firstName}+" "+$F{lastName}]]></textFieldExpression>
 				</textField>
@@ -193,7 +193,7 @@ ORDER BY employee.serial_no DESC]]>
 						<property name="com.jaspersoft.studio.unit.height" value="px"/>
 					</reportElement>
 					<textElement>
-						<font size="6" pdfFontName="Helvetica-Bold" isPdfEmbedded="true"/>
+						<font fontName="Arial" size="6" pdfFontName="Helvetica-Bold" isPdfEmbedded="true"/>
 					</textElement>
 					<textFieldExpression><![CDATA[": "+$F{designation}]]></textFieldExpression>
 				</textField>
@@ -203,7 +203,7 @@ ORDER BY employee.serial_no DESC]]>
 						<property name="com.jaspersoft.studio.unit.height" value="px"/>
 					</reportElement>
 					<textElement>
-						<font size="6" pdfFontName="Helvetica-Bold" isPdfEmbedded="true"/>
+						<font fontName="Arial" size="6" pdfFontName="Helvetica-Bold" isPdfEmbedded="true"/>
 					</textElement>
 					<textFieldExpression><![CDATA[": "+$F{office.officeName}]]></textFieldExpression>
 				</textField>
@@ -214,7 +214,7 @@ ORDER BY employee.serial_no DESC]]>
 						<property name="com.jaspersoft.studio.unit.width" value="px"/>
 					</reportElement>
 					<textElement textAlignment="Center">
-						<font fontName="Tahoma" size="10" isBold="true" pdfFontName="Helvetica-Bold" isPdfEmbedded="true"/>
+						<font fontName="Arial" size="10" isBold="true" pdfFontName="Helvetica-Bold" isPdfEmbedded="true"/>
 					</textElement>
 					<textFieldExpression><![CDATA[$F{districtmaster.headerFirstLine}]]></textFieldExpression>
 				</textField>
@@ -224,7 +224,7 @@ ORDER BY employee.serial_no DESC]]>
 						<property name="com.jaspersoft.studio.unit.width" value="px"/>
 					</reportElement>
 					<textElement textAlignment="Center">
-						<font fontName="Tahoma" size="10" isBold="true" pdfFontName="Helvetica-Bold" isPdfEmbedded="true"/>
+						<font fontName="Arial" size="10" isBold="true" pdfFontName="Helvetica-Bold" isPdfEmbedded="true"/>
 					</textElement>
 					<textFieldExpression><![CDATA[$F{districtmaster.headerSecondLine}]]></textFieldExpression>
 				</textField>
@@ -234,7 +234,7 @@ ORDER BY employee.serial_no DESC]]>
 						<property name="com.jaspersoft.studio.unit.width" value="px"/>
 					</reportElement>
 					<textElement textAlignment="Center">
-						<font fontName="Tahoma" size="10" isBold="true" pdfFontName="Helvetica-Bold" isPdfEmbedded="true"/>
+						<font fontName="Arial" size="10" isBold="true" pdfFontName="Helvetica-Bold" isPdfEmbedded="true"/>
 					</textElement>
 					<textFieldExpression><![CDATA[$F{districtmaster.headerThirdLine}]]></textFieldExpression>
 				</textField>
@@ -262,7 +262,7 @@ ORDER BY employee.serial_no DESC]]>
 						<propertyExpression name="net.sf.jasperreports.style.backcolor"><![CDATA[$F{cell.cellColour}]]></propertyExpression>
 					</reportElement>
 					<textElement textAlignment="Center" verticalAlignment="Middle">
-						<font fontName="Times New Roman" size="12"/>
+						<font fontName="Arial" size="12"/>
 					</textElement>
 					<textFieldExpression><![CDATA[$F{cell.cellName}]]></textFieldExpression>
 				</textField>
@@ -271,7 +271,7 @@ ORDER BY employee.serial_no DESC]]>
 						<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="e815b104-533d-42f2-bf71-72c750d9033b"/>
 					</reportElement>
 					<textElement textAlignment="Center">
-						<font size="6"/>
+						<font fontName="Arial" size="6"/>
 					</textElement>
 					<textFieldExpression><![CDATA[$F{districtmaster.footerFirstLine}]]></textFieldExpression>
 				</textField>
@@ -280,7 +280,7 @@ ORDER BY employee.serial_no DESC]]>
 						<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="e815b104-533d-42f2-bf71-72c750d9033b"/>
 					</reportElement>
 					<textElement textAlignment="Center">
-						<font size="6"/>
+						<font fontName="Arial" size="6"/>
 					</textElement>
 					<textFieldExpression><![CDATA[$F{districtmaster.footerThirdLine}]]></textFieldExpression>
 				</textField>
@@ -332,7 +332,7 @@ ORDER BY employee.serial_no DESC]]>
 						<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="e815b104-533d-42f2-bf71-72c750d9033b"/>
 					</reportElement>
 					<textElement textAlignment="Center">
-						<font size="6"/>
+						<font fontName="Arial" size="6"/>
 					</textElement>
 					<textFieldExpression><![CDATA[$F{firstName}+" "+$F{lastName}]]></textFieldExpression>
 				</textField>
@@ -343,7 +343,7 @@ ORDER BY employee.serial_no DESC]]>
 						<property name="com.jaspersoft.studio.unit.width" value="px"/>
 					</reportElement>
 					<textElement textAlignment="Center">
-						<font size="6" isBold="false"/>
+						<font fontName="Arial" size="6" isBold="false"/>
 					</textElement>
 					<text><![CDATA[Signature of]]></text>
 				</staticText>
@@ -378,7 +378,7 @@ ORDER BY employee.serial_no DESC]]>
 						<property name="com.jaspersoft.studio.unit.height" value="px"/>
 					</reportElement>
 					<textElement textAlignment="Left">
-						<font size="8" isBold="true"/>
+						<font fontName="Arial" size="8" isBold="true"/>
 					</textElement>
 					<textFieldExpression><![CDATA[java.util.Date.from($F{districtmaster.validity}.atStartOfDay(java.time.ZoneId.systemDefault()).toInstant())]]></textFieldExpression>
 				</textField>
@@ -389,7 +389,7 @@ ORDER BY employee.serial_no DESC]]>
 						<property name="com.jaspersoft.studio.unit.width" value="px"/>
 					</reportElement>
 					<textElement>
-						<font size="10" isBold="false"/>
+						<font fontName="Arial" size="10" isBold="false"/>
 					</textElement>
 					<text><![CDATA[Issued By:]]></text>
 				</staticText>
@@ -400,7 +400,7 @@ ORDER BY employee.serial_no DESC]]>
 						<property name="com.jaspersoft.studio.unit.width" value="px"/>
 					</reportElement>
 					<textElement textAlignment="Left">
-						<font size="8" isBold="true"/>
+						<font fontName="Arial" size="8" isBold="true"/>
 					</textElement>
 					<text><![CDATA[Valid Upto :]]></text>
 				</staticText>
@@ -410,7 +410,7 @@ ORDER BY employee.serial_no DESC]]>
 						<property name="com.jaspersoft.studio.unit.height" value="px"/>
 					</reportElement>
 					<textElement textAlignment="Left">
-						<font size="8" isBold="true"/>
+						<font fontName="Arial" size="8" isBold="true"/>
 					</textElement>
 					<textFieldExpression><![CDATA["Valid In :"+$F{district.districtName} +" District Only"]]></textFieldExpression>
 				</textField>
@@ -419,7 +419,7 @@ ORDER BY employee.serial_no DESC]]>
 						<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="e815b104-533d-42f2-bf71-72c750d9033b"/>
 					</reportElement>
 					<textElement textAlignment="Center">
-						<font size="6"/>
+						<font fontName="Arial" size="6"/>
 					</textElement>
 					<textFieldExpression><![CDATA[$F{districtmaster.footerSecondLine}]]></textFieldExpression>
 				</textField>
@@ -429,7 +429,7 @@ ORDER BY employee.serial_no DESC]]>
 						<property name="com.jaspersoft.studio.unit.height" value="px"/>
 					</reportElement>
 					<textElement textAlignment="Left">
-						<font size="6" isBold="false"/>
+						<font fontName="Arial" size="6" isBold="false"/>
 					</textElement>
 					<textFieldExpression><![CDATA["DESIGNATION"]]></textFieldExpression>
 				</textField>
@@ -439,7 +439,7 @@ ORDER BY employee.serial_no DESC]]>
 						<property name="com.jaspersoft.studio.unit.height" value="px"/>
 					</reportElement>
 					<textElement textAlignment="Left">
-						<font size="6" isBold="false"/>
+						<font fontName="Arial" size="6" isBold="false"/>
 					</textElement>
 					<textFieldExpression><![CDATA["DEPT/ ORG"]]></textFieldExpression>
 				</textField>
@@ -449,7 +449,7 @@ ORDER BY employee.serial_no DESC]]>
 						<property name="com.jaspersoft.studio.unit.height" value="px"/>
 					</reportElement>
 					<textElement textAlignment="Left">
-						<font size="6" isBold="false"/>
+						<font fontName="Arial" size="6" isBold="false"/>
 					</textElement>
 					<textFieldExpression><![CDATA["ID No :"+$F{serialNo}]]></textFieldExpression>
 				</textField>

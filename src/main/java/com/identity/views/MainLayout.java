@@ -61,11 +61,26 @@ public class MainLayout extends AppLayout {
 		this.securityService = securityService;
 		createHeader();
 		createDrawer();
-		userType = dbservice.getUser().getRole();
-		usertype.setItems("ADMIN", "USER");
+		//System.out.println("Super"+isSuperAdmin());
+		//usertype.setItems("ADMIN", "USER");
 		// setPrimarySection(Section.DRAWER);
 	}
-
+	private boolean isSuperAdmin() {
+		userType = dbservice.getUser().getRole();
+		if(userType.trim().equals("SUPER")) {
+			return true;
+		}else {
+			return false;
+		}
+	}
+	private boolean isAdmin() {
+		userType = dbservice.getUser().getRole();
+		if(userType.equals("SUPER")||userType.equals("ADMIN")) {
+			return true;
+		}else {
+			return false;
+		}
+	}
 	private void createDrawer() {
 		// Create a vertical layout for the drawer content
 		VerticalLayout drawerContent = new VerticalLayout();
@@ -78,9 +93,11 @@ public class MainLayout extends AppLayout {
 		SideNavItemWithHelperText omaster = new SideNavItemWithHelperText("", "Political Master", PoliticalMasterView.class,LineAwesomeIcon.SNOWFLAKE.create());
 		SideNavItemWithHelperText distMaster = new SideNavItemWithHelperText("", "Printing Master", MasterDistrictView.class,LineAwesomeIcon.KEYBOARD.create());
 		SideNavItemWithHelperText users = new SideNavItemWithHelperText("", "Users", UsersView.class,LineAwesomeIcon.PEOPLE_CARRY_SOLID.create());
-		SideNavItemWithHelperText districts = new SideNavItemWithHelperText("", "Districts", DistrictView.class,LineAwesomeIcon.XBOX.create());
+		SideNavItemWithHelperText districts = new SideNavItemWithHelperText("", "Districts", EntityView.class,LineAwesomeIcon.XBOX.create());
 		// Set visibility based on roles
-		
+		districts.setVisible(isSuperAdmin());
+		users.setVisible(isAdmin());
+		distMaster.setVisible(isAdmin());
 		// Add all the navigation items to the drawer content
 		drawerContent.add(personnel,political,  master,omaster, distMaster, reports, districts,users);
 

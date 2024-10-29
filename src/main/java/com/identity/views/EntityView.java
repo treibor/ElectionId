@@ -1,11 +1,14 @@
 package com.identity.views;
 
 
+
 import com.identity.dbservice.DbService;
 import com.identity.entity.District;
 import com.vaadin.flow.component.Component;
+import com.vaadin.flow.component.button.Button;
 import com.vaadin.flow.component.grid.Grid;
 import com.vaadin.flow.component.orderedlayout.HorizontalLayout;
+import com.vaadin.flow.component.orderedlayout.VerticalLayout;
 import com.vaadin.flow.router.PageTitle;
 import com.vaadin.flow.router.Route;
 
@@ -13,24 +16,28 @@ import jakarta.annotation.security.RolesAllowed;
 
 @RolesAllowed({"SUPER"})
 @PageTitle("Districts")
-@Route(value = "District", layout = MainLayout.class)
-public class DistrictView extends HorizontalLayout {
+@Route(value = "NewEntity", layout = MainLayout.class)
+public class EntityView extends VerticalLayout {
 	/**
 	 * 
 	 */
 	private static final long serialVersionUID = 1L;
 	Grid<District> grid=new Grid<>(District.class);
 	DbService service;
-	UsersForm form=new UsersForm(service);
-	public DistrictView(DbService service) {
+	EntityForm form=new EntityForm(service);
+	Button newButtton=new Button("New");
+	public EntityView(DbService service) {
 		this.service=service;
 		// TODO Auto-generated constructor stub
 		setSizeFull();
 		configureForms();
 		getUsergrid();
 		closeEditor();
-		add(getContent());
+		newButtton.addClickListener(e->newDistrict());
+		add(newButtton, getContent());
+		form.populateState();
 	}
+	
 	private Component getContent() {
 		
 		HorizontalLayout content=new HorizontalLayout(grid, form);
@@ -44,36 +51,44 @@ public class DistrictView extends HorizontalLayout {
 	public void getUsergrid() {
 		grid.removeAllColumns();
 		grid.addColumn(district->district.getDistrictId()).setHeader("Id").setSortable(true).setResizable(true);
-		grid.addColumn(district->district.getDistrictName()).setHeader("User Name").setSortable(true).setResizable(true);
-		grid.addColumn(district->district.getState().getStateName()).setHeader("Role").setSortable(true).setResizable(true);
+		grid.addColumn(district->district.getDistrictName()).setHeader("Department").setSortable(true).setResizable(true);
+		grid.addColumn(district->district.getState().getStateName()).setHeader("State").setSortable(true).setResizable(true);
 		grid.setItems(service.getDistricts());
-		grid.asSingleSelect().addValueChangeListener(e->editUser(e.getValue()));
+		grid.asSingleSelect().addValueChangeListener(e->editDistrict(e.getValue()));
 		grid.setSizeFull();
 		//return grid;
 	}
 	
-	private void editUser(District user) {
+	private void editDistrict(District user) {
 		// TODO Auto-generated method stub
 		form.setVisible(false);
 		if (user == null) {
 			form.setVisible(false);
 		} else {
-			//form.setUsers(user);
+			form.setDistrict(user);
 			form.setVisible(true);
 			//yearform.setYear(year);
 			
 		}
 	}
+
+	private void newDistrict() {
+		// TODO Auto-generated method stub
+		form.setDistrict(new District());
+		form.setVisible(true);
+		// yearform.setYear(year);
+
+	}
 	private void configureForms() {
 		form.setVisible(false);
-		form=new UsersForm(service);
+		form=new EntityForm(service);
 		form.setWidth("20%");
-		form.addListener(UsersForm.SaveEvent.class, this::saveUser);
+		form.addListener(EntityForm.SaveEvent.class, this::saveEntity);
 		
 		
 	}
-	public void saveUser(UsersForm.SaveEvent event) {
-		service.saveUser(event.getUsers());
+	public void saveEntity(EntityForm.SaveEvent event) {
+		service.saveDistrict(event.getDistrict());
 		updateGrids();
 		closeEditor();
 	}
@@ -82,7 +97,7 @@ public class DistrictView extends HorizontalLayout {
 		grid.setItems(service.getDistricts());
 	}
 	private void closeEditor() {
-		form.setUsers(null);
+		form.setDistrict(null);
 		form.setVisible(false);
 
 	}
