@@ -51,10 +51,10 @@ public class MainLayout extends AppLayout {
 	Dialog userdialog;
 	TextField userName = new TextField("User Name");
 	String userType;
-	ComboBox<State> state = new ComboBox("State");
-	ComboBox<District> district = new ComboBox("District");
+	ComboBox<State> state = new ComboBox<State>("State");
+	ComboBox<District> district = new ComboBox<District>("District");
 	final BCryptPasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
-	ComboBox usertype = new ComboBox("Role");
+	ComboBox<String> usertype = new ComboBox<String>("Role");
 
 	public MainLayout(DbService dbservice, SecurityService securityService) {
 		this.dbservice = dbservice;
@@ -62,7 +62,7 @@ public class MainLayout extends AppLayout {
 		createHeader();
 		createDrawer();
 		//System.out.println("Super"+isSuperAdmin());
-		//usertype.setItems("ADMIN", "USER");
+		usertype.setItems("ADMIN", "USER");
 		// setPrimarySection(Section.DRAWER);
 	}
 	private boolean isSuperAdmin() {
