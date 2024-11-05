@@ -136,7 +136,7 @@ public class PrintView2 extends VerticalLayout{
 		radioGroup.addClassName("buttons");
 		//radioGroup.addThemeVariants(RadioGroupVariant.LUMO_VERTICAL);
 		radioGroup.setLabel("Id Type");
-		radioGroup.setItems("Landscape", "Landscape2","Portrait", "DSC");
+		radioGroup.setItems("Landscape", "Landscape2","Portrait", "DSC", "DSC2");
 		radioGroup.setValue("Landscape");
 		radioGroup.setRenderer(new ComponentRenderer<>(item -> createItemWithImage(item)));
 		reportFormat.add(radioGroup);
@@ -199,10 +199,13 @@ public class PrintView2 extends VerticalLayout{
             	//System.out.println("Landscape");
                 break;
             case "Portrait":
-            	image = new Image("/images/portrait.jpg", "Image");
+            	image = new Image("/images/portrait.jpg", "Portrait Image");
                 break;
             case "DSC":
-            	image = new Image("/images/dsc.jpeg", "DSC Image");
+            	image = new Image("/images/dsc.png", "DSC Image");
+                break;
+            case "DSC2":
+            	image = new Image("/images/dsc2.png", "DSC Image 2");
                 break;
             case "OTHER":
                 image.setSrc("/images/other.png");
@@ -486,6 +489,9 @@ public class PrintView2 extends VerticalLayout{
 				}else if (format == "DSC") {
 					resource = new ClassPathResource("report/" + districtid + "_id3.jrxml");
 					resourceduplicate = new ClassPathResource("report/1_id3.jrxml");
+				}else if (format == "DSC2") {
+					resource = new ClassPathResource("report/" + districtid + "_id4.jrxml");
+					resourceduplicate = new ClassPathResource("report/1_id4.jrxml");
 				}else {
 					resource = new ClassPathResource("report/" + districtid + "_id.jrxml");
 					resourceduplicate = new ClassPathResource("report/1_id.jrxml");

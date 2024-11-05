@@ -20,6 +20,13 @@ public class Office {
 	private long oid;
 	@NotEmpty
 	private String officeName;
+	private String officeColour;
+	public String getOfficeColour() {
+		return officeColour;
+	}
+	public void setOfficeColour(String officeColour) {
+		this.officeColour = officeColour;
+	}
 	@ManyToOne
 	@JoinColumn(name="districtId")
 	@NotNull

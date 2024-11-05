@@ -57,8 +57,8 @@ public class MasterView extends VerticalLayout {
 		// TODO Auto-generated method stub
 		form=new OfficeForm(dbservice);
 		cellform=new CellForm(dbservice);
-		form.setWidth("35em");
-		cellform.setWidth("35em");
+		form.setWidth("50%");
+		cellform.setWidth("50%");
 		form.addListener(OfficeForm.SaveEvent.class, this::saveOffice);
 		form.addListener(OfficeForm.DeleteEvent.class, this::deleteOffice);
 		form.addListener(OfficeForm.CloseEvent.class, e->closeOfficeEditor());
@@ -111,7 +111,7 @@ public class MasterView extends VerticalLayout {
 	private void configureGrid() {
 		officegrid.setSizeFull();
 		cellgrid.setSizeFull();
-		officegrid.setColumns("officeName");
+		officegrid.setColumns("officeName","officeColour");
 		cellgrid.setColumns("cellName", "cellColour");
 		//cellgrid.setColumns("cellColour");
     	officegrid.getColumns().forEach(col-> col.setAutoWidth(true));
@@ -155,8 +155,8 @@ public class MasterView extends VerticalLayout {
 		HorizontalLayout content=new HorizontalLayout(officegrid,cellgrid, form, cellform);
 		content.setFlexGrow(1, officegrid);
 		content.setFlexGrow(1, cellgrid);
-		content.setFlexGrow(2, form);
-		content.setFlexGrow(2, cellform);
+		content.setFlexGrow(1, form);
+		content.setFlexGrow(1, cellform);
 		content.addClassName("content");
 		content.setSizeFull();
 		return content;

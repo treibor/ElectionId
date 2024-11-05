@@ -1,5 +1,8 @@
 package com.identity.views;
 
+import org.vaadin.addons.tatu.ColorPicker;
+import org.vaadin.addons.tatu.ColorPickerVariant;
+
 import com.identity.dbservice.DbService;
 import com.identity.entity.Office;
 import com.identity.views.OfficeForm;
@@ -13,6 +16,7 @@ import com.vaadin.flow.component.Key;
 import com.vaadin.flow.component.button.Button;
 import com.vaadin.flow.component.button.ButtonVariant;
 import com.vaadin.flow.component.formlayout.FormLayout;
+import com.vaadin.flow.component.html.Anchor;
 import com.vaadin.flow.component.notification.Notification;
 import com.vaadin.flow.component.notification.Notification.Position;
 import com.vaadin.flow.component.orderedlayout.HorizontalLayout;
@@ -27,19 +31,37 @@ public class OfficeForm extends FormLayout{
 	
 	Binder<Office> binder=new BeanValidationBinder<>(Office.class);
 	TextField officeName=new TextField("Office Name");
+	TextField officeColour=new TextField("Office Colour");
 	Button save= new Button("Save");
 	Button delete= new Button("Delete");
 	//Button close= new Button("Close");
 	Notification notification=new Notification();
+	Anchor anchor =new Anchor("", "Reference for HEX Colour");
 	private Office office;
 	private final DbService dbService;
 	boolean isadmin;
 	public OfficeForm(DbService dbservice) {
 		this.dbService=dbservice;
 		binder.bindInstanceFields(this);
+		ColorPicker colorPicker = new ColorPicker();
+        colorPicker.setLabel("Select Colour");
+        colorPicker.addThemeVariants(ColorPickerVariant.COMPACT);
+        //colorPicker.setPresets(Arrays.asList(new ColorPreset("#00ff00", "Color 1"), new ColorPreset("#ff0000", "Color 2")));
+        colorPicker.setValue("#ffffff");
+        colorPicker.addValueChangeListener(event -> {
+            //Notification.show(event.getValue());
+        	officeColour.setValue(event.getValue());
+        });
+        officeColour.addValueChangeListener(e->{
+        		try {
+        			colorPicker.setValue(officeColour.getValue());
+        		}catch(Exception ex) {
+        			officeColour.setValue("#ffffff");
+                }
+        });	
 		//binder.bind(officeName, Office::getOfficeName, Office::setOfficeName);
 		isadmin=dbservice.isAdmin();
-		add(officeName, createButtonsLayout());
+		add(officeName,colorPicker,officeColour,anchor, createButtonsLayout());
 		//addOffice();
 		
 	}

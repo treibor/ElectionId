@@ -70,7 +70,7 @@ public class EmployeeView extends VerticalLayout {
 	private void configureForm() {
 		// TODO Auto-generated method stub
 		form=new EmployeeForm(dbservice.findAllOffices(), dbservice.findAllCells(), dbservice);
-		form.setWidth("25em");
+		form.setWidth("30%");
 		form.addListener(EmployeeForm.SaveEvent.class, this::saveEmployee);
 		form.addListener(EmployeeForm.DeleteEvent.class, this::deleteEmployee);
 		form.addListener(EmployeeForm.CloseEvent.class, e->closeEditor());
@@ -124,7 +124,7 @@ public class EmployeeView extends VerticalLayout {
 		grid.setSizeFull();
 		//grid.addColumn(employee->employee.getEid()).setHeader("Id No");
 		grid.setColumns("serialNo","firstName", "lastName", "designation");
-    	grid.addColumn(employee -> employee.getOffice().getOfficeName()).setHeader("Department").setSortable(true);
+    	grid.addColumn(employee -> employee.getOffice().getOfficeName()).setHeader("Office").setSortable(true);
     	grid.addColumn(employee -> employee.getCell().getCellName()).setHeader("Cell").setFooter("Total Entries: "+dbservice.getEmployeeCount()).setSortable(true);
     	//grid.addColumn();
     	grid.addThemeVariants(GridVariant.LUMO_ROW_STRIPES);

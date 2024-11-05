@@ -88,14 +88,14 @@ vaadin-app-layout::part(drawer) {
 }
 vaadin-radio-group.buttons vaadin-radio-button {
     border: 1pt solid black;
-    border-radius: 4px;
-    --radio-button-wrapper-display: none; /* This hides the native radio button */
-    padding: 10px;
+    border-radius: 4 px;
+    --radio-button-wrapper-display: none; 
+    padding: 5 px;
     display: flex;
     align-items: center;
     justify-content: center;
     cursor: pointer;
-    margin: 10px;
+    margin: 1px;
 }
 
 vaadin-radio-group.buttons vaadin-radio-button[checked] {
@@ -113,7 +113,7 @@ vaadin-radio-group.buttons vaadin-radio-button:hover::part(label) {
     position: absolute;
     background: white;
     border: 1pt solid black;
-    padding: 5px;
-    border-radius: 4px;
+    padding: 1px;
+    border-radius: 1px;
     z-index: 10;
 }

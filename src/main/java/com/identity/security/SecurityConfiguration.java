@@ -186,7 +186,7 @@ public class SecurityConfiguration extends VaadinWebSecurity {
 	            .sessionConcurrency(concurrency -> concurrency
 	                .maximumSessions(1)
 	                .expiredUrl("/")
-	                .maxSessionsPreventsLogin(true)
+	                .maxSessionsPreventsLogin(false)
 	                .sessionRegistry(sessionRegistry()))
 	             // Enforces SameSite=Strict on JSESSIONID
 	        )
