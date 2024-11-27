@@ -200,7 +200,7 @@ ORDER BY employee.serial_no DESC]]>
 						<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="37f690c4-5267-44a1-8170-6ec3a1ea374e"/>
 						<property name="com.jaspersoft.studio.unit.height" value="px"/>
 						<property name="com.jaspersoft.studio.unit.width" value="px"/>
-						<propertyExpression name="net.sf.jasperreports.style.backcolor"><![CDATA[$F{office.officeColour}]]></propertyExpression>
+						<propertyExpression name="net.sf.jasperreports.style.backcolor"><![CDATA[$F{cell.cellColour}]]></propertyExpression>
 					</reportElement>
 					<textElement textAlignment="Center" verticalAlignment="Middle">
 						<font fontName="Arial" size="16" isBold="true" pdfFontName="Helvetica-Bold" isPdfEmbedded="true"/>
@@ -229,10 +229,10 @@ ORDER BY employee.serial_no DESC]]>
 					<textFieldExpression><![CDATA[$F{districtmaster.headerSecondLine}]]></textFieldExpression>
 				</textField>
 				<textField textAdjust="ScaleFont" isBlankWhenNull="true">
-					<reportElement stretchType="ContainerHeight" mode="Opaque" x="9" y="102" width="299" height="48" backcolor="#BDBBBB" uuid="96438a96-329e-4b9d-816c-e61be3a6ee22">
+					<reportElement style="Row" stretchType="ContainerHeight" mode="Opaque" x="9" y="102" width="299" height="48" backcolor="#BDBBBB" uuid="96438a96-329e-4b9d-816c-e61be3a6ee22">
 						<property name="com.jaspersoft.studio.unit.width" value="px"/>
 						<property name="com.jaspersoft.studio.unit.height" value="px"/>
-						<propertyExpression name="net.sf.jasperreports.style.backcolor"><![CDATA[$F{cell.cellColour}]]></propertyExpression>
+						<propertyExpression name="net.sf.jasperreports.style.backcolor"><![CDATA[$F{office.officeColour}]]></propertyExpression>
 					</reportElement>
 					<textElement textAlignment="Center" verticalAlignment="Middle">
 						<font fontName="Arial" size="13" pdfFontName="Helvetica-Bold" isPdfEmbedded="true"/>

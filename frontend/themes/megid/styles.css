@@ -1,3 +1,32 @@
+
+:root {
+    --lumo-primary-color: DarkCyan; /* Primary theme color */
+    --lumo-primary-text-color: DarkCyan; /* Text color for primary buttons, links, etc. */
+    --lumo-primary-contrast-color: white; /* Contrast color for buttons and highlights */
+
+    --lumo-error-color: darkred; /* Optional: Customize error color */
+    --lumo-success-color: darkgreen; /* Optional: Customize success color */
+
+    /* Background and borders */
+    --lumo-base-color: #ffffff; /* Base background */
+    --lumo-body-text-color: #333333; /* General text color */
+
+    /* Secondary and tertiary colors (if applicable) */
+    --lumo-secondary-color: DarkCyan; 
+    --lumo-secondary-text-color: DarkCyan;
+
+    --lumo-tertiary-color: DarkCyan;
+    --lumo-tertiary-text-color: DarkCyan;
+}
+vaadin-grid::part(selected) {
+    background-color: darkcyan !important; /* Change to Dark Cyan */
+    color: white !important; /* Optional: Set text color for better contrast */
+}
+.login-page {
+    background: url('images/background.jpg') no-repeat center center fixed;
+    background-size: cover;
+    height: 100vh; /* Ensure it takes the full viewport height */
+}
 html {
       
       --lumo-font-size: 1rem;
@@ -69,7 +98,7 @@ vaadin-app-layout::part(drawer) {
     width: 50px;
     height: 50px;
     margin-bottom: 10px;
-    color: rgb(2, 115, 253);
+    color:DarkCyan;
 }
 
 .card-title {
@@ -84,7 +113,7 @@ vaadin-app-layout::part(drawer) {
      font-family: inherit;
      font-size: var(--lumo-font-size-xs);
     text-align: center;
-     color: rgb(2, 115, 253);
+     color: DarkCyan;
 }
 vaadin-radio-group.buttons vaadin-radio-button {
     border: 1pt solid black;
@@ -99,8 +128,7 @@ vaadin-radio-group.buttons vaadin-radio-button {
 }
 
 vaadin-radio-group.buttons vaadin-radio-button[checked] {
-    background: rgb(151, 203, 255);
-}
+    background: DarkCyan;}
 
 vaadin-radio-group.buttons vaadin-radio-button::part(radio) {
     display: none; /* Hides the actual radio button */

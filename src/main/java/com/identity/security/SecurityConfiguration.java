@@ -3,7 +3,6 @@ package com.identity.security;
 import java.io.IOException;
 import java.util.Arrays;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.web.servlet.ServletListenerRegistrationBean;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -29,7 +28,7 @@ import org.springframework.web.cors.CorsConfiguration;
 import org.springframework.web.cors.reactive.CorsConfigurationSource;
 import org.springframework.web.cors.reactive.UrlBasedCorsConfigurationSource;
 
-import com.identity.views.LoginView;
+import com.identity.views.Login;
 import com.vaadin.flow.spring.security.VaadinWebSecurity;
 
 import jakarta.servlet.Filter;
@@ -197,6 +196,7 @@ public class SecurityConfiguration extends VaadinWebSecurity {
 	    
 
 	    super.configure(http);
-	    setLoginView(http, LoginView.class);
+	    //setLoginView(http, LoginView.class);
+	    setLoginView(http, Login.class);
 	}
 }

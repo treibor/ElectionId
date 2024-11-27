@@ -36,6 +36,7 @@
 	district_master.right_image,
 	district_master.signature_image,
 	office.office_name,
+	office.office_colour,
 	cell.cell_name,
 	cell.cell_colour,
 	state.state_name
@@ -152,6 +153,11 @@ ORDER BY employee.serial_no DESC]]>
 		<property name="com.jaspersoft.studio.field.label" value="cell_colour"/>
 		<property name="com.jaspersoft.studio.field.tree.path" value="cell"/>
 	</field>
+	<field name="office.officeColour" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.name" value="office_colour"/>
+		<property name="com.jaspersoft.studio.field.label" value="office_colour"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="office"/>
+	</field>
 	<field name="state.stateName" class="java.lang.String">
 		<property name="com.jaspersoft.studio.field.name" value="state_name"/>
 		<property name="com.jaspersoft.studio.field.label" value="state_name"/>
@@ -190,7 +196,7 @@ ORDER BY employee.serial_no DESC]]>
 					<textFieldExpression><![CDATA[": "+$F{firstName}+" "+$F{lastName}]]></textFieldExpression>
 				</textField>
 				<textField textAdjust="ScaleFont">
-					<reportElement style="Detail" positionType="Float" mode="Opaque" x="9" y="48" width="299" height="38" backcolor="#9C9C9C" uuid="d3c620d2-d003-495c-8e84-038234fe640c">
+					<reportElement style="Detail" positionType="Float" mode="Opaque" x="9" y="48" width="299" height="38" uuid="d3c620d2-d003-495c-8e84-038234fe640c">
 						<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="37f690c4-5267-44a1-8170-6ec3a1ea374e"/>
 						<property name="com.jaspersoft.studio.unit.height" value="px"/>
 						<property name="com.jaspersoft.studio.unit.width" value="px"/>
@@ -199,7 +205,7 @@ ORDER BY employee.serial_no DESC]]>
 					<textElement textAlignment="Center" verticalAlignment="Middle">
 						<font fontName="Arial" size="16" isBold="true" pdfFontName="Helvetica-Bold" isPdfEmbedded="true"/>
 					</textElement>
-					<textFieldExpression><![CDATA[$F{office.officeName}]]></textFieldExpression>
+					<textFieldExpression><![CDATA[$F{cell.cellName}]]></textFieldExpression>
 				</textField>
 				<textField textAdjust="ScaleFont">
 					<reportElement style="Detail" positionType="Float" x="11" y="3" width="293" height="14" uuid="69026708-25ca-4651-8d6d-c78209eede00">
@@ -223,15 +229,15 @@ ORDER BY employee.serial_no DESC]]>
 					<textFieldExpression><![CDATA[$F{districtmaster.headerSecondLine}]]></textFieldExpression>
 				</textField>
 				<textField textAdjust="ScaleFont" isBlankWhenNull="true">
-					<reportElement stretchType="ContainerHeight" mode="Opaque" x="9" y="102" width="299" height="48" backcolor="#FFFFFF" uuid="96438a96-329e-4b9d-816c-e61be3a6ee22">
+					<reportElement style="Row" stretchType="ContainerHeight" mode="Opaque" x="9" y="102" width="299" height="48" backcolor="#BDBBBB" uuid="96438a96-329e-4b9d-816c-e61be3a6ee22">
 						<property name="com.jaspersoft.studio.unit.width" value="px"/>
 						<property name="com.jaspersoft.studio.unit.height" value="px"/>
-						<propertyExpression name="net.sf.jasperreports.style.backcolor"><![CDATA[]]></propertyExpression>
+						<propertyExpression name="net.sf.jasperreports.style.backcolor"><![CDATA[$F{office.officeColour}]]></propertyExpression>
 					</reportElement>
 					<textElement textAlignment="Center" verticalAlignment="Middle">
 						<font fontName="Arial" size="13" pdfFontName="Helvetica-Bold" isPdfEmbedded="true"/>
 					</textElement>
-					<textFieldExpression><![CDATA["Centre : "+$F{cell.cellName}]]></textFieldExpression>
+					<textFieldExpression><![CDATA[$F{office.officeName}]]></textFieldExpression>
 				</textField>
 				<textField textAdjust="ScaleFont" isBlankWhenNull="true">
 					<reportElement style="Detail" positionType="Float" x="140" y="179" width="162" height="11" isRemoveLineWhenBlank="true" uuid="7ac84ffc-3c59-4e48-95b1-106558657037">
