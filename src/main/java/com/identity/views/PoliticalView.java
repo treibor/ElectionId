@@ -123,13 +123,19 @@ public class PoliticalView extends VerticalLayout {
 	private void configureGrid() {
 		grid.addClassName("contact-grid");
 		grid.setSizeFull();
-		grid.setColumns("serialNo","firstName", "lastName");
-		grid.addColumn(political -> political.getCell().getCellName()).setHeader("Cell").setSortable(true);
-		grid.addColumn(political -> political.getCandidate().getCandidateName()).setHeader("Candidate").setSortable(true);
-    	grid.addColumn(political -> political.getParty().getPartyName()).setHeader("Party").setSortable(true);
-    	grid.addColumn(political -> political.getConstituency().getConstituencyName()).setHeader("Constituency").setSortable(true).setFooter("Total Entries: "+ dbservice.getPoliticalCount());
+		grid.removeAllColumns();
+		//grid.setColumns("serialNo","firstName", "lastName");
+		grid.addColumn(political -> political.getSerialNo()).setHeader("Serial No").setSortable(true).setResizable(true);
+		grid.addColumn(political -> political.getFirstName()).setHeader("First Name").setSortable(true).setResizable(true);
+		grid.addColumn(political -> political.getLastName()).setHeader("Last Name").setSortable(true).setResizable(true);
+		grid.addColumn(political -> political.getCell().getCellName()).setHeader("Cell").setSortable(true).setResizable(true);
+		grid.addColumn(political -> political.getCandidate().getCandidateName()).setHeader("Candidate").setSortable(true).setResizable(true);
+    	grid.addColumn(political -> political.getParty().getPartyName()).setHeader("Party").setSortable(true).setResizable(true);
+    	grid.addColumn(political -> political.getConstituency().getConstituencyName()).setHeader("Constituency").setSortable(true).setResizable(true).setFooter("Total Entries: "+ dbservice.getPoliticalCount());
     	//grid.addColumn(political -> political.getCandidate().getCandidateName()).setHeader("Candidate").setSortable(true);
-    	grid.addColumns("enteredOn", "enteredBy");
+    	grid.addColumn(political -> political.getEnteredBy()).setHeader("Entered By").setSortable(true).setResizable(true);
+    	grid.addColumn(political -> political.getEnteredOn()).setHeader("Entered On").setSortable(true).setResizable(true);
+    	//grid.addColumns("enteredOn", "enteredBy");
     	//grid.addThemeVariants(GridVariant.LUMO_COLUMN_BORDERS);
     	grid.addThemeVariants(GridVariant.LUMO_ROW_STRIPES);
     	grid.getColumns().forEach(col-> col.setAutoWidth(true));

@@ -92,6 +92,7 @@ public class EmployeeView extends VerticalLayout {
 	
 	private void updateList() {
 		// TODO Auto-generated method stub
+		grid.removeAllColumns();
 		grid.setItems(dbservice.findAllEmployees(filterText.getValue()));
 		configureGrid();
 	}
@@ -123,12 +124,18 @@ public class EmployeeView extends VerticalLayout {
 		grid.addClassName("contact-grid");
 		grid.setSizeFull();
 		//grid.addColumn(employee->employee.getEid()).setHeader("Id No");
-		grid.setColumns("serialNo","firstName", "lastName", "designation");
-    	grid.addColumn(employee -> employee.getOffice().getOfficeName()).setHeader("Office").setSortable(true);
-    	grid.addColumn(employee -> employee.getCell().getCellName()).setHeader("Cell").setFooter("Total Entries: "+dbservice.getEmployeeCount()).setSortable(true);
+		//grid.setColumns("serialNo","firstName", "lastName", "designation");
+		grid.addColumn(employee -> employee.getSerialNo()).setSortable(true).setResizable(true).setHeader("Serial No");
+		grid.addColumn(employee -> employee.getFirstName()).setSortable(true).setResizable(true).setHeader("First Name");
+		grid.addColumn(employee -> employee.getLastName()).setSortable(true).setResizable(true).setHeader("Last Name");
+		grid.addColumn(employee -> employee.getDesignation()).setSortable(true).setResizable(true).setHeader("Designation");
+    	grid.addColumn(employee -> employee.getOffice().getOfficeName()).setHeader("Office").setSortable(true).setResizable(true).setHeader("Office");
+    	grid.addColumn(employee -> employee.getCell().getCellName()).setHeader("Cell").setFooter("Total Entries: "+dbservice.getEmployeeCount()).setSortable(true).setResizable(true);
+    	grid.addColumn(employee -> employee.getEnteredOn()).setSortable(true).setResizable(true).setHeader("Entered On");
+    	grid.addColumn(employee -> employee.getEnteredBy()).setSortable(true).setResizable(true).setHeader("Entered By");
     	//grid.addColumn();
-    	grid.addThemeVariants(GridVariant.LUMO_ROW_STRIPES);
-    	grid.addColumns("enteredOn", "enteredBy");
+    	//grid.addThemeVariants(GridVariant.LUMO_ROW_STRIPES);
+    	//grid.addColumns("enteredOn", "enteredBy");
     	grid.getColumns().forEach(col-> col.setAutoWidth(true));
 		grid.asSingleSelect().addValueChangeListener(e-> editContact(e.getValue()));
 		
