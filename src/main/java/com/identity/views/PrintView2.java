@@ -136,7 +136,7 @@ public class PrintView2 extends VerticalLayout{
 		radioGroup.addClassName("buttons");
 		//radioGroup.addThemeVariants(RadioGroupVariant.LUMO_VERTICAL);
 		radioGroup.setLabel("Id Type");
-		radioGroup.setItems("Landscape", "Landscape2","Portrait", "DSC", "DSC2");
+		radioGroup.setItems("Landscape", "Landscape2","Portrait", "DSC", "DSC2","Portrait2");
 		radioGroup.setValue("Landscape");
 		radioGroup.setRenderer(new ComponentRenderer<>(item -> createItemWithImage(item)));
 		reportFormat.add(radioGroup);
@@ -185,8 +185,8 @@ public class PrintView2 extends VerticalLayout{
 	private Component createItemWithImage(String item) {
         // Create an image based on the item value
         Image image = new Image();
-        image.getStyle().set("width", "5px");
-        image.getStyle().set("height", "5px");
+        image.getStyle().set("width", "7px");
+        image.getStyle().set("height", "7px");
         image.getStyle().set("object-fit", "contain");
         // Set the image source based on the report type
         switch (item) {
@@ -210,13 +210,16 @@ public class PrintView2 extends VerticalLayout{
             case "OTHER":
                 image.setSrc("/images/other.png");
                 break;
+            case "Portrait2":
+            	image = new Image("/images/portrait.jpg", "Portrait Image 2");
+                break;
             default:
                 image.setSrc("/images/default.png");
         }
 
         //Span label = new Span(item);
 
-       
+        image.setTitle(item);
         HorizontalLayout layout = new HorizontalLayout(image);
         
         layout.setAlignItems(Alignment.CENTER);  // Align image and text vertically in the center
@@ -492,6 +495,9 @@ public class PrintView2 extends VerticalLayout{
 				}else if (format == "DSC2") {
 					resource = new ClassPathResource("report/" + districtid + "_id4.jrxml");
 					resourceduplicate = new ClassPathResource("report/1_id4.jrxml");
+				}else if (format == "Portrait2") {
+					resource = new ClassPathResource("report/" + districtid + "_idpl.jrxml");
+					resourceduplicate = new ClassPathResource("report/1_idpl.jrxml");
 				}else {
 					resource = new ClassPathResource("report/" + districtid + "_id.jrxml");
 					resourceduplicate = new ClassPathResource("report/1_id.jrxml");

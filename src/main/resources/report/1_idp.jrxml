@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!-- Created with Jaspersoft Studio version 6.20.6.final using JasperReports Library version 6.20.6-5c96b6aa8a39ac1dc6b6bea4b81168e16dd39231  -->
-<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="First" pageWidth="595" pageHeight="842" columnWidth="585" leftMargin="5" rightMargin="5" topMargin="5" bottomMargin="5" uuid="13acf49e-4913-4d1b-bccc-113817ad15d1">
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="First" columnCount="2" pageWidth="595" pageHeight="842" columnWidth="291" columnSpacing="2" leftMargin="5" rightMargin="5" topMargin="5" bottomMargin="5" uuid="13acf49e-4913-4d1b-bccc-113817ad15d1">
 	<property name="com.jaspersoft.studio.data.sql.tables" value=""/>
 	<property name="com.jaspersoft.studio.data.defaultdataadapter" value="Postgres"/>
 	<property name="com.jaspersoft.studio.property.dataset.dialog.DatasetDialog.sash.w1" value="169"/>
@@ -175,7 +175,7 @@ ORDER BY employee.serial_no DESC]]>
 	<detail>
 		<band height="311" splitType="Stretch">
 			<frame>
-				<reportElement style="Row" mode="Opaque" x="158" y="-17" width="270" height="315" uuid="b50221b5-8254-440b-8c6f-1f0b138c9259"/>
+				<reportElement style="Row" mode="Opaque" x="12" y="-17" width="270" height="315" uuid="b50221b5-8254-440b-8c6f-1f0b138c9259"/>
 				<textField textAdjust="ScaleFont">
 					<reportElement style="Detail" positionType="Float" x="13" y="60" width="233" height="12" uuid="bb19698c-0485-415e-9323-86f67e1e80ce">
 						<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="b07b2a52-8da5-4edd-a2da-ed595a8440bd"/>
