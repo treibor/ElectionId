@@ -136,8 +136,8 @@ public class PrintView2 extends VerticalLayout{
 		radioGroup.addClassName("buttons");
 		//radioGroup.addThemeVariants(RadioGroupVariant.LUMO_VERTICAL);
 		radioGroup.setLabel("Id Type");
-		radioGroup.setItems("Landscape", "Landscape2","Portrait", "DSC", "DSC2","Portrait2");
-		radioGroup.setValue("Landscape");
+		radioGroup.setItems("Landscape1", "Landscape2", "Landscape2", "Landscape4", "Landscape5","Portrait1", "Portrait2");
+		radioGroup.setValue("Landscape1");
 		radioGroup.setRenderer(new ComponentRenderer<>(item -> createItemWithImage(item)));
 		reportFormat.add(radioGroup);
 		FormLayout fl1=new FormLayout();
@@ -190,7 +190,7 @@ public class PrintView2 extends VerticalLayout{
         image.getStyle().set("object-fit", "contain");
         // Set the image source based on the report type
         switch (item) {
-            case "Landscape":
+            case "Landscape1":
             	image = new Image("images/landscape.png", "Landscape Image");
             	//System.out.println("Landscape");
                 break;
@@ -198,20 +198,23 @@ public class PrintView2 extends VerticalLayout{
             	image = new Image("images/landscape2.jpg", "Landscape Image 2");
             	//System.out.println("Landscape");
                 break;
-            case "Portrait":
+            case "Portrait1":
             	image = new Image("/images/portrait.jpg", "Portrait Image");
                 break;
-            case "DSC":
-            	image = new Image("/images/dsc.png", "DSC Image");
+            case "Landscape3":
+            	image = new Image("/images/landscape3.png", "DSC Image");
                 break;
-            case "DSC2":
-            	image = new Image("/images/dsc2.png", "DSC Image 2");
+            case "Landscape4":
+            	image = new Image("/images/landscape4.png", "DSC Image 2");
                 break;
             case "OTHER":
                 image.setSrc("/images/other.png");
                 break;
             case "Portrait2":
-            	image = new Image("/images/portrait.jpg", "Portrait Image 2");
+            	image = new Image("/images/portrait2.jpeg", "Portrait Image 2");
+                break;
+            case "Landscape5":
+            	image = new Image("/images/landscape5.jpeg", "Landscape Image 5");
                 break;
             default:
                 image.setSrc("/images/default.png");
@@ -480,21 +483,24 @@ public class PrintView2 extends VerticalLayout{
 			
 			
 			if (reportType.equals("id")) {
-				if (format == "Landscape") {
+				if (format == "Landscape1") {
 					resource = new ClassPathResource("report/" + districtid + "_id.jrxml");
 					resourceduplicate = new ClassPathResource("report/1_id.jrxml");
 				}else if (format == "Landscape2") {
 					resource = new ClassPathResource("report/" + districtid + "_id2.jrxml");
 					resourceduplicate = new ClassPathResource("report/1_id2.jrxml");
-				}else if (format == "Portrait") {
-					resource = new ClassPathResource("report/" + districtid + "_idp.jrxml");
-					resourceduplicate = new ClassPathResource("report/1_idp.jrxml");
-				}else if (format == "DSC") {
+				}else if (format == "Landscape3") {
 					resource = new ClassPathResource("report/" + districtid + "_id3.jrxml");
 					resourceduplicate = new ClassPathResource("report/1_id3.jrxml");
-				}else if (format == "DSC2") {
+				}else if (format == "Landscape4") {
 					resource = new ClassPathResource("report/" + districtid + "_id4.jrxml");
 					resourceduplicate = new ClassPathResource("report/1_id4.jrxml");
+				}else if (format == "Landscape5") {
+					resource = new ClassPathResource("report/" + districtid + "_id5.jrxml");
+					resourceduplicate = new ClassPathResource("report/1_id5.jrxml");
+				}else if (format == "Portrait1") {
+					resource = new ClassPathResource("report/" + districtid + "_idp.jrxml");
+					resourceduplicate = new ClassPathResource("report/1_idp.jrxml");
 				}else if (format == "Portrait2") {
 					resource = new ClassPathResource("report/" + districtid + "_idpl.jrxml");
 					resourceduplicate = new ClassPathResource("report/1_idpl.jrxml");
