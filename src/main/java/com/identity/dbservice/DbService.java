@@ -1,6 +1,7 @@
 package com.identity.dbservice;
 
 import java.time.LocalDate;
+import java.util.Collections;
 import java.util.List;
 import java.util.Optional;
 
@@ -61,6 +62,13 @@ public class DbService {
 			return false; 
 		}
 	}
+	public boolean isSuper() {
+		if(getUser().getRole().equals("SUPER")) {
+			return true;
+		}else {
+			return false; 
+		}
+	}
 	public List<State> findAllStates(){
 		return srepo.findAll();
 	}
@@ -115,7 +123,10 @@ public class DbService {
 	public List<Employee> findEmployeesBydistrict(){
 		return erepo.findBydistrict(getLoggedDistrict());
 	}
-
+	
+	public List<Employee> findEmployeesBydistrict(District district){
+		return erepo.findBydistrict(district);
+	}
 	public long findMaxSerialNo() {
 		
 		try {
@@ -171,14 +182,29 @@ public class DbService {
 		 return urepo.findByUserNameAndEnabled(username, true);
 	 }
 	public List<Employee> findAllEmployees(String filterText) {
-		if (filterText == null || filterText.isEmpty()) {
-			return findEmployeesBydistrict();
-		} else {
-			//return erepo.search(filterText, getLoggedDistrict());
-			return erepo.search(filterText, getLoggedDistrict());
+		
+			if (filterText == null || filterText.isEmpty()) {
+				return findEmployeesBydistrict();
+			} else {
+				// return erepo.search(filterText, getLoggedDistrict());
+				return erepo.search(filterText, getLoggedDistrict());
+			}
+		
+	}
+
+	public List<Employee> findAllEmployees(String filterText, District district) {
+		if (isSuper()) {
+			if (filterText == null || filterText.isEmpty()) {
+				return findEmployeesBydistrict(district);
+			} else {
+				// return erepo.search(filterText, getLoggedDistrict());
+				return erepo.search(filterText, district);
+			}
+		}else {
+			return Collections.emptyList();
 		}
 	}
-	
+
 	public long employeeCount() {
 		//erepo.
 		return erepo.count();

@@ -23,11 +23,21 @@ public interface EmployeeRepository extends JpaRepository<Employee, Long> {
 	Employee findByeid(long eid);
 	List<Employee> findBySerialNoBetweenAndDistrict(long fromSerial, long toSerial, District district);
 	// Employee findByeidoid();
-	String a1="select c from Employee c where c.district= :district and(";
-	String a2="lower(c.firstName) like lower(concat('%', :searchTerm, '%')) ";
-	String a3="or lower(c.lastName) like lower(concat('%', :searchTerm, '%')))";
-	@Query(a1+a2+a3)
+	/*
+	 * String a1="select c from Employee c where c.district= :district and("; String
+	 * a2="lower(c.firstName) like lower(concat('%', :searchTerm, '%')) "; String
+	 * a3="or lower(c.lastName) like lower(concat('%', :searchTerm, '%')))";
+	 * 
+	 * @Query(a1+a2+a3) List<Employee> search(@Param("searchTerm") String
+	 * searchTerm, @Param("district") District district);
+	 */
+	
+	String a1 = "select c from Employee c where (:district is null or c.district = :district) and (";
+	String a2 = "lower(c.firstName) like lower(concat('%', :searchTerm, '%')) ";
+	String a3 = "or lower(c.lastName) like lower(concat('%', :searchTerm, '%')))";
+	@Query(a1 + a2 + a3)
 	List<Employee> search(@Param("searchTerm") String searchTerm, @Param("district") District district);
+	
 	
 	@Query("select Max(c.serialNo) from Employee c where c.district= :district")
 	Long findMaxSerial(@Param ("district") District district);

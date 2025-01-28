@@ -3,13 +3,12 @@ package com.identity.views;
 import java.io.ByteArrayInputStream;
 
 import com.identity.dbservice.DbService;
+import com.identity.entity.District;
 import com.identity.entity.Employee;
-import com.identity.views.EmployeeForm;
-import com.identity.views.MainLayout;
 import com.vaadin.flow.component.Component;
 import com.vaadin.flow.component.button.Button;
+import com.vaadin.flow.component.combobox.ComboBox;
 import com.vaadin.flow.component.grid.Grid;
-import com.vaadin.flow.component.grid.GridVariant;
 import com.vaadin.flow.component.html.Image;
 import com.vaadin.flow.component.icon.Icon;
 import com.vaadin.flow.component.icon.VaadinIcon;
@@ -19,7 +18,6 @@ import com.vaadin.flow.component.textfield.TextField;
 import com.vaadin.flow.data.value.ValueChangeMode;
 import com.vaadin.flow.router.PageTitle;
 import com.vaadin.flow.router.Route;
-import com.vaadin.flow.server.PWA;
 import com.vaadin.flow.server.StreamResource;
 
 import jakarta.annotation.security.RolesAllowed;
@@ -30,10 +28,16 @@ import software.xdev.vaadin.grid_exporter.GridExporter;
 @Route(value = "", layout=MainLayout.class)
 @RolesAllowed({ "USER", "SUPER", "ADMIN" })
 public class EmployeeView extends VerticalLayout {
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = -5313017582568561763L;
+
 	Grid<Employee> grid = new Grid<>(Employee.class);
 	
 	//Grid<Employee> grid = new Grid<>();
 	TextField filterText = new TextField();
+	ComboBox<District> district=new ComboBox<District>();
 	private DbService dbservice;
 	EmployeeForm form;
 	
@@ -96,6 +100,12 @@ public class EmployeeView extends VerticalLayout {
 		grid.setItems(dbservice.findAllEmployees(filterText.getValue()));
 		configureGrid();
 	}
+	private void updateList(District district) {
+		// TODO Auto-generated method stub
+		grid.removeAllColumns();
+		grid.setItems(dbservice.findAllEmployees(filterText.getValue(), district));
+		configureGrid();
+	}
 	private Component getToolbar() {
 		// TODO Auto-generated method stub
 		filterText.setPlaceholder("Filter By Name");
@@ -103,15 +113,25 @@ public class EmployeeView extends VerticalLayout {
 		filterText.setValueChangeMode(ValueChangeMode.LAZY);
 		filterText.addValueChangeListener(e-> updateList());
 		filterText.setWidth("350px");
+		district.setItems(dbservice.getDistricts());
+		district.setItemLabelGenerator(District::getDistrictName);
+		district.addValueChangeListener(e->getDistrictData(district.getValue()));
 		Button addButton=new  Button("Add New");
 		Button expButton=new  Button("Export");
 		addButton.setIcon(new Icon(VaadinIcon.PLUS_CIRCLE));
 		expButton.setIcon(new Icon(VaadinIcon.EXTERNAL_LINK));
 		addButton.addClickListener(e-> addContact());
 		expButton.addClickListener(e-> export());
-		HorizontalLayout toolbar=new HorizontalLayout(filterText, addButton, expButton);
+		district.setVisible(dbservice.isSuper());
+		HorizontalLayout toolbar=new HorizontalLayout(filterText, addButton, expButton, district);
 		return toolbar;
 	}
+	private void getDistrictData(District district) {
+		// TODO Auto-generated method stub
+		updateList(district);
+	}
+
+
 	private void export() {
 		GridExporter.newWithDefaults(grid).open();
 	}
@@ -133,6 +153,7 @@ public class EmployeeView extends VerticalLayout {
     	grid.addColumn(employee -> employee.getCell().getCellName()).setHeader("Cell").setFooter("Total Entries: "+dbservice.getEmployeeCount()).setSortable(true).setResizable(true);
     	grid.addColumn(employee -> employee.getEnteredOn()).setSortable(true).setResizable(true).setHeader("Entered On");
     	grid.addColumn(employee -> employee.getEnteredBy()).setSortable(true).setResizable(true).setHeader("Entered By");
+    	grid.addColumn(employee -> employee.getDistrict().getDistrictName()).setSortable(true).setResizable(true).setHeader("District").setVisible(dbservice.isSuper());
     	//grid.addColumn();
     	//grid.addThemeVariants(GridVariant.LUMO_ROW_STRIPES);
     	//grid.addColumns("enteredOn", "enteredBy");

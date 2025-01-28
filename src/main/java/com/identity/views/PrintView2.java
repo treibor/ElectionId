@@ -240,13 +240,19 @@ public class PrintView2 extends VerticalLayout{
 		HorizontalLayout reportType=new HorizontalLayout();
 		HorizontalLayout reportFormat=new HorizontalLayout();
 		//radioGroup.addThemeVariants(RadioGroupVariant.LUMO_VERTICAL);
+		radioGroup2.addClassName("buttons");
 		radioGroup2.setLabel("Report Type");
-		radioGroup2.setItems("Landscape", "Portrait");
-		radioGroup2.setValue("Landscape");
+		radioGroup2.setItems("Landscape1","Landscape2", "Portrait");
+		radioGroup2.setValue("Landscape1");
 		reportFormat.add(radioGroup2);
 		radioGroup1.setLabel("Id For");
 		radioGroup1.setItems("Agents", "Candidate");
 		radioGroup1.setValue("Agents");
+		
+		
+		//radioGroup.addThemeVariants(RadioGroupVariant.LUMO_VERTICAL);
+		radioGroup2.setRenderer(new ComponentRenderer<>(item -> createItemWithImage2(item)));
+		
 		reportType.add(radioGroup1);
 		FormLayout fl2=new FormLayout();
 		Button printRangep=new Button("Print Id");
@@ -296,7 +302,48 @@ public class PrintView2 extends VerticalLayout{
 		return fl2;
 	}
 	
-	
+	private Component createItemWithImage2(String item) {
+        // Create an image based on the item value
+        Image image = new Image();
+        image.getStyle().set("width", "7px");
+        image.getStyle().set("height", "7px");
+        image.getStyle().set("object-fit", "contain");
+        // Set the image source based on the report type
+        switch (item) {
+            case "Landscape1":
+            	image = new Image("images/p_landscape1.jpg", "Landscape Image");
+            	//System.out.println("Landscape");
+                break;
+            case "Landscape2":
+            	image = new Image("images/p_landscape2.jpg", "Landscape Image 2");
+            	//System.out.println("Landscape");
+                break;
+            case "Portrait":
+            	image = new Image("images/p_portrait.jpg", "Portrait Image");
+            	//System.out.println("Landscape");
+                break;
+            
+            default:
+            	
+                image.setSrc("/images/default.png");
+        }
+
+        //Span label = new Span(item);
+
+        image.setTitle(item);
+        HorizontalLayout layout = new HorizontalLayout(image);
+        
+        layout.setAlignItems(Alignment.CENTER);  // Align image and text vertically in the center
+
+        
+        Div wrapper = new Div(layout);
+        wrapper.getStyle().set("display", "flex");
+        wrapper.getStyle().set("align-items", "center");  // Align items vertically
+        wrapper.getStyle().set("justify-content", "center");  // Center items horizontally
+        wrapper.getStyle().set("width", "100%");
+
+        return wrapper;
+    }
 	
 	private void printRangeReport(String reportType, String type) {
 		String format=radioGroup.getValue().trim();
@@ -563,9 +610,15 @@ public class PrintView2 extends VerticalLayout{
 					if(reportformat=="Portrait") {
 						resource = new ClassPathResource("report/" + districtid + "_id_p.jrxml");
 						resourceduplicate = new ClassPathResource("report/1_id_p.jrxml");
-					}else {
+					}else if(reportformat=="Landscape1") {
 						resource = new ClassPathResource("report/" + districtid + "_id_pl.jrxml");
 						resourceduplicate = new ClassPathResource("report/1_id_pl.jrxml");
+					}else if(reportformat=="Landscape2") {
+						resource = new ClassPathResource("report/" + districtid + "_id_pl2.jrxml");
+						resourceduplicate = new ClassPathResource("report/1_id_pl2.jrxml");
+					}else {
+						resource = new ClassPathResource("report/" + districtid + "_id_pl2.jrxml");
+						resourceduplicate = new ClassPathResource("report/1_id_pl2.jrxml");
 					}
 				}
 			} else if (reportType.equals("list_p")) {
