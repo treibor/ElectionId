@@ -1,0 +1,157 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Created with Jaspersoft Studio version 6.20.6.final using JasperReports Library version 6.20.6-5c96b6aa8a39ac1dc6b6bea4b81168e16dd39231  -->
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="First" columnCount="2" pageWidth="595" pageHeight="842" columnWidth="292" leftMargin="5" rightMargin="5" topMargin="5" bottomMargin="5" uuid="13acf49e-4913-4d1b-bccc-113817ad15d1">
+	<property name="com.jaspersoft.studio.data.sql.tables" value=""/>
+	<property name="com.jaspersoft.studio.data.defaultdataadapter" value="Postgres"/>
+	<property name="com.jaspersoft.studio.property.dataset.dialog.DatasetDialog.sash.w1" value="433"/>
+	<property name="com.jaspersoft.studio.property.dataset.dialog.DatasetDialog.sash.w2" value="557"/>
+	<property name="com.jaspersoft.studio.unit." value="pixel"/>
+	<property name="com.jaspersoft.studio.unit.pageHeight" value="pixel"/>
+	<property name="com.jaspersoft.studio.unit.pageWidth" value="pixel"/>
+	<property name="com.jaspersoft.studio.unit.topMargin" value="pixel"/>
+	<property name="com.jaspersoft.studio.unit.bottomMargin" value="pixel"/>
+	<property name="com.jaspersoft.studio.unit.leftMargin" value="pixel"/>
+	<property name="com.jaspersoft.studio.unit.rightMargin" value="pixel"/>
+	<property name="com.jaspersoft.studio.unit.columnWidth" value="pixel"/>
+	<property name="com.jaspersoft.studio.unit.columnSpacing" value="pixel"/>
+	<style name="Title" forecolor="#FFFFFF" fontName="Times New Roman" fontSize="50" isBold="false"/>
+	<style name="SubTitle" forecolor="#CCCCCC" fontName="Times New Roman" fontSize="18" isBold="false"/>
+	<style name="Column header" forecolor="#666666" fontName="Times New Roman" fontSize="14" isBold="true"/>
+	<style name="Detail" mode="Transparent" fontName="Times New Roman"/>
+	<style name="Row" mode="Transparent" fontName="Times New Roman" pdfFontName="Times-Roman">
+		<conditionalStyle>
+			<conditionExpression><![CDATA[$V{REPORT_COUNT}%2 == 0]]></conditionExpression>
+			<style mode="Transparent" backcolor="#FFFFFF"/>
+		</conditionalStyle>
+	</style>
+	<parameter name="serialFrom" class="java.lang.Long" isForPrompting="false"/>
+	<parameter name="serialTo" class="java.lang.Long" isForPrompting="false"/>
+	<field name="candId" class="java.lang.Long">
+		<property name="com.jaspersoft.studio.field.name" value="serial_no"/>
+		<property name="com.jaspersoft.studio.field.label" value="serial_no"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="candidate"/>
+	</field>
+	<field name="candidateName" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.name" value="first_name"/>
+		<property name="com.jaspersoft.studio.field.label" value="first_name"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="candidate"/>
+	</field>
+	<field name="constituency.constituencyName" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.name" value="district_name"/>
+		<property name="com.jaspersoft.studio.field.label" value="district_name"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="constituency"/>
+	</field>
+	<field name="party.partyName" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.name" value="district_name"/>
+		<property name="com.jaspersoft.studio.field.label" value="district_name"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="party"/>
+	</field>
+	<title>
+		<band splitType="Stretch"/>
+	</title>
+	<columnHeader>
+		<band height="26" splitType="Stretch"/>
+	</columnHeader>
+	<detail>
+		<band height="331" splitType="Stretch">
+			<frame>
+				<reportElement style="Row" mode="Opaque" x="-3" y="-20" width="263" height="330" uuid="b50221b5-8254-440b-8c6f-1f0b138c9259"/>
+				<rectangle>
+					<reportElement x="10" y="6" width="243" height="301" uuid="23b542c3-ff9d-4130-b1ff-c842344061de">
+						<property name="com.jaspersoft.studio.unit.height" value="px"/>
+						<property name="com.jaspersoft.studio.unit.width" value="px"/>
+					</reportElement>
+				</rectangle>
+				<staticText>
+					<reportElement style="Column header" x="14" y="227" width="100" height="12" forecolor="#000000" uuid="86bfa081-db4c-413a-b8c3-e8a0d8d03d60">
+						<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="e815b104-533d-42f2-bf71-72c750d9033b"/>
+						<property name="com.jaspersoft.studio.unit.height" value="px"/>
+						<property name="com.jaspersoft.studio.unit.width" value="px"/>
+					</reportElement>
+					<textElement textAlignment="Center">
+						<font fontName="Arial" size="6" isBold="true" pdfFontName="Helvetica-Bold" isPdfEmbedded="true"/>
+					</textElement>
+					<text><![CDATA[(Signature of the Candidate)]]></text>
+				</staticText>
+				<staticText>
+					<reportElement style="Column header" x="146" y="223" width="100" height="12" forecolor="#000000" uuid="19b7c638-6229-4f43-8299-4b7960fed13d">
+						<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="e815b104-533d-42f2-bf71-72c750d9033b"/>
+						<property name="com.jaspersoft.studio.unit.height" value="px"/>
+						<property name="com.jaspersoft.studio.unit.width" value="px"/>
+					</reportElement>
+					<textElement textAlignment="Center">
+						<font fontName="Arial" size="6" isBold="true" pdfFontName="Helvetica-Bold" isPdfEmbedded="true"/>
+					</textElement>
+					<text><![CDATA[Attested by]]></text>
+				</staticText>
+				<staticText>
+					<reportElement style="Column header" x="145" y="257" width="100" height="12" forecolor="#000000" uuid="8dac681b-93c1-4afe-8168-8e4e40bd90a6">
+						<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="e815b104-533d-42f2-bf71-72c750d9033b"/>
+						<property name="com.jaspersoft.studio.unit.height" value="px"/>
+					</reportElement>
+					<textElement textAlignment="Center">
+						<font fontName="Arial" size="6" isBold="true" pdfFontName="Helvetica-Bold" isPdfEmbedded="true"/>
+					</textElement>
+					<text><![CDATA[Returning Officer]]></text>
+				</staticText>
+				<staticText>
+					<reportElement style="Column header" x="14" y="247" width="109" height="12" forecolor="#000000" uuid="3734bb69-35af-47f5-99e5-d3db05b9c119">
+						<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="e815b104-533d-42f2-bf71-72c750d9033b"/>
+						<property name="com.jaspersoft.studio.unit.height" value="px"/>
+						<property name="com.jaspersoft.studio.unit.width" value="px"/>
+					</reportElement>
+					<textElement textAlignment="Left">
+						<font fontName="Arial" size="6" isBold="true" pdfFontName="Helvetica-Bold" isPdfEmbedded="true"/>
+					</textElement>
+					<text><![CDATA[Place:_________________]]></text>
+				</staticText>
+				<staticText>
+					<reportElement x="10" y="10" width="241" height="30" uuid="3502cb7d-c481-45cc-8161-82ae3a2cdc44">
+						<property name="com.jaspersoft.studio.unit.height" value="px"/>
+					</reportElement>
+					<textElement textAlignment="Center" verticalAlignment="Middle">
+						<font fontName="Arial" size="12" isBold="true"/>
+					</textElement>
+					<text><![CDATA[CANDIDATE'S IDENTITY ]]></text>
+				</staticText>
+				<image>
+					<reportElement x="97" y="52" width="60" height="60" uuid="e421c533-431f-460e-a0dd-6b42d7144924">
+						<property name="com.jaspersoft.studio.unit.x" value="px"/>
+						<property name="com.jaspersoft.studio.unit.y" value="px"/>
+						<property name="com.jaspersoft.studio.unit.width" value="px"/>
+						<property name="com.jaspersoft.studio.unit.height" value="px"/>
+					</reportElement>
+					<box>
+						<topPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
+						<leftPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
+						<bottomPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
+						<rightPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
+					</box>
+				</image>
+				<textField textAdjust="ScaleFont">
+					<reportElement style="Detail" positionType="Float" x="14" y="129" width="236" height="74" uuid="5f291065-8a28-4fdc-b754-501a61ac3181">
+						<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="e815b104-533d-42f2-bf71-72c750d9033b"/>
+						<property name="com.jaspersoft.studio.unit.height" value="px"/>
+						<property name="com.jaspersoft.studio.unit.width" value="px"/>
+					</reportElement>
+					<textElement textAlignment="Justified" markup="styled">
+						<font fontName="Arial" size="8"/>
+					</textElement>
+					<textFieldExpression><![CDATA["<style isBold=\"true\" isUnderline=\"true\" pdfFontName=\"Helvetica-Bold\">"+$F{candidateName} +"</style>   is a contesting candidate for Election to the Legislative Assembly, 2023 from the  <style isBold=\"true\" isUnderline=\"true\" pdfFontName=\"Helvetica-Bold\">"+$F{constituency.constituencyName}+ "</style> Constituency and is setup by the <style isBold=\"true\" isUnderline=\"true\" pdfFontName=\"Helvetica-Bold\">"+$F{party.partyName}+"</style> party."]]></textFieldExpression>
+				</textField>
+				<textField>
+					<reportElement x="15" y="270" width="100" height="12" uuid="d8b2956c-8257-4433-aaa1-180338a430b4">
+						<property name="com.jaspersoft.studio.unit.height" value="px"/>
+					</reportElement>
+					<textElement>
+						<font fontName="Arial" size="6" isBold="true"/>
+					</textElement>
+					<textFieldExpression><![CDATA["Date : " + new SimpleDateFormat("dd-MM-yyyy").format(new Date())]]></textFieldExpression>
+				</textField>
+			</frame>
+		</band>
+	</detail>
+	<columnFooter>
+		<band splitType="Stretch"/>
+	</columnFooter>
+</jasperReport>

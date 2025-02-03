@@ -173,7 +173,7 @@ district.district_name,
 						<property name="com.jaspersoft.studio.unit.height" value="px"/>
 					</reportElement>
 					<textElement textAlignment="Left">
-						<font size="8" isBold="false"/>
+						<font fontName="Arial" size="8" isBold="false"/>
 					</textElement>
 					<textFieldExpression><![CDATA["NAME"]]></textFieldExpression>
 				</textField>
@@ -183,7 +183,7 @@ district.district_name,
 						<property name="com.jaspersoft.studio.unit.height" value="px"/>
 					</reportElement>
 					<textElement>
-						<font size="8"/>
+						<font fontName="Arial" size="8"/>
 					</textElement>
 					<textFieldExpression><![CDATA[": "+$F{firstName}+" "+$F{lastName}]]></textFieldExpression>
 				</textField>
@@ -193,7 +193,7 @@ district.district_name,
 						<property name="com.jaspersoft.studio.unit.height" value="px"/>
 					</reportElement>
 					<textElement>
-						<font size="8"/>
+						<font fontName="Arial" size="8"/>
 					</textElement>
 					<textFieldExpression><![CDATA[": "+$F{party.partyName}]]></textFieldExpression>
 				</textField>
@@ -203,7 +203,7 @@ district.district_name,
 						<property name="com.jaspersoft.studio.unit.height" value="px"/>
 					</reportElement>
 					<textElement>
-						<font size="8"/>
+						<font fontName="Arial" size="8"/>
 					</textElement>
 					<textFieldExpression><![CDATA[": "+$F{candidate.candidateName}]]></textFieldExpression>
 				</textField>
@@ -214,7 +214,7 @@ district.district_name,
 						<property name="com.jaspersoft.studio.unit.width" value="px"/>
 					</reportElement>
 					<textElement textAlignment="Center">
-						<font fontName="Times New Roman" size="10" isBold="true"/>
+						<font fontName="Arial" size="10" isBold="true"/>
 					</textElement>
 					<textFieldExpression><![CDATA[$F{districtmaster.headerFirstLine}]]></textFieldExpression>
 				</textField>
@@ -234,7 +234,7 @@ district.district_name,
 						<property name="com.jaspersoft.studio.unit.width" value="px"/>
 					</reportElement>
 					<textElement textAlignment="Center">
-						<font fontName="Times New Roman" size="10" isBold="true"/>
+						<font fontName="Arial" size="10" isBold="true"/>
 					</textElement>
 					<textFieldExpression><![CDATA[$F{districtmaster.headerThirdLine}]]></textFieldExpression>
 				</textField>
@@ -261,7 +261,7 @@ district.district_name,
 						<propertyExpression name="net.sf.jasperreports.style.backcolor"><![CDATA[$F{cell.cellColour}]]></propertyExpression>
 					</reportElement>
 					<textElement textAlignment="Center" verticalAlignment="Middle">
-						<font fontName="Times New Roman" size="16"/>
+						<font fontName="Arial" size="16"/>
 					</textElement>
 					<textFieldExpression><![CDATA[$F{cell.cellName}]]></textFieldExpression>
 				</textField>
@@ -271,7 +271,7 @@ district.district_name,
 						<property name="com.jaspersoft.studio.unit.height" value="px"/>
 					</reportElement>
 					<textElement textAlignment="Center">
-						<font size="8"/>
+						<font fontName="Arial" size="8"/>
 					</textElement>
 					<textFieldExpression><![CDATA[$F{districtmaster.footerFirstLine}]]></textFieldExpression>
 				</textField>
@@ -290,7 +290,7 @@ district.district_name,
 					</reportElement>
 				</line>
 				<line>
-					<reportElement x="10" y="182" width="280" height="1" uuid="831ef4ce-2366-47a2-a838-581f09ca6b3f">
+					<reportElement x="10" y="183" width="280" height="1" uuid="831ef4ce-2366-47a2-a838-581f09ca6b3f">
 						<property name="com.jaspersoft.studio.unit.width" value="px"/>
 					</reportElement>
 				</line>
@@ -319,7 +319,7 @@ district.district_name,
 					</reportElement>
 				</line>
 				<line>
-					<reportElement x="302" y="182" width="280" height="1" uuid="07a8c8fd-d2c8-4078-adf5-f7f47a4e5c76">
+					<reportElement x="302" y="183" width="280" height="1" uuid="07a8c8fd-d2c8-4078-adf5-f7f47a4e5c76">
 						<property name="com.jaspersoft.studio.unit.width" value="px"/>
 					</reportElement>
 				</line>
@@ -349,7 +349,7 @@ district.district_name,
 						<property name="com.jaspersoft.studio.unit.height" value="px"/>
 					</reportElement>
 					<textElement textAlignment="Left">
-						<font size="8" isBold="true"/>
+						<font fontName="Arial" size="8" isBold="true"/>
 					</textElement>
 					<textFieldExpression><![CDATA[java.util.Date.from($F{districtmaster.validity}.atStartOfDay(java.time.ZoneId.systemDefault()).toInstant())]]></textFieldExpression>
 				</textField>
@@ -360,7 +360,7 @@ district.district_name,
 						<property name="com.jaspersoft.studio.unit.width" value="px"/>
 					</reportElement>
 					<textElement>
-						<font size="10" isBold="false"/>
+						<font fontName="Arial" size="10" isBold="false"/>
 					</textElement>
 					<text><![CDATA[Issued By:]]></text>
 				</staticText>
@@ -381,7 +381,7 @@ district.district_name,
 						<property name="com.jaspersoft.studio.unit.height" value="px"/>
 					</reportElement>
 					<textElement textAlignment="Left">
-						<font size="8" isBold="true"/>
+						<font fontName="Arial" size="8" isBold="true"/>
 					</textElement>
 					<textFieldExpression><![CDATA["Valid In :"+$F{district.districtName} +" DISTRICT"]]></textFieldExpression>
 				</textField>
@@ -391,7 +391,7 @@ district.district_name,
 						<property name="com.jaspersoft.studio.unit.height" value="px"/>
 					</reportElement>
 					<textElement textAlignment="Center">
-						<font size="8"/>
+						<font fontName="Arial" size="8"/>
 					</textElement>
 					<textFieldExpression><![CDATA[$F{districtmaster.footerSecondLine}]]></textFieldExpression>
 				</textField>
@@ -401,7 +401,7 @@ district.district_name,
 						<property name="com.jaspersoft.studio.unit.height" value="px"/>
 					</reportElement>
 					<textElement textAlignment="Left">
-						<font size="8" isBold="false"/>
+						<font fontName="Arial" size="8" isBold="false"/>
 					</textElement>
 					<textFieldExpression><![CDATA["PARTY"]]></textFieldExpression>
 				</textField>
@@ -411,7 +411,7 @@ district.district_name,
 						<property name="com.jaspersoft.studio.unit.height" value="px"/>
 					</reportElement>
 					<textElement textAlignment="Left">
-						<font size="8" isBold="false"/>
+						<font fontName="Arial" size="8" isBold="false"/>
 					</textElement>
 					<textFieldExpression><![CDATA["CANDIDATE"]]></textFieldExpression>
 				</textField>
@@ -421,7 +421,7 @@ district.district_name,
 						<property name="com.jaspersoft.studio.unit.height" value="px"/>
 					</reportElement>
 					<textElement textAlignment="Center">
-						<font size="10" isBold="false"/>
+						<font fontName="Arial" size="10" isBold="false"/>
 					</textElement>
 					<textFieldExpression><![CDATA["ID NO :"+$F{serialNo}]]></textFieldExpression>
 				</textField>
@@ -431,7 +431,7 @@ district.district_name,
 						<propertyExpression name="net.sf.jasperreports.style.backcolor"><![CDATA[$F{constituency.constituencyColour}]]></propertyExpression>
 					</reportElement>
 					<textElement textAlignment="Center" verticalAlignment="Middle">
-						<font fontName="Times New Roman" size="16"/>
+						<font fontName="Arial" size="16"/>
 					</textElement>
 					<textFieldExpression><![CDATA[$F{constituency.constituencyName}]]></textFieldExpression>
 				</textField>

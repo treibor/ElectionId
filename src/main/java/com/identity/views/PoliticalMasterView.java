@@ -117,6 +117,7 @@ public class PoliticalMasterView extends VerticalLayout {
 		partygrid.setColumns("partyName");
 		constgrid.setColumns("constituencyName", "constituencyColour");
 		candgrid.setColumns("candidateName");
+		candgrid.addColumn(cand ->cand.getCandId()).setHeader("Candidate Number");
 		candgrid.addColumn(cand ->cand.getConstituency().getConstituencyName()).setHeader("Constituency");
 		candgrid.addColumn(cand ->cand.getParty().getPartyName()).setHeader("Party");
     	partygrid.getColumns().forEach(col-> col.setAutoWidth(true));

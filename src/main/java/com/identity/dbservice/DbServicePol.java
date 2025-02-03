@@ -143,7 +143,12 @@ public class DbServicePol {
 	public List <Candidate> findCandidateBydistrict(){
 		return canrepo.findByDistrict(getLoggedDistrict());
 	}
-	
+	public List <Candidate> findCandidateByParty(Party party){
+		return canrepo.getCandidatesList(getLoggedDistrict(), party);
+	}
+	public List <Candidate> findCandidateByConsti(Constituency consti){
+		return canrepo.getCandidatesList(getLoggedDistrict(), consti);
+	}
 	public long findMaxSerialNo() {
 		
 		try {

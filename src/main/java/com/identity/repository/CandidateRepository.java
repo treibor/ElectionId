@@ -21,7 +21,10 @@ public interface CandidateRepository extends JpaRepository<Candidate, Long>{
 	@Query("select  c  from Candidate c where c.party=:party and c.constituency=:consti")
 	Candidate  getCandidateComboBox(@Param("party") Party party, @Param("consti") Constituency consti);
 	
+	@Query("select  c  from Candidate c where c.party=:party and c.district=:district")
+	List<Candidate>  getCandidatesList(@Param("district") District district,@Param("party") Party party);
 	
-	
+	@Query("select  c  from Candidate c where constituency=:consti and c.district=:district")
+	List<Candidate>  getCandidatesList(@Param("district") District district, @Param("consti") Constituency consti);
 	
 }

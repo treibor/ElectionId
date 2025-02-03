@@ -269,6 +269,7 @@
   "Frontend/generated/jar-resources/so/chart/chart.js",
   "Frontend/generated/jar-resources/src/pdf-print.js",
   "Frontend/generated/jar-resources/styles/toolbar-button.css",
+  "Frontend/generated/jar-resources/styles/wizard.css",
   "Frontend/generated/jar-resources/theme-util.js",
   "Frontend/generated/jar-resources/tooltip.ts",
   "Frontend/generated/jar-resources/vaadin-big-decimal-field.js",
@@ -298,6 +299,7 @@
   "so/chart/chart.js": "0b74a2dd8e84a8aa0082a88020b43204cdef3eccb5757e0c1ec041ccf3e65e52",
   "src/pdf-print.js": "3329b8ed218b392b774ff779a49de030e0482a740fc1f3fd413be9a9835dd637",
   "styles/toolbar-button.css": "7b285d043fe8e1991814254962e53370aaebe703bbc53c69f9b9c2b4bf93fe0e",
+  "styles/wizard.css": "daec53ff36c455472f0ec7edf9f26ddbd3ab540b37e41746f48e4dab051cb1f7",
   "theme-util.js": "828ba8154b5d2d762ade6ed6f0614691c68db929b69c3c54250858a077960ba3",
   "tooltip.ts": "b7e9af67169277b94cab722d244340c3a9d463bcf4de2aaa84dddcebbd59447b",
   "vaadin-big-decimal-field.js": "0e0f4e3bb8928c708d02e77d07ede09525102440511942e3b24721702352f140",
@@ -308,7 +310,7 @@
  },
  "themeJsonContents": {},
  "entryScripts": [
-  "VAADIN/build/indexhtml-6d0c1ca6.js"
+  "VAADIN/build/indexhtml-0e6e642c.js"
  ],
  "webComponents": [],
  "cvdlModules": {
@@ -343,6 +345,6 @@
  },
  "packageJsonHash": "18464628f61fcde0d23a214e13fb935f5ae18ce1d247afb7efef581a3288d69f",
  "indexHtmlGenerated": [
-  "  <script type=\"module\" crossorigin src=\"./VAADIN/build/indexhtml-6d0c1ca6.js\"></script>"
+  "  <script type=\"module\" crossorigin src=\"./VAADIN/build/indexhtml-0e6e642c.js\"></script>"
  ]
 }

@@ -34,6 +34,7 @@ import com.vaadin.flow.component.html.Div;
 import com.vaadin.flow.component.html.Image;
 import com.vaadin.flow.component.html.Span;
 import com.vaadin.flow.component.notification.Notification;
+import com.vaadin.flow.component.notification.NotificationVariant;
 import com.vaadin.flow.component.notification.Notification.Position;
 import com.vaadin.flow.component.orderedlayout.HorizontalLayout;
 import com.vaadin.flow.component.orderedlayout.VerticalLayout;
@@ -67,12 +68,20 @@ public class PrintView2 extends VerticalLayout{
 	ComboBox<Party> party = new ComboBox("Print Party-Wise");
 	ComboBox<Constituency> consti = new ComboBox("Print Constituency-Wise");
 	ComboBox<Candidate> candi = new ComboBox("Print Candidate-Wise");
+	ComboBox<Party> partyc = new ComboBox("Print Party-Wise");
+	ComboBox<Constituency> constic = new ComboBox("Print Constituency-Wise");
+	ComboBox<Candidate> candic = new ComboBox("Print Candidate-Wise");
+	
 	NumberField fromRange=new NumberField("Print By Serial No ", "From");
 	NumberField toRange=new NumberField("", "To");
 	NumberField fromRangep=new NumberField("Print By Serial No ", "From");
 	NumberField toRangep=new NumberField("", "To");
 	DatePicker fromDate=new DatePicker("Print By Dates");
 	DatePicker toDate=new DatePicker();
+	NumberField fromRangec=new NumberField("Print By Serial No ", "From");
+	NumberField toRangec=new NumberField("", "To");
+	DatePicker fromDatec=new DatePicker("Print By Dates");
+	DatePicker toDatec=new DatePicker();
 	//Notification Notification=new Notification();
 	private DbService dbservice;
 	private DbServicePol dbservice1;
@@ -85,6 +94,7 @@ public class PrintView2 extends VerticalLayout{
 	RadioButtonGroup<String> radioGroup = new RadioButtonGroup<>();
 	RadioButtonGroup<String> radioGroup1 = new RadioButtonGroup<>();
 	RadioButtonGroup<String> radioGroup2 = new RadioButtonGroup<>();
+	RadioButtonGroup<String> radioGroup3 = new RadioButtonGroup<>();
 	public PrintView2(DbService dbservice, DbServicePol dbservice1) {
 		this.dbservice=dbservice;
 		this.dbservice1=dbservice1;
@@ -99,12 +109,18 @@ public class PrintView2 extends VerticalLayout{
 		party.setItems(parties);
 		consti.setItems(constis);
 		candi.setItems(candis);
+		partyc.setItems(parties);
+		constic.setItems(constis);
+		candic.setItems(candis);
 		office.setItemLabelGenerator(Office::getOfficeName);
 		cell.setItemLabelGenerator(Cell::getCellName);
 		
 		party.setItemLabelGenerator(Party :: getPartyName);
 		consti.setItemLabelGenerator(Constituency:: getConstituencyName);
 		candi.setItemLabelGenerator(Candidate::getCandidateName);
+		partyc.setItemLabelGenerator(Party :: getPartyName);
+		constic.setItemLabelGenerator(Constituency:: getConstituencyName);
+		candic.setItemLabelGenerator(Candidate::getCandidateName);
 		cell.addValueChangeListener(e->removePdfViewer());
 		office.addValueChangeListener(e-> removePdfViewer());
 		party.addValueChangeListener(e-> removePdfViewer());
@@ -123,7 +139,8 @@ public class PrintView2 extends VerticalLayout{
 	public Component createFinalPanel() {
 		Accordion accordion=new Accordion();
 		accordion.add("Personnel", createGovtpanel());
-		accordion.add("Political", createPoliticalpanel());
+		accordion.add("Political Agents", createPoliticalpanel());
+		accordion.add("Candidate", createCandidatepanel());
 		//accordion.set
 		return accordion;
 	}
@@ -136,7 +153,7 @@ public class PrintView2 extends VerticalLayout{
 		radioGroup.addClassName("buttons");
 		//radioGroup.addThemeVariants(RadioGroupVariant.LUMO_VERTICAL);
 		radioGroup.setLabel("Id Type");
-		radioGroup.setItems("Landscape1", "Landscape2", "Landscape2", "Landscape4", "Landscape5","Portrait1", "Portrait2");
+		radioGroup.setItems("Landscape1", "Landscape2", "Landscape3", "Landscape4", "Landscape5","Landscape6","Portrait1", "Portrait2");
 		radioGroup.setValue("Landscape1");
 		radioGroup.setRenderer(new ComponentRenderer<>(item -> createItemWithImage(item)));
 		reportFormat.add(radioGroup);
@@ -216,6 +233,9 @@ public class PrintView2 extends VerticalLayout{
             case "Landscape5":
             	image = new Image("/images/landscape5.jpeg", "Landscape Image 5");
                 break;
+            case "Landscape6":
+            	image = new Image("/images/landscape6.jpeg", "Landscape Image 6");
+                break;
             default:
                 image.setSrc("/images/default.png");
         }
@@ -253,7 +273,7 @@ public class PrintView2 extends VerticalLayout{
 		//radioGroup.addThemeVariants(RadioGroupVariant.LUMO_VERTICAL);
 		radioGroup2.setRenderer(new ComponentRenderer<>(item -> createItemWithImage2(item)));
 		
-		reportType.add(radioGroup1);
+		//reportType.add(radioGroup1);
 		FormLayout fl2=new FormLayout();
 		Button printRangep=new Button("Print Id");
 		Button printRangelistp=new Button("Print List");
@@ -301,7 +321,54 @@ public class PrintView2 extends VerticalLayout{
 		//return detailsp;
 		return fl2;
 	}
-	
+	public Component createCandidatepanel() {
+		//HorizontalLayout reportType1=new HorizontalLayout();
+		HorizontalLayout reportFormat1=new HorizontalLayout();
+		//radioGroup.addThemeVariants(RadioGroupVariant.LUMO_VERTICAL);
+		radioGroup3.addClassName("buttons");
+		radioGroup3.setLabel("Report Type");
+		radioGroup3.setItems("Landscape1", "Portrait1");
+		radioGroup3.setValue("Landscape1");
+		reportFormat1.add(radioGroup3);
+		
+		
+		//radioGroup.addThemeVariants(RadioGroupVariant.LUMO_VERTICAL);
+		//radioGroup3.setRenderer(new ComponentRenderer<>(item -> createItemWithImage2(item)));
+		
+		FormLayout fl2=new FormLayout();
+		Button printRangep=new Button("Print Id");
+		Button printRangelistp=new Button("Print List");
+		Button printDatesp=new Button("Print Id");
+		Button printDateslistp=new Button("Print List");
+		Button printParty=new Button("Print");
+		Button printPartylist=new Button("Print List");
+		Button printConsti=new Button("Print ID");
+		Button printConstilist=new Button("Print List");
+		Button printCandi=new Button("Print ID");
+		Button printCandilist=new Button("Print List");
+		//printRangep.addClickListener(e-> printCandidateByNameReport("id_pc", "political"));
+		//printRangelistp.addClickListener(e-> printRangeReportPolitical("list_p", "political"));
+		printParty.addClickListener(e-> printCandidateByNameReport("party", "id"));
+		printPartylist.addClickListener(e-> printCandidateByNameReport("party", "list"));
+		printConsti.addClickListener(e-> printCandidateByNameReport("consti", "id"));
+		printConstilist.addClickListener(e-> printCandidateByNameReport("consti", "list"));
+		//fl2.add(reportType, 8);
+		fl2.add(reportFormat1, 8);
+		fl2.add(partyc, 2);
+		fl2.add(printParty, printPartylist);
+		fl2.add(constic, 2);
+		fl2.add(printConsti, printConstilist);
+		
+		fl2.setResponsiveSteps(
+		        new ResponsiveStep("0", 8),
+		        // Use two columns, if layout's width exceeds 500px
+		        new ResponsiveStep("500px", 8)
+		);
+		//Details detailsp=new Details("Political Agents", fl2);
+		//detailsp.setOpened(false);
+		//return detailsp;
+		return fl2;
+	}
 	private Component createItemWithImage2(String item) {
         // Create an image based on the item value
         Image image = new Image();
@@ -400,7 +467,7 @@ public class PrintView2 extends VerticalLayout{
 
 		}
 	}
-
+	
 	private void printDatesReport(String reportType, String type) {
 		String format=radioGroup.getValue().trim();
 		if (fromDate.getValue() == null || toDate.getValue() == null) {
@@ -484,7 +551,7 @@ public class PrintView2 extends VerticalLayout{
 	
 	private void printPartyReport(String reportType, String type) {
 		if(party.getValue()==null) {
-			Notification.show("Please Select a Cell", 3000, Position.TOP_CENTER);
+			Notification.show("Please Select a Party", 3000, Position.TOP_CENTER);
 		}else {
 				List<Political> political= dbservice1.findPoliticalByParty(party.getValue(), type);
 				printPoliticalReports(political, reportType, type);
@@ -493,7 +560,7 @@ public class PrintView2 extends VerticalLayout{
 	}
 	private void printCandidateReport(String reportType, String type) {
 		if(candi.getValue()==null) {
-			Notification.show("Please Select a Cell", 3000, Position.TOP_CENTER);
+			Notification.show("Please Select a Candidate", 3000, Position.TOP_CENTER);
 		}else {
 				List<Political> political= dbservice1.findPoliticalByCandidate(candi.getValue(), type);
 				printPoliticalReports(political, reportType, type);
@@ -503,7 +570,7 @@ public class PrintView2 extends VerticalLayout{
 
 	private void printConstituencyReport(String reportType, String type) {
 		if(consti.getValue()==null) {
-			Notification.show("Please Select a Cell", 3000, Position.TOP_CENTER);
+			Notification.show("Please Select an AC", 3000, Position.TOP_CENTER);
 		}else {
 				List<Political> political= dbservice1.findPoliticalByConstituency(consti.getValue(), type);
 				printPoliticalReports(political, reportType, type);
@@ -511,6 +578,23 @@ public class PrintView2 extends VerticalLayout{
 		}
 	}
 
+	private void printCandidateByNameReport(String reportType, String type) {
+		if (partyc.getValue()==null && constic.getValue()==null) {
+			Notification.show("Please Select the Party/Constituency").addThemeVariants(NotificationVariant.LUMO_WARNING);
+		} else {
+			Constituency consti = constic.getValue();
+			Party party = partyc.getValue();
+			
+			if (reportType.equals("party")) {
+				List<Candidate> candidate = dbservice1.findCandidateByParty(party);
+				printCandidateReports(candidate, type);
+			} else {
+				List<Candidate> candidate = dbservice1.findCandidateByConsti(consti);
+				printCandidateReports(candidate, type);
+			}
+		}
+	}
+	
 	
 	private void printReports(List<Employee> employees, String reportType, String type, String format) {
 		//System.out.println("Format:"+format);
@@ -544,6 +628,9 @@ public class PrintView2 extends VerticalLayout{
 					resourceduplicate = new ClassPathResource("report/1_id4.jrxml");
 				}else if (format == "Landscape5") {
 					resource = new ClassPathResource("report/" + districtid + "_id5.jrxml");
+					resourceduplicate = new ClassPathResource("report/1_id5.jrxml");
+				}else if (format == "Landscape6") {
+					resource = new ClassPathResource("report/" + districtid + "_id6.jrxml");
 					resourceduplicate = new ClassPathResource("report/1_id5.jrxml");
 				}else if (format == "Portrait1") {
 					resource = new ClassPathResource("report/" + districtid + "_idp.jrxml");
@@ -635,6 +722,59 @@ public class PrintView2 extends VerticalLayout{
 			//InputStream employeeReportStream = resource.getInputStream();
 			JasperReport jasperReport = JasperCompileManager.compileReport(employeeReportStream);
 			JRBeanCollectionDataSource jrBeanCollectionDataSource = new JRBeanCollectionDataSource(politicals);
+			// Map<String, Object> parameters = new HashMap<>();
+			// parameters.put("Parameter1", "Sabaton");
+			JasperPrint jasperPrint = JasperFillManager.fillReport(jasperReport, null, jrBeanCollectionDataSource);
+			JasperExportManager.exportReportToPdfFile(jasperPrint, reportPath + "//" + user + "report.pdf");
+			File a = new File(reportPath + "//" + user + "report.pdf");
+			resourcerange = new StreamResource("Report.pdf", () -> createResource(a));
+			pdfViewerrange = new PdfViewer();
+			pdfViewerrange.setSrc(resourcerange);
+			hl4.setSizeFull();
+			hl4.add(pdfViewerrange);
+
+		} catch (Exception e) {
+			Notification.show("Unable TO Generate Report. Error:" + e, 5000, Position.TOP_CENTER);
+			e.printStackTrace();
+
+		}
+
+	}
+	private void printCandidateReports(List<Candidate> candidate, String type) {
+		String reporttype=radioGroup3.getValue();
+		try {
+			Resource resource = null;
+			Resource resourceduplicate = null;
+			InputStream employeeReportStream =null;
+			removePdfViewer();
+			
+			long districtid = dbservice.getLoggedDistrict().getDistrictId();
+			URL res = getClass().getClassLoader().getResource("report/1_idp.jrxml");
+			File file = Paths.get(res.toURI()).toFile();
+			String absolutePath = file.getAbsolutePath();
+			String reportPath = absolutePath.substring(0, absolutePath.length() - 11);
+			if (type.equals("id")) {
+				if(reporttype=="Landscape1") {
+				resource = new ClassPathResource("report/" + districtid + "_id_pc1.jrxml");
+				resourceduplicate = new ClassPathResource("report/1_id_pc1.jrxml");
+				}else if(reporttype=="Portrait1") {
+					resource = new ClassPathResource("report/" + districtid + "_id_pc2.jrxml");
+					resourceduplicate = new ClassPathResource("report/1_id_pc2.jrxml");
+				}
+			} else  {
+				//System.out.println("Format2");
+				resource = new ClassPathResource("report/list_p.jrxml");
+			}
+			try {
+				employeeReportStream = resource.getInputStream();
+			}catch (FileNotFoundException e) {
+				// TODO: handle exception
+				employeeReportStream = resourceduplicate.getInputStream();
+				//System.out.println("Duplicate ");
+			}
+			//InputStream employeeReportStream = resource.getInputStream();
+			JasperReport jasperReport = JasperCompileManager.compileReport(employeeReportStream);
+			JRBeanCollectionDataSource jrBeanCollectionDataSource = new JRBeanCollectionDataSource(candidate);
 			// Map<String, Object> parameters = new HashMap<>();
 			// parameters.put("Parameter1", "Sabaton");
 			JasperPrint jasperPrint = JasperFillManager.fillReport(jasperReport, null, jrBeanCollectionDataSource);
