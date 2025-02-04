@@ -62,14 +62,17 @@ import '@vaadin/vaadin-lumo-styles/vaadin-iconset.js';
 
 const loadOnDemand = (key) => {
   const pending = [];
-  if (key === '73aa86a14f574f5038b42a6e1eac2f1fdd981e17874ce4c110f44a06e5ce33c8') {
-    pending.push(import('./chunks/chunk-289b6b1fa1433b60be5b6ea4b8483e49478071cf719fd014e97bf38cc151ca60.js'));
-  }
   if (key === '6b8e18566ab3756401bff2586e82824b027bd92f5f2148b792736baa8414a9f2') {
     pending.push(import('./chunks/chunk-3015b79b3f16ff5c3a27fe5276ed94715b7e13c4ca56adbd9b3954463b1c2aad.js'));
   }
   if (key === '5903027ff5a563a6f690e96bd1ccca7cf36cb40e31c24df6fc9bad6df1e71864') {
     pending.push(import('./chunks/chunk-6f4dccacbe1f2ebd2fbaee9438f8a201697c6aae23144dd275c042d9d87c8282.js'));
+  }
+  if (key === '4c4161a446dfa4b327de63775a1637e65ffe1c305847be5881e4586216a13752') {
+    pending.push(import('./chunks/chunk-f455ff1b325819e0e3bec407d28c7e82625ec4c71994f2ba68106a7ae147339a.js'));
+  }
+  if (key === '73aa86a14f574f5038b42a6e1eac2f1fdd981e17874ce4c110f44a06e5ce33c8') {
+    pending.push(import('./chunks/chunk-289b6b1fa1433b60be5b6ea4b8483e49478071cf719fd014e97bf38cc151ca60.js'));
   }
   if (key === '3c6599b9e7dedb629e783659ba9686c0b8273d0230cf9c306cf9224f2e1822c1') {
     pending.push(import('./chunks/chunk-f455ff1b325819e0e3bec407d28c7e82625ec4c71994f2ba68106a7ae147339a.js'));
@@ -79,9 +82,6 @@ const loadOnDemand = (key) => {
   }
   if (key === '660d9a872ddf3b2176ccc58608c9fcf7356e359c3e3ad0ba62a420e6ef6bbb28') {
     pending.push(import('./chunks/chunk-6f4dccacbe1f2ebd2fbaee9438f8a201697c6aae23144dd275c042d9d87c8282.js'));
-  }
-  if (key === '4c4161a446dfa4b327de63775a1637e65ffe1c305847be5881e4586216a13752') {
-    pending.push(import('./chunks/chunk-f455ff1b325819e0e3bec407d28c7e82625ec4c71994f2ba68106a7ae147339a.js'));
   }
   return Promise.all(pending);
 }

@@ -89,7 +89,7 @@
 					<textElement textAlignment="Justified" markup="styled">
 						<font fontName="SansSerif" size="11"/>
 					</textElement>
-					<textFieldExpression><![CDATA["<style isBold=\"true\" isUnderline=\"true\" pdfFontName=\"Helvetica-Bold\">"+$F{candidateName} +"</style>   is a contesting candidate for Election to the Legislative Assembly, 2023 from the  <style isBold=\"true\" isUnderline=\"true\" pdfFontName=\"Helvetica-Bold\">"+$F{constituency.constituencyName}+ "</style> Constituency and is setup by the <style isBold=\"true\" isUnderline=\"true\" pdfFontName=\"Helvetica-Bold\">"+$F{party.partyName}+"</style> party."]]></textFieldExpression>
+					<textFieldExpression><![CDATA["<style isBold=\"true\" isUnderline=\"true\" pdfFontName=\"Helvetica-Bold\">"+$F{candidateName} +"</style>   is a contesting candidate for the election to the KHADC, 2025 from the  <style isBold=\"true\" isUnderline=\"true\" pdfFontName=\"Helvetica-Bold\">"+$F{constituency.constituencyName}+ "</style> Constituency and is setup by the <style isBold=\"true\" isUnderline=\"true\" pdfFontName=\"Helvetica-Bold\">"+$F{party.partyName}+"</style> party."]]></textFieldExpression>
 				</textField>
 				<staticText>
 					<reportElement style="Column header" x="326" y="152" width="136" height="12" forecolor="#000000" uuid="86bfa081-db4c-413a-b8c3-e8a0d8d03d60">

@@ -129,15 +129,16 @@
 					</box>
 				</image>
 				<textField textAdjust="ScaleFont">
-					<reportElement style="Detail" positionType="Float" x="14" y="129" width="236" height="74" uuid="5f291065-8a28-4fdc-b754-501a61ac3181">
+					<reportElement style="Detail" positionType="Float" x="14" y="117" width="236" height="80" uuid="5f291065-8a28-4fdc-b754-501a61ac3181">
 						<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="e815b104-533d-42f2-bf71-72c750d9033b"/>
-						<property name="com.jaspersoft.studio.unit.height" value="px"/>
 						<property name="com.jaspersoft.studio.unit.width" value="px"/>
+						<property name="com.jaspersoft.studio.unit.height" value="px"/>
 					</reportElement>
-					<textElement textAlignment="Justified" markup="styled">
-						<font fontName="Arial" size="8"/>
+					<textElement textAlignment="Justified" verticalAlignment="Middle" markup="styled">
+						<font fontName="Arial" size="9"/>
+						<paragraph lineSpacing="1_1_2"/>
 					</textElement>
-					<textFieldExpression><![CDATA["<style isBold=\"true\" isUnderline=\"true\" pdfFontName=\"Helvetica-Bold\">"+$F{candidateName} +"</style>   is a contesting candidate for Election to the Legislative Assembly, 2023 from the  <style isBold=\"true\" isUnderline=\"true\" pdfFontName=\"Helvetica-Bold\">"+$F{constituency.constituencyName}+ "</style> Constituency and is setup by the <style isBold=\"true\" isUnderline=\"true\" pdfFontName=\"Helvetica-Bold\">"+$F{party.partyName}+"</style> party."]]></textFieldExpression>
+					<textFieldExpression><![CDATA["<style isBold=\"true\" isUnderline=\"true\" pdfFontName=\"Helvetica-Bold\">"+$F{candidateName} +"</style>   is a contesting candidate for the election to the KHADC, 2025 from the  <style isBold=\"true\" isUnderline=\"true\" pdfFontName=\"Helvetica-Bold\">"+$F{constituency.constituencyName}+ "</style> Constituency and is setup by the <style isBold=\"true\" isUnderline=\"true\" pdfFontName=\"Helvetica-Bold\">"+$F{party.partyName}+"</style> party."]]></textFieldExpression>
 				</textField>
 				<textField>
 					<reportElement x="15" y="270" width="100" height="12" uuid="d8b2956c-8257-4433-aaa1-180338a430b4">
