@@ -12,6 +12,7 @@ import com.identity.entity.Cell;
 import com.identity.entity.District;
 import com.identity.entity.Districtmaster;
 import com.identity.entity.Employee;
+import com.identity.entity.MasterEvent;
 import com.identity.entity.Office;
 
 @Repository
@@ -20,6 +21,7 @@ public interface EmployeeRepository extends JpaRepository<Employee, Long> {
 	long countBydistrict(District district);
 	List<Employee> findBylastName(String lname);
 	List<Employee> findBydistrict(District district);
+	List<Employee> findByDistrictAndEventOrderBySerialNoDesc(District district, MasterEvent event);
 	Employee findByeid(long eid);
 	List<Employee> findBySerialNoBetweenAndDistrict(long fromSerial, long toSerial, District district);
 	// Employee findByeidoid();
@@ -31,16 +33,21 @@ public interface EmployeeRepository extends JpaRepository<Employee, Long> {
 	 * @Query(a1+a2+a3) List<Employee> search(@Param("searchTerm") String
 	 * searchTerm, @Param("district") District district);
 	 */
-	
+	String a = "select c from Employee c where (:district is null or c.district = :district) and (c.event=:masterEvent) and (";
 	String a1 = "select c from Employee c where (:district is null or c.district = :district) and (";
 	String a2 = "lower(c.firstName) like lower(concat('%', :searchTerm, '%')) ";
 	String a3 = "or lower(c.lastName) like lower(concat('%', :searchTerm, '%')))";
+	
 	@Query(a1 + a2 + a3)
 	List<Employee> search(@Param("searchTerm") String searchTerm, @Param("district") District district);
 	
 	
-	@Query("select Max(c.serialNo) from Employee c where c.district= :district")
-	Long findMaxSerial(@Param ("district") District district);
+	@Query(a + a2 + a3)
+	List<Employee> search(@Param("searchTerm") String searchTerm, @Param("district") District district, @Param("masterEvent") MasterEvent event);
+	
+	
+	@Query("select Max(c.serialNo) from Employee c where c.district= :district and  c.event=:masterEvent")
+	Long findMaxSerial(@Param ("district") District district,@Param("masterEvent") MasterEvent event);
 	
 /*
 	

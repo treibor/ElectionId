@@ -75,6 +75,7 @@
   "construct-style-sheets-polyfill": "3.1.0",
   "date-fns": "2.29.3",
   "echarts": "5.4.2",
+  "konva": "^8.3.13",
   "lit": "2.8.0",
   "mobile-drag-drop": "2.3.0-rc.2",
   "print-js": "1.6.0",
@@ -158,6 +159,7 @@
   "date-fns": "2.29.3",
   "echarts": "5.4.2",
   "highcharts": "9.2.2",
+  "konva": "8.4.3",
   "lit-element": "3.3.3",
   "lit-html": "2.8.0",
   "mgrs": "1.0.0",
@@ -262,6 +264,8 @@
   "Frontend/generated/jar-resources/flow-component-renderer.js",
   "Frontend/generated/jar-resources/gridConnector.js",
   "Frontend/generated/jar-resources/gridProConnector.js",
+  "Frontend/generated/jar-resources/konva-canvas.js",
+  "Frontend/generated/jar-resources/konva.min.js",
   "Frontend/generated/jar-resources/lit-renderer.ts",
   "Frontend/generated/jar-resources/menubarConnector.js",
   "Frontend/generated/jar-resources/messageListConnector.js",
@@ -269,7 +273,6 @@
   "Frontend/generated/jar-resources/so/chart/chart.js",
   "Frontend/generated/jar-resources/src/pdf-print.js",
   "Frontend/generated/jar-resources/styles/toolbar-button.css",
-  "Frontend/generated/jar-resources/styles/wizard.css",
   "Frontend/generated/jar-resources/theme-util.js",
   "Frontend/generated/jar-resources/tooltip.ts",
   "Frontend/generated/jar-resources/vaadin-big-decimal-field.js",
@@ -292,6 +295,8 @@
   "flow-component-renderer.js": "f45de3d78e4719c2eb7aa09b48ec758e1e44e171cd4ad545ac9e33c3623dcfb1",
   "gridConnector.js": "8c50e6b738bd6028c37253090efade68bfcdef7e96e023ea7c912e31d7979e6f",
   "gridProConnector.js": "fc479c2e72c06a5d2c9ef73ac8120a9d6a3f1ef2b16a6fe459cf00a5170d54d4",
+  "konva-canvas.js": "de7bb4cd505dba9f1c6c210749674f359c807f8f18bbb63ccd53ad99fa3f5c97",
+  "konva.min.js": "369508fb40a1216b19708e6a1a22bd916c35959638313c9be9a2389699188e1a",
   "lit-renderer.ts": "afefa9f5fcb38260a0ff08bc044a5f591f242689ca3c7905130ad32df0476e7c",
   "menubarConnector.js": "8ddac5a87155632c516fd16c9402bd9a2fe6d965998169743744842aacdfd412",
   "messageListConnector.js": "480d7092b9fe42aab45756eb4287b2c4b0d6e5d38514e967543bc5c317948c18",
@@ -299,7 +304,6 @@
   "so/chart/chart.js": "0b74a2dd8e84a8aa0082a88020b43204cdef3eccb5757e0c1ec041ccf3e65e52",
   "src/pdf-print.js": "3329b8ed218b392b774ff779a49de030e0482a740fc1f3fd413be9a9835dd637",
   "styles/toolbar-button.css": "7b285d043fe8e1991814254962e53370aaebe703bbc53c69f9b9c2b4bf93fe0e",
-  "styles/wizard.css": "daec53ff36c455472f0ec7edf9f26ddbd3ab540b37e41746f48e4dab051cb1f7",
   "theme-util.js": "828ba8154b5d2d762ade6ed6f0614691c68db929b69c3c54250858a077960ba3",
   "tooltip.ts": "b7e9af67169277b94cab722d244340c3a9d463bcf4de2aaa84dddcebbd59447b",
   "vaadin-big-decimal-field.js": "0e0f4e3bb8928c708d02e77d07ede09525102440511942e3b24721702352f140",
@@ -310,7 +314,7 @@
  },
  "themeJsonContents": {},
  "entryScripts": [
-  "VAADIN/build/indexhtml-0e6e642c.js"
+  "VAADIN/build/indexhtml-95c25b7b.js"
  ],
  "webComponents": [],
  "cvdlModules": {
@@ -343,8 +347,8 @@
    "version": "24.2.0"
   }
  },
- "packageJsonHash": "18464628f61fcde0d23a214e13fb935f5ae18ce1d247afb7efef581a3288d69f",
+ "packageJsonHash": "ca86eaf4634471138e666ea8117f89f932558b73dd226631a7347e2d291c132c",
  "indexHtmlGenerated": [
-  "  <script type=\"module\" crossorigin src=\"./VAADIN/build/indexhtml-0e6e642c.js\"></script>"
+  "  <script type=\"module\" crossorigin src=\"./VAADIN/build/indexhtml-95c25b7b.js\"></script>"
  ]
 }

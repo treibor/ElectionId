@@ -19,7 +19,6 @@ import com.vaadin.flow.component.contextmenu.MenuItem;
 import com.vaadin.flow.component.contextmenu.SubMenu;
 import com.vaadin.flow.component.dialog.Dialog;
 import com.vaadin.flow.component.html.H2;
-import com.vaadin.flow.component.html.Image;
 import com.vaadin.flow.component.menubar.MenuBar;
 import com.vaadin.flow.component.menubar.MenuBarVariant;
 import com.vaadin.flow.component.notification.Notification;
@@ -27,6 +26,7 @@ import com.vaadin.flow.component.notification.Notification.Position;
 import com.vaadin.flow.component.orderedlayout.FlexComponent;
 import com.vaadin.flow.component.orderedlayout.HorizontalLayout;
 import com.vaadin.flow.component.orderedlayout.VerticalLayout;
+import com.vaadin.flow.component.sidenav.SideNavItem;
 import com.vaadin.flow.component.textfield.PasswordField;
 import com.vaadin.flow.component.textfield.TextField;
 
@@ -94,7 +94,8 @@ public class MainLayout extends AppLayout {
 		SideNavItemWithHelperText distMaster = new SideNavItemWithHelperText("", "Printing Master", MasterDistrictView.class,LineAwesomeIcon.KEYBOARD.create());
 		SideNavItemWithHelperText users = new SideNavItemWithHelperText("", "Users", UsersView.class,LineAwesomeIcon.PEOPLE_CARRY_SOLID.create());
 		SideNavItemWithHelperText districts = new SideNavItemWithHelperText("", "Districts", EntityView.class,LineAwesomeIcon.XBOX.create());
-		// Set visibility based on roles
+		SideNavItem designer=new SideNavItem("Designer", VaadinIDCardDesignerView.class, LineAwesomeIcon.DOCKER.create());
+        //nav.addItem(designer);
 		districts.setVisible(isSuperAdmin());
 		users.setVisible(isAdmin());
 		distMaster.setVisible(isAdmin());

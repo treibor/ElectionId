@@ -36,7 +36,10 @@ public class Employee {
 	@NotNull
 	private Office office;
 	//private Long office;
-	
+	@ManyToOne
+	@JoinColumn(name="event", referencedColumnName="id")
+	//@NotNull
+	private MasterEvent event;
 	@ManyToOne
 	@JoinColumn(name="cid")
 	@NotNull
@@ -196,6 +199,15 @@ public class Employee {
 		this.cell = cell;
 	}
 
+	public MasterEvent getEvent() {
+		return event;
+	}
+
+	public void setEvent(MasterEvent event) {
+		this.event = event;
+	}
+
+	
 	
 	
 }
