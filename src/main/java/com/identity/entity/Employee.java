@@ -38,7 +38,7 @@ public class Employee {
 	//private Long office;
 	@ManyToOne
 	@JoinColumn(name="event", referencedColumnName="id")
-	//@NotNull
+	@NotNull
 	private MasterEvent event;
 	@ManyToOne
 	@JoinColumn(name="cid")

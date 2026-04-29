@@ -92,6 +92,13 @@ public class DbService {
 	public List<MasterEvent> getEvents() {
 		return eventrepo.findByDistrict(getLoggedDistrict());
 	}
+	public List<MasterEvent> findEventsBydistrict() {
+		return eventrepo.findByDistrict(getLoggedDistrict());
+	}
+	public List<MasterEvent> findEventsBydistrictAndNotDefault() {
+		return eventrepo.findByDistrictAndIsdefaultOrderByEventNameAsc(getLoggedDistrict(),false);
+	}
+	
 	public List<State> findAllStates() {
 		return srepo.findAll();
 	}
@@ -176,10 +183,7 @@ public class DbService {
 		return crepo.findByDistrict(getLoggedDistrict());
 	}
 
-	public List<MasterEvent> findEventsBydistrict() {
-		return eventrepo.findByDistrict(getLoggedDistrict());
-	}
-
+	
 	public List<Office> findOfficesBydistrict() {
 		return orepo.findByDistrict(getLoggedDistrict());
 	}

@@ -15,6 +15,7 @@ import com.identity.entity.MasterEvent;
 public interface EventRepository extends JpaRepository<MasterEvent, Long>{
 	//Office findByoid(long eid);
 	List<MasterEvent> findByDistrict(District district);
+	List<MasterEvent> findByDistrictAndIsdefaultOrderByEventNameAsc(District district, boolean isdefault);
 	MasterEvent findByDistrictAndIsdefault(District district, boolean isdefault);
 	
 	@Modifying

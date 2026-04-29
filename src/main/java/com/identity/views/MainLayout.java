@@ -89,7 +89,7 @@ public class MainLayout extends AppLayout {
 		SideNavItemWithHelperText personnel = new SideNavItemWithHelperText("", "Personnel", EmployeeView.class,LineAwesomeIcon.USER_TIE_SOLID.create());
 		SideNavItemWithHelperText political = new SideNavItemWithHelperText("", "Political", PoliticalView.class,LineAwesomeIcon.GHOST_SOLID.create());
 		SideNavItemWithHelperText reports = new SideNavItemWithHelperText("", "Reports", PrintView2.class,LineAwesomeIcon.PRINT_SOLID.create());
-		SideNavItemWithHelperText master = new SideNavItemWithHelperText("", "Offices & Cells", MasterView.class,LineAwesomeIcon.BUILDING_SOLID.create());
+		SideNavItemWithHelperText master = new SideNavItemWithHelperText("", "Master", MasterView.class,LineAwesomeIcon.BUILDING_SOLID.create());
 		SideNavItemWithHelperText omaster = new SideNavItemWithHelperText("", "Political Master", PoliticalMasterView.class,LineAwesomeIcon.SNOWFLAKE.create());
 		SideNavItemWithHelperText distMaster = new SideNavItemWithHelperText("", "Printing Master", MasterDistrictView.class,LineAwesomeIcon.KEYBOARD.create());
 		SideNavItemWithHelperText users = new SideNavItemWithHelperText("", "Users", UsersView.class,LineAwesomeIcon.PEOPLE_CARRY_SOLID.create());
@@ -99,6 +99,8 @@ public class MainLayout extends AppLayout {
 		districts.setVisible(isSuperAdmin());
 		users.setVisible(isAdmin());
 		distMaster.setVisible(isAdmin());
+		omaster.setVisible(isAdmin());
+		master.setVisible(isAdmin());
 		// Add all the navigation items to the drawer content
 		drawerContent.add(personnel,political,  master,omaster, distMaster, reports, districts,users);
 

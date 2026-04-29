@@ -65,7 +65,10 @@ public class Political {
 	@JoinColumn(name="candId")
 	@NotNull
 	private Candidate candidate;
-	
+	@ManyToOne
+	@JoinColumn(name="event", referencedColumnName="id")
+	@NotNull
+	private MasterEvent event;
 	//@Lob    Don't use lob for postgres
 	private byte[] picture;
 	@ManyToOne
@@ -184,6 +187,14 @@ public class Political {
 				+ party + ", cell=" + cell + ", districtmaster=" + districtmaster + ", constituency=" + constituency
 				+ ", candidate=" + candidate + ", picture=" + Arrays.toString(picture) + ", district=" + district
 				+ ", state=" + state + "]";
+	}
+
+	public MasterEvent getEvent() {
+		return event;
+	}
+
+	public void setEvent(MasterEvent event) {
+		this.event = event;
 	}
 	
 	

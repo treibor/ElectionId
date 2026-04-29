@@ -24,7 +24,7 @@ import jakarta.annotation.security.RolesAllowed;
 
 @PageTitle("Master Data")
 @Route(value = "masterpolitical", layout=MainLayout.class)
-@RolesAllowed({ "USER", "SUPER", "ADMIN" })
+@RolesAllowed({ "SUPER", "ADMIN" })
 public class PoliticalMasterView extends VerticalLayout {
 	Grid <Party> partygrid=new Grid<>(Party.class);
 	Grid <Constituency> constgrid=new Grid<>(Constituency.class);

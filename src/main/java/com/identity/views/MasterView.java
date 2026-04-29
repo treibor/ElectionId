@@ -21,7 +21,7 @@ import jakarta.annotation.security.RolesAllowed;
 
 @PageTitle("Master Data")
 @Route(value = "master", layout=MainLayout.class)
-@RolesAllowed({"USER","SUPER", "ADMIN" })
+@RolesAllowed({"SUPER", "ADMIN" })
 public class MasterView extends VerticalLayout {
 	Grid <Office> officegrid=new Grid<>(Office.class);
 	Grid <Cell> cellgrid=new Grid<>(Cell.class);
@@ -115,7 +115,7 @@ public class MasterView extends VerticalLayout {
 		addOfficebutton.addClickListener(e-> addOffice());
 		addCellbutton.addClickListener(e-> addCell()); 
 		addEventbutton.addClickListener(e-> addEvent()); 
-		HorizontalLayout toolbar=new HorizontalLayout(addOfficebutton, addCellbutton, addEventbutton);
+		HorizontalLayout toolbar=new HorizontalLayout(addEventbutton,addOfficebutton, addCellbutton);
 		return toolbar;
 	}
 	
@@ -207,7 +207,7 @@ public class MasterView extends VerticalLayout {
 	}
 	private Component getContent() {
 		// TODO Auto-generated method stub
-		HorizontalLayout content=new HorizontalLayout(officegrid,cellgrid,eventgrid, form, cellform,eventform);
+		HorizontalLayout content=new HorizontalLayout(eventgrid,officegrid,cellgrid, form, cellform,eventform);
 		content.setFlexGrow(1, officegrid);
 		content.setFlexGrow(1, cellgrid);
 		content.setFlexGrow(1, eventgrid);

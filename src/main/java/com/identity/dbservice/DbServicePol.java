@@ -1,6 +1,7 @@
 package com.identity.dbservice;
 
 import java.time.LocalDate;
+import java.util.Collections;
 import java.util.List;
 import java.util.Optional;
 
@@ -14,6 +15,7 @@ import com.identity.entity.Constituency;
 import com.identity.entity.District;
 import com.identity.entity.Districtmaster;
 import com.identity.entity.Employee;
+import com.identity.entity.MasterEvent;
 import com.identity.entity.Office;
 import com.identity.entity.Party;
 import com.identity.entity.Political;
@@ -25,11 +27,13 @@ import com.identity.repository.ConstituencyRepository;
 import com.identity.repository.DistrictRepository;
 import com.identity.repository.DistrictmasterRepository;
 import com.identity.repository.EmployeeRepository;
+import com.identity.repository.EventRepository;
 import com.identity.repository.OfficeRepository;
 import com.identity.repository.PartyRepository;
 import com.identity.repository.PoliticalRepository;
 import com.identity.repository.StateRepository;
 import com.identity.repository.UsersRepository;
+import com.identity.util.NotificationUtil;
 import com.vaadin.flow.component.notification.Notification;
 import com.vaadin.flow.component.notification.Notification.Position;
 
@@ -43,8 +47,9 @@ public class DbServicePol {
 	private final UsersRepository urepo;
 	private final PoliticalRepository polrepo;
 	private final DistrictmasterRepository dmrepo;
+	private final EventRepository eventrepo;
 	Notification notify=new Notification();
-	public DbServicePol(CandidateRepository canrepo, ConstituencyRepository conrepo, PartyRepository prepo, DistrictRepository drepo, StateRepository srepo, UsersRepository urepo, PoliticalRepository polrepo,DistrictmasterRepository dmrepo) {
+	public DbServicePol(CandidateRepository canrepo, ConstituencyRepository conrepo, PartyRepository prepo, DistrictRepository drepo, StateRepository srepo, UsersRepository urepo, PoliticalRepository polrepo,DistrictmasterRepository dmrepo,EventRepository eventrepo) {
 		this.canrepo = canrepo;
 		this.conrepo = conrepo;
 		this.prepo = prepo;
@@ -53,7 +58,45 @@ public class DbServicePol {
 		this.urepo=urepo;
 		this.polrepo=polrepo;
 		this.dmrepo=dmrepo;
-		
+		this.eventrepo = eventrepo;
+	}
+	public Users getUser() {
+		return urepo.findByUserNameAndEnabled(getloggeduser(), true);
+	}
+	public boolean isAdmin() {
+		if (getUser().getRole().equals("ADMIN") || getUser().getRole().equals("SUPER")) {
+			return true;
+		} else {
+			return false;
+		}
+	}
+
+	public boolean isSuper() {
+		if (getUser().getRole().equals("SUPER")) {
+			return true;
+		} else {
+			return false;
+		}
+	}
+	public MasterEvent getDefaultEvent() {
+		MasterEvent event = eventrepo.findByDistrictAndIsdefault(getLoggedDistrict(), true);
+
+		if (event == null) {
+			NotificationUtil.showError("Event Has Not Been Initialized. Please contact your Administrator");
+			return null;
+		}
+
+		return event;
+	}
+	public List<MasterEvent> getEvents() {
+		return eventrepo.findByDistrict(getLoggedDistrict());
+	}
+	
+	public List<MasterEvent> findEventsBydistrict() {
+		return eventrepo.findByDistrict(getLoggedDistrict());
+	}
+	public List<MasterEvent> findEventsBydistrictAndNotDefault() {
+		return eventrepo.findByDistrictAndIsdefaultOrderByEventNameAsc(getLoggedDistrict(),false);
 	}
 	
 	public long getPoliticalCount() {
@@ -109,20 +152,55 @@ public class DbServicePol {
 	}
 	
 	public List<Political> findAllPoliticals(String filterText) {
-		if (filterText == null || filterText.isEmpty()) {
-			return findPoliticalBydistrict();
-		} else {
-			//return erepo.search(filterText, getLoggedDistrict());
-			return polrepo.search(filterText, getLoggedDistrict());
+		
+		District district = getLoggedDistrict();
+
+		MasterEvent event = getDefaultEvent();
+
+		if (event == null) {
+			return Collections.emptyList();
 		}
+
+		if (filterText == null || filterText.trim().isEmpty()) {
+			return polrepo.findByDistrictAndEventOrderBySerialNoDesc(district, event);
+		}
+
+		return polrepo.search(filterText.trim(), district, event);
+	}
+	public List<Political> findAllPoliticals(MasterEvent event, String filterText) {
+		District district = getLoggedDistrict();
+		if (event == null) {
+			return Collections.emptyList();
+		}
+
+		if (filterText == null || filterText.trim().isEmpty()) {
+			return polrepo.findByDistrictAndEventOrderBySerialNoDesc(district, event);
+		}
+
+		return polrepo.search(filterText.trim(), district, event);
 	}
 	public void savePolitical(Political political) {
 		if (political==null) {
 			Notification notification = Notification.show("No Record To Save");
 			return;
 		}
+		political.setEvent(getDefaultEvent());
 		polrepo.save(political);
 		
+	}
+	public void savePolitical(List<Political> employees) {
+		if (employees == null) {
+			Notification.show("No Employee To Save");
+			return;
+		}
+		if (getDefaultEvent() == null) {
+			NotificationUtil.showError("Event Has Not Been Initialized. Please contact your Administrator");
+			return;
+		}
+
+		//employee.setEvent(getDefaultEvent());
+		polrepo.saveAll(employees);
+
 	}
 	public void deletePolitical(Political political) {
 		try {
@@ -153,7 +231,7 @@ public class DbServicePol {
 		
 		try {
 			//System.out.println("Returned:"+erepo.findMaxSerial(getLoggedDistrict()));
-			return polrepo.findMaxSerial(getLoggedDistrict());
+			return polrepo.findMaxSerial(getLoggedDistrict(), getDefaultEvent());
 		} catch (NullPointerException e) {
 			//e.printStackTrace();
 			return (long) 0;

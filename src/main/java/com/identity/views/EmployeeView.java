@@ -44,7 +44,7 @@ public class EmployeeView extends VerticalLayout {
 	private static final long serialVersionUID = -5313017582568561763L;
 
 	Grid<Employee> grid = new Grid<>(Employee.class);
-	Grid<Employee> employeegrid = new Grid<>(Employee.class);
+	//Grid<Employee> employeegrid = new Grid<>(Employee.class);
 	ComboBox<MasterEvent> event = new ComboBox<>("Select Event");
 	TextField filterText = new TextField();
 	ComboBox<District> district=new ComboBox<District>();
@@ -116,7 +116,7 @@ public class EmployeeView extends VerticalLayout {
 	}
 	private Component getToolbar() {
 		// TODO Auto-generated method stub
-		filterText.setPlaceholder("Filter By Name");
+		filterText.setPlaceholder("Filter by Name, Designation or Office");
 		filterText.setClearButtonVisible(true);
 		filterText.setValueChangeMode(ValueChangeMode.LAZY);
 		filterText.addValueChangeListener(e-> updateList());
@@ -148,20 +148,20 @@ public class EmployeeView extends VerticalLayout {
 	    dialog.setWidth("90vw");
 	    dialog.setHeight("90vh");
 	    dialog.addClassName("history-dialog");
-	    dialog.setHeaderTitle("Import Data");
+	    dialog.setHeaderTitle("Import Data From Other Events");
 
-	    search.setHelperText("Enter Name");
+	    search.setPlaceholder("Filter by Name, Designation or Office");
 	    search.setClearButtonVisible(true);
 	    search.setValueChangeMode(ValueChangeMode.LAZY);
-
+	    Grid<Employee> employeegrid = new Grid<>(Employee.class);
 	    event.setWidthFull();
-	    event.setItems(dbservice.getEvents());
+	    event.setItems(dbservice.findEventsBydistrictAndNotDefault());
 	    event.setItemLabelGenerator(MasterEvent::getEventName);
-
+	    employeegrid.removeAllColumns();
 	    employeegrid.addClassName("contact-employeegrid");
 	    employeegrid.setSizeFull();
 	    employeegrid.setSelectionMode(Grid.SelectionMode.MULTI);
-	    employeegrid.removeAllColumns();
+	   
 
 	    employeegrid.addColumn(Employee::getSerialNo)
 	            .setSortable(true)
@@ -219,9 +219,9 @@ public class EmployeeView extends VerticalLayout {
 
 	    employeegrid.getColumns().forEach(col -> col.setAutoWidth(true));
 
-	    event.addValueChangeListener(e -> search());
+	    event.addValueChangeListener(e -> search(employeegrid));
 
-	    search.addValueChangeListener(e -> search());
+	    search.addValueChangeListener(e -> search(employeegrid));
 	    event.setWidth("350px");
 	    search.setWidthFull();
 
@@ -270,8 +270,8 @@ public class EmployeeView extends VerticalLayout {
 	        }
 
 	        importEmployees(defaultEvent, selectedEmployees);
-
-	        dialog.close();
+	        employeegrid.deselectAll();
+	        //dialog.close();
 	    });
 
 	    importButton.addThemeVariants(ButtonVariant.LUMO_PRIMARY);
@@ -287,7 +287,7 @@ public class EmployeeView extends VerticalLayout {
 
 	
 
-	public void search() {
+	public void search(Grid<Employee> employeegrid) {
 
 	    MasterEvent selectedEvent = event.getValue();
 
