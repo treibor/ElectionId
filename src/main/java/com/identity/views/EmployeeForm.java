@@ -31,7 +31,8 @@ import com.vaadin.flow.component.html.Div;
 import com.vaadin.flow.component.html.Image;
 import com.vaadin.flow.component.notification.Notification;
 import com.vaadin.flow.component.notification.Notification.Position;
-import com.vaadin.flow.component.orderedlayout.HorizontalLayout;
+import com.vaadin.flow.component.orderedlayout.FlexComponent;
+import com.vaadin.flow.component.orderedlayout.FlexLayout;
 import com.vaadin.flow.component.orderedlayout.VerticalLayout;
 import com.vaadin.flow.component.textfield.TextField;
 import com.vaadin.flow.component.upload.Upload;
@@ -157,21 +158,40 @@ public class EmployeeForm extends FormLayout {
 	}
 
 	private Component createButtonsLayout() {
-		// TODO Auto-generated method stub
-		save.addThemeVariants(ButtonVariant.LUMO_PRIMARY);
-		delete.addThemeVariants(ButtonVariant.LUMO_ERROR);
-		save.addClickShortcut(Key.ENTER);
-		save.addClickListener(event -> validatandSave());
-		delete.addClickListener(event -> fireEvent(new DeleteEvent(this, employee)));
-		//delete.setEnabled(admin);
-		close.addClickListener(event -> fireEvent(new CloseEvent(this)));
-		HorizontalLayout hl1=new HorizontalLayout(save, delete, close);
-		hl1.setFlexGrow(1, save);
-		hl1.setFlexGrow(1, delete);
-		hl1.setFlexGrow(1, close);
-		hl1.setWidthFull();
-		hl1.setWidthFull();
-		return hl1;
+
+	    save.addThemeVariants(ButtonVariant.LUMO_PRIMARY);
+	    delete.addThemeVariants(ButtonVariant.LUMO_ERROR);
+
+	    save.addClickShortcut(Key.ENTER);
+
+	    save.addClickListener(event -> validatandSave());
+	    delete.addClickListener(event -> fireEvent(new DeleteEvent(this, employee)));
+	    close.addClickListener(event -> fireEvent(new CloseEvent(this)));
+
+	    FlexLayout buttonsLayout = new FlexLayout(save, delete, close);
+
+	    buttonsLayout.setWidthFull();
+	    buttonsLayout.setFlexWrap(FlexLayout.FlexWrap.WRAP);
+	    buttonsLayout.setAlignItems(FlexComponent.Alignment.CENTER);
+
+	    buttonsLayout.getStyle()
+	            .set("gap", "var(--lumo-space-s)")
+	            .set("padding-top", "var(--lumo-space-m)");
+
+	    // Do NOT use setWidthFull() on the buttons
+	    save.setWidth(null);
+	    delete.setWidth(null);
+	    close.setWidth(null);
+
+	    save.getStyle().set("min-width", "120px");
+	    delete.getStyle().set("min-width", "120px");
+	    close.getStyle().set("min-width", "120px");
+
+	    buttonsLayout.setFlexGrow(1, save);
+	    buttonsLayout.setFlexGrow(1, delete);
+	    buttonsLayout.setFlexGrow(1, close);
+
+	    return buttonsLayout;
 	}
 
 	private void validatandSave() {

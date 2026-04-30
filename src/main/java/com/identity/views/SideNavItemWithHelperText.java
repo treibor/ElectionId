@@ -3,30 +3,58 @@ package com.identity.views;
 import com.vaadin.flow.component.Component;
 import com.vaadin.flow.component.html.Span;
 import com.vaadin.flow.component.orderedlayout.VerticalLayout;
-import com.vaadin.flow.component.sidenav.SideNavItem;
+import com.vaadin.flow.router.HighlightConditions;
+import com.vaadin.flow.router.RouterLink;
 
 public class SideNavItemWithHelperText extends VerticalLayout {
 
-    /**
-	 * 
-	 */
-	private static final long serialVersionUID = 1L;
+    private static final long serialVersionUID = 1L;
 
-	 public SideNavItemWithHelperText(String label, String helperText, Class<? extends Component> navigationTarget, Component icon) {
-	        // Set layout properties
-	        setSpacing(false);
-	        setPadding(false);
-	        setMargin(false);
-	        icon.getElement().getStyle().set("color", "var(--lumo-primary-text-color)");
-	        // Create the main SideNavItem
-	        SideNavItem mainItem = new SideNavItem(label, navigationTarget, icon);
+    public SideNavItemWithHelperText(
+            String label,
+            String helperText,
+            Class<? extends Component> navigationTarget,
+            Component icon
+    ) {
+        setPadding(false);
+        setSpacing(false);
+        setMargin(false);
+        setAlignItems(Alignment.CENTER);
+        setWidthFull();
 
-	        // Create the helper text
-	        Span helperTextSpan = new Span(helperText);
-	        helperTextSpan.getStyle().set("font-size", "var(--lumo-font-size-s)");
-	        helperTextSpan.getStyle().set("color", "var(--lumo-secondary-text-color)");
-	        
-	        // Add the main item and helper text to the layout
-	        add(mainItem, helperTextSpan);
-	    }
+        icon.getElement().getStyle()
+                .set("font-size", "16px")
+                .set("color", "inherit");
+
+        Span title = new Span(label);
+        title.getStyle()
+                .set("font-size", "var(--lumo-font-size-xs)")
+                .set("font-weight", "600")
+                .set("color", "inherit")
+                .set("text-align", "center")
+                .set("line-height", "1.2")
+                .set("white-space", "normal");
+
+        VerticalLayout tile = new VerticalLayout(icon, title);
+        tile.setPadding(false);
+        tile.setSpacing(false);
+        tile.setMargin(false);
+        tile.setAlignItems(Alignment.CENTER);
+
+        RouterLink link = new RouterLink();
+        link.setRoute(navigationTarget);
+        link.setHighlightCondition(HighlightConditions.sameLocation());
+
+        link.add(tile);
+        link.addClassName("drawer-tile-item");
+
+        link.getStyle()
+                .set("text-decoration", "none")
+                .set("color", "inherit")
+                .set("display", "flex")
+                .set("justify-content", "center")
+                .set("width", "100%");
+
+        add(link);
+    }
 }

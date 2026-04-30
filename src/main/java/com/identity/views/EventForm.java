@@ -60,6 +60,7 @@ public class EventForm extends FormLayout{
 		// TODO Auto-generated method stub
 		save.addThemeVariants(ButtonVariant.LUMO_PRIMARY);
 		save.addClickShortcut(Key.ENTER);
+		save.setEnabled(isadmin);
 		save.addClickListener(event-> validateandSave());
 		delete.addClickListener(event-> fireEvent(new DeleteEvent(this, masterevent)));
 		delete.setEnabled(isadmin);

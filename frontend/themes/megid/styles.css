@@ -17,6 +17,10 @@
 
     --lumo-tertiary-color: DarkCyan;
     --lumo-tertiary-text-color: DarkCyan;
+    --lumo-primary-color-10pct: rgba(0, 139, 139, 0.10);
+    --lumo-primary-color-50pct: rgba(0, 139, 139, 0.50);
+
+    --lumo-secondary-text-color: DarkCyan;
 }
 vaadin-grid::part(selected) {
     background-color: darkcyan !important; /* Change to Dark Cyan */
@@ -144,4 +148,88 @@ vaadin-radio-group.buttons vaadin-radio-button:hover::part(label) {
     padding: 1px;
     border-radius: 1px;
     z-index: 10;
+}
+
+.drawer-tile-item {
+    width: 100%;
+    padding: var(--lumo-space-s) var(--lumo-space-xs);
+    border-radius: var(--lumo-border-radius-m);
+    color: var(--lumo-secondary-text-color);
+    box-sizing: border-box;
+}
+
+.drawer-tile-item:hover {
+    background-color: var(--lumo-contrast-5pct);
+    color: var(--lumo-primary-text-color);
+}
+
+.drawer-tile-item[highlight] {
+    background-color: rgba(0, 139, 139, 0.12);
+    color: DarkCyan;
+}
+
+.drawer-tile-item[highlight] span,
+.drawer-tile-item[highlight] svg {
+    color: DarkCyan;
+}
+
+.drawer-tile-item[highlight] svg {
+    color: var(--lumo-primary-text-color);
+}
+
+
+.app-header {
+    height: 56px;
+    padding: 0 var(--lumo-space-m);
+    background: linear-gradient(90deg, DarkCyan, #006666);
+    color: white;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.18);
+}
+
+.app-header-title {
+    margin: 0;
+    color: white;
+    font-size: var(--lumo-font-size-l);
+    font-weight: 700;
+    letter-spacing: 0.3px;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.header-avatar {
+    border: 2px solid rgba(255, 255, 255, 0.85);
+}
+
+.header-menu {
+    color: white;
+}
+
+.app-header vaadin-drawer-toggle {
+    color: white;
+}
+
+@media (max-width: 600px) {
+    .app-header {
+        height: auto;
+        min-height: 56px;
+        padding: var(--lumo-space-xs) var(--lumo-space-s);
+    }
+
+    .app-header-title {
+        font-size: var(--lumo-font-size-m);
+        line-height: 1.2;
+        white-space: normal;
+    }
+}
+
+
+.transparent-avatar {
+    background-color: transparent;
+    border: 2px solid rgba(255, 255, 255, 0.85);
+}
+
+.transparent-avatar::part(abbr) {
+    background-color: transparent;
+    color: white;
 }

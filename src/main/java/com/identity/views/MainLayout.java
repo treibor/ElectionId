@@ -19,6 +19,7 @@ import com.vaadin.flow.component.contextmenu.MenuItem;
 import com.vaadin.flow.component.contextmenu.SubMenu;
 import com.vaadin.flow.component.dialog.Dialog;
 import com.vaadin.flow.component.html.H2;
+import com.vaadin.flow.component.html.Span;
 import com.vaadin.flow.component.menubar.MenuBar;
 import com.vaadin.flow.component.menubar.MenuBarVariant;
 import com.vaadin.flow.component.notification.Notification;
@@ -81,26 +82,27 @@ public class MainLayout extends AppLayout {
 			return false;
 		}
 	}
+	
 	private void createDrawer() {
 		// Create a vertical layout for the drawer content
 		VerticalLayout drawerContent = new VerticalLayout();
 
 		// Create navigation items with helper text and appropriate icons
-		SideNavItemWithHelperText personnel = new SideNavItemWithHelperText("", "Personnel", EmployeeView.class,LineAwesomeIcon.USER_TIE_SOLID.create());
-		SideNavItemWithHelperText political = new SideNavItemWithHelperText("", "Political", PoliticalView.class,LineAwesomeIcon.GHOST_SOLID.create());
-		SideNavItemWithHelperText reports = new SideNavItemWithHelperText("", "Reports", PrintView2.class,LineAwesomeIcon.PRINT_SOLID.create());
-		SideNavItemWithHelperText master = new SideNavItemWithHelperText("", "Master", MasterView.class,LineAwesomeIcon.BUILDING_SOLID.create());
-		SideNavItemWithHelperText omaster = new SideNavItemWithHelperText("", "Political Master", PoliticalMasterView.class,LineAwesomeIcon.SNOWFLAKE.create());
-		SideNavItemWithHelperText distMaster = new SideNavItemWithHelperText("", "Printing Master", MasterDistrictView.class,LineAwesomeIcon.KEYBOARD.create());
-		SideNavItemWithHelperText users = new SideNavItemWithHelperText("", "Users", UsersView.class,LineAwesomeIcon.PEOPLE_CARRY_SOLID.create());
-		SideNavItemWithHelperText districts = new SideNavItemWithHelperText("", "Districts", EntityView.class,LineAwesomeIcon.XBOX.create());
+		SideNavItemWithHelperText personnel = new SideNavItemWithHelperText( "Personnel","", EmployeeView.class,LineAwesomeIcon.SNOWMAN_SOLID.create());
+		SideNavItemWithHelperText political = new SideNavItemWithHelperText( "Political","", PoliticalView.class,LineAwesomeIcon.GHOST_SOLID.create());
+		SideNavItemWithHelperText reports = new SideNavItemWithHelperText( "Reports","", PrintView2.class,LineAwesomeIcon.PRINT_SOLID.create());
+		SideNavItemWithHelperText master = new SideNavItemWithHelperText( "Master","", MasterView.class,LineAwesomeIcon.BUILDING_SOLID.create());
+		SideNavItemWithHelperText omaster = new SideNavItemWithHelperText( "Political Master","", PoliticalMasterView.class,LineAwesomeIcon.SNOWFLAKE.create());
+		SideNavItemWithHelperText distMaster = new SideNavItemWithHelperText( "Printing Master","", MasterDistrictView.class,LineAwesomeIcon.KEYBOARD.create());
+		SideNavItemWithHelperText users = new SideNavItemWithHelperText( "Users","", UsersView.class,LineAwesomeIcon.PEOPLE_CARRY_SOLID.create());
+		SideNavItemWithHelperText districts = new SideNavItemWithHelperText( "Districts","", EntityView.class,LineAwesomeIcon.XBOX.create());
 		SideNavItem designer=new SideNavItem("Designer", VaadinIDCardDesignerView.class, LineAwesomeIcon.DOCKER.create());
         //nav.addItem(designer);
 		districts.setVisible(isSuperAdmin());
 		users.setVisible(isAdmin());
 		distMaster.setVisible(isAdmin());
-		omaster.setVisible(isAdmin());
-		master.setVisible(isAdmin());
+		//omaster.setVisible(isAdmin());
+		//master.setVisible(isAdmin());
 		// Add all the navigation items to the drawer content
 		drawerContent.add(personnel,political,  master,omaster, distMaster, reports, districts,users);
 
@@ -109,30 +111,54 @@ public class MainLayout extends AppLayout {
 	}
 
 	private void createHeader() {
-		Avatar avatarImage = new Avatar(dbservice.getloggeduser());
-		avatarImage.setColorIndex(2);
-		// avatarImage.addThemeVariants(AvatarVariant.LUMO_LARGE);
-		MenuBar menuBar = new MenuBar();
-		menuBar.addThemeVariants(MenuBarVariant.LUMO_TERTIARY_INLINE);
-		MenuItem item = menuBar.addItem(avatarImage);
-		SubMenu subMenu = item.getSubMenu();
-		subMenu.addItem("Change Password", e -> openPasswordDialog());
-		subMenu.addItem("Create User", e -> createUser());
-		subMenu.addItem("Logout", e -> securityService.logout());
-		H2 logo = new H2("Identity Card Management : "
 
-				+ dbservice.getLoggedDistrict().getDistrictName() +", "
-				+ dbservice.getLoggedState().getStateName());
-		logo.addClassNames("text-s", "m-m");
-		// Image img = new Image("images/logo.png", "placeholder plant");
-		HorizontalLayout header = new HorizontalLayout(new DrawerToggle(), logo, menuBar);
-		header.setDefaultVerticalComponentAlignment(FlexComponent.Alignment.CENTER);
-		header.expand(logo);
-		header.setWidthFull();
-		header.addClassNames("py-0", "px-m");
-		addToNavbar(header);
+	    Avatar avatarImage = new Avatar(dbservice.getloggeduser());
+	    //avatarImage.setColorIndex(2);
+	    avatarImage.addClassName("header-avatar");
+	    avatarImage.addClassName("transparent-avatar");
+	    MenuBar menuBar = new MenuBar();
+	    menuBar.addThemeVariants(MenuBarVariant.LUMO_TERTIARY_INLINE);
+	    menuBar.addClassName("header-menu");
+
+	    MenuItem item = menuBar.addItem(avatarImage);
+	    SubMenu subMenu = item.getSubMenu();
+
+	    subMenu.addItem("Change Password", e -> openPasswordDialog());
+	    subMenu.addItem("Create User", e -> createUser()).setVisible(isAdmin());
+	    subMenu.addItem("Logout", e -> securityService.logout());
+
+	    Span appTitle = new Span("Identity Card Management");
+	    appTitle.addClassName("app-header-title");
+
+	    Span locationTitle = new Span(
+	            dbservice.getLoggedDistrict().getDistrictName()
+	                    + " || "
+	                    + dbservice.getDefaultEvent().getEventName()
+	    );
+	    locationTitle.addClassName("app-header-subtitle");
+
+	    VerticalLayout titleBlock = new VerticalLayout(appTitle, locationTitle);
+	    titleBlock.setPadding(false);
+	    titleBlock.setSpacing(false);
+	    titleBlock.setMargin(false);
+	    titleBlock.setAlignItems(FlexComponent.Alignment.START);
+	    titleBlock.addClassName("app-header-title-block");
+
+	    HorizontalLayout header = new HorizontalLayout(
+	            new DrawerToggle(),
+	            titleBlock,
+	            menuBar
+	    );
+
+	    header.setDefaultVerticalComponentAlignment(FlexComponent.Alignment.CENTER);
+	    header.expand(titleBlock);
+	    header.setWidthFull();
+	    header.setPadding(false);
+	    header.setSpacing(true);
+	    header.addClassName("app-header");
+
+	    addToNavbar(header);
 	}
-
 	private void createUser() {
 		// TODO Auto-generated method stub
 		if (dbservice.getUser().getRole().equals("ADMIN") || dbservice.getUser().getRole().equals("SUPER")) {

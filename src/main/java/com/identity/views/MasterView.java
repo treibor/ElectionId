@@ -21,7 +21,7 @@ import jakarta.annotation.security.RolesAllowed;
 
 @PageTitle("Master Data")
 @Route(value = "master", layout=MainLayout.class)
-@RolesAllowed({"SUPER", "ADMIN" })
+@RolesAllowed({"USER","SUPER", "ADMIN" })
 public class MasterView extends VerticalLayout {
 	Grid <Office> officegrid=new Grid<>(Office.class);
 	Grid <Cell> cellgrid=new Grid<>(Cell.class);
@@ -137,7 +137,7 @@ public class MasterView extends VerticalLayout {
 		 closeCellEditor();
 	 }
 	 public void deleteEvent(EventForm.DeleteEvent event) {
-			//dbservice.deleteOffice(event.getOffice());
+			dbservice.deleteEvent(event.getMasterEvent());
 			updateList();
 			closeOfficeEditor();
 		}

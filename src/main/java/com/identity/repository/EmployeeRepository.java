@@ -19,6 +19,7 @@ import com.identity.entity.Office;
 public interface EmployeeRepository extends JpaRepository<Employee, Long> {
 	// List<Employee> findAll();
 	long countBydistrict(District district);
+	long countBydistrictAndEvent(District district, MasterEvent event);
 	List<Employee> findBylastName(String lname);
 	List<Employee> findBydistrict(District district);
 	List<Employee> findByDistrictAndEventOrderBySerialNoDesc(District district, MasterEvent event);
@@ -47,18 +48,18 @@ public interface EmployeeRepository extends JpaRepository<Employee, Long> {
 /*
 	
 */	
-	@Query("select  c, d, e,f,g  from Employee c join c.office d join c.cell e  join c.district f join f.state g join c.districtmaster h where c.office=:office and c.district=:district and c.districtmaster=:districtmaster order by c.serialNo ASC")
-	List<Employee> getreportQueryOffice(@Param("office") Office office, @Param("district") District district,  @Param ("districtmaster") Districtmaster districtmaster);
+	@Query("select  c, d, e,f,g  from Employee c join c.office d join c.cell e  join c.district f join f.state g join c.districtmaster h where c.office=:office and c.district=:district and c.districtmaster=:districtmaster and  c.event=:masterEvent order by c.serialNo ASC")
+	List<Employee> getreportQueryOffice(@Param("office") Office office, @Param("district") District district,  @Param ("districtmaster") Districtmaster districtmaster ,@Param("masterEvent") MasterEvent event);
 	
-	@Query("select  c, d, e,f,g  from Employee c join c.office d join c.cell e  join c.district f join f.state g join c.districtmaster h where c.cell=:cell and c.district=:district and c.districtmaster=:districtmaster order by c.serialNo ASC")
-	List<Employee> getreportQueryCell(@Param("cell") Cell cell, @Param("district") District district,  @Param ("districtmaster") Districtmaster districtmaster);
-	
-	
-	@Query("select  c, d, e,f,g,h  from Employee c join c.office d join c.cell e  join c.district f join f.state g join c.districtmaster h where c.serialNo>= :from and c.serialNo<= :to and c.district= :district and c.districtmaster=:districtmaster order by c.serialNo ASC")
-	List<Employee> getreportQueryRange(@Param ("district") District district, @Param ("from") long from,  @Param ("to") long to,  @Param ("districtmaster") Districtmaster districtmaster);
+	@Query("select  c, d, e,f,g  from Employee c join c.office d join c.cell e  join c.district f join f.state g join c.districtmaster h where c.cell=:cell and c.district=:district and c.districtmaster=:districtmaster and  c.event=:masterEvent order by c.serialNo ASC")
+	List<Employee> getreportQueryCell(@Param("cell") Cell cell, @Param("district") District district,  @Param ("districtmaster") Districtmaster districtmaster,@Param("masterEvent") MasterEvent event);
 	
 	
-	@Query("select  c, d, e,f,g  from Employee c join c.office d join c.cell e  join c.district f join f.state g join c.districtmaster h where c.enteredOn >= :from and c.enteredOn<=:to and c.district=:district and c.districtmaster=:districtmaster order by c.serialNo ASC")
-	List<Employee> getreportQueryDates(@Param ("district") District district, @Param ("from") LocalDate fromRange, @Param ("to") LocalDate toRange,  @Param ("districtmaster") Districtmaster districtmaster);
+	@Query("select  c, d, e,f,g,h  from Employee c join c.office d join c.cell e  join c.district f join f.state g join c.districtmaster h where c.serialNo>= :from and c.serialNo<= :to and c.district= :district and c.districtmaster=:districtmaster and  c.event=:masterEvent order by c.serialNo ASC")
+	List<Employee> getreportQueryRange(@Param ("district") District district, @Param ("from") long from,  @Param ("to") long to,  @Param ("districtmaster") Districtmaster districtmaster,@Param("masterEvent") MasterEvent event);
+	
+	
+	@Query("select  c, d, e,f,g  from Employee c join c.office d join c.cell e  join c.district f join f.state g join c.districtmaster h where c.enteredOn >= :from and c.enteredOn<=:to and c.district=:district and c.districtmaster=:districtmaster and  c.event=:masterEvent order by c.serialNo ASC")
+	List<Employee> getreportQueryDates(@Param ("district") District district, @Param ("from") LocalDate fromRange, @Param ("to") LocalDate toRange,  @Param ("districtmaster") Districtmaster districtmaster,@Param("masterEvent") MasterEvent event);
 	//List<Employee> getreportQueryRange(Districtmaster districtMaster, long fromSerial, long toSerial);
 }

@@ -2,7 +2,6 @@ package com.identity.views;
 
 import java.io.ByteArrayInputStream;
 import java.time.LocalDate;
-import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Set;
@@ -18,9 +17,12 @@ import com.vaadin.flow.component.button.ButtonVariant;
 import com.vaadin.flow.component.combobox.ComboBox;
 import com.vaadin.flow.component.dialog.Dialog;
 import com.vaadin.flow.component.grid.Grid;
+import com.vaadin.flow.component.grid.GridVariant;
 import com.vaadin.flow.component.html.Image;
 import com.vaadin.flow.component.icon.Icon;
 import com.vaadin.flow.component.icon.VaadinIcon;
+import com.vaadin.flow.component.orderedlayout.FlexComponent;
+import com.vaadin.flow.component.orderedlayout.FlexLayout;
 import com.vaadin.flow.component.orderedlayout.HorizontalLayout;
 import com.vaadin.flow.component.orderedlayout.VerticalLayout;
 import com.vaadin.flow.component.textfield.TextField;
@@ -115,27 +117,55 @@ public class EmployeeView extends VerticalLayout {
 		configureGrid();
 	}
 	private Component getToolbar() {
-		// TODO Auto-generated method stub
-		filterText.setPlaceholder("Filter by Name, Designation or Office");
-		filterText.setClearButtonVisible(true);
-		filterText.setValueChangeMode(ValueChangeMode.LAZY);
-		filterText.addValueChangeListener(e-> updateList());
-		filterText.setWidth("350px");
-		district.setItems(dbservice.getDistricts());
-		district.setItemLabelGenerator(District::getDistrictName);
-		district.addValueChangeListener(e->getDistrictData(district.getValue()));
-		Button addButton=new  Button("Add New");
-		Button impButton=new  Button("Import");
-		Button expButton=new  Button("Print");
-		addButton.setIcon(new Icon(VaadinIcon.PLUS_CIRCLE));
-		expButton.setIcon(new Icon(VaadinIcon.EXTERNAL_LINK));
-		impButton.setIcon(new Icon(VaadinIcon.HARDDRIVE));
-		addButton.addClickListener(e-> addContact());
-		expButton.addClickListener(e-> export());
-		impButton.addClickListener(e-> openImportDialog());
-		district.setVisible(dbservice.isSuper());
-		HorizontalLayout toolbar=new HorizontalLayout(filterText, addButton,impButton, expButton, district);
-		return toolbar;
+
+	    filterText.setPlaceholder("Filter by Name, Designation or Office");
+	    filterText.setClearButtonVisible(true);
+	    filterText.setValueChangeMode(ValueChangeMode.LAZY);
+	    filterText.addValueChangeListener(e -> updateList());
+
+	    // Important: responsive width
+	    filterText.setWidthFull();
+	    filterText.setMaxWidth("350px");
+
+	    district.setItems(dbservice.getDistricts());
+	    district.setItemLabelGenerator(District::getDistrictName);
+	    district.addValueChangeListener(e -> getDistrictData(district.getValue()));
+	    district.setVisible(dbservice.isSuper());
+
+	    district.setWidthFull();
+	    district.setMaxWidth("250px");
+
+	    Button addButton = new Button("Add New");
+	    Button impButton = new Button("Import");
+	    Button expButton = new Button("Print");
+
+	    addButton.setIcon(new Icon(VaadinIcon.PLUS_CIRCLE));
+	    expButton.setIcon(new Icon(VaadinIcon.EXTERNAL_LINK));
+	    impButton.setIcon(new Icon(VaadinIcon.HARDDRIVE));
+
+	    addButton.addClickListener(e -> addContact());
+	    expButton.addClickListener(e -> export());
+	    impButton.addClickListener(e -> openImportDialog());
+
+	    FlexLayout toolbar = new FlexLayout(
+	            filterText,
+	            addButton,
+	            impButton,
+	            expButton,
+	            district
+	    );
+
+	    toolbar.setWidthFull();
+	    toolbar.setFlexWrap(FlexLayout.FlexWrap.WRAP);
+	    toolbar.setAlignItems(FlexComponent.Alignment.BASELINE);
+	    toolbar.getStyle()
+	            .set("gap", "var(--lumo-space-s)")
+	            .set("padding", "var(--lumo-space-s) 0");
+
+	    // Let search field take available space on wide screens
+	    toolbar.setFlexGrow(1, filterText);
+
+	    return toolbar;
 	}
 	private void getDistrictData(District district) {
 		// TODO Auto-generated method stub
@@ -388,7 +418,8 @@ public class EmployeeView extends VerticalLayout {
     	grid.addColumn(employee -> employee.getEnteredBy()).setSortable(true).setResizable(true).setHeader("Entered By");
     	grid.addColumn(employee -> employee.getDistrict().getDistrictName()).setSortable(true).setResizable(true).setHeader("District").setVisible(dbservice.isSuper());
     	//grid.addColumn();
-    	//grid.addThemeVariants(GridVariant.LUMO_ROW_STRIPES);
+    	grid.addThemeVariants(GridVariant.LUMO_ROW_STRIPES,GridVariant.LUMO_WRAP_CELL_CONTENT);
+    	//grid.addThemeVariants(GridVariant.LUMO_WRAP_CELL_CONTENT);
     	//grid.addColumns("enteredOn", "enteredBy");
     	grid.getColumns().forEach(col-> col.setAutoWidth(true));
 		grid.asSingleSelect().addValueChangeListener(e-> editContact(e.getValue()));

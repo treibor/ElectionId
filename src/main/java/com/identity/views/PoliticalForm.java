@@ -33,6 +33,7 @@ import com.vaadin.flow.component.html.Div;
 import com.vaadin.flow.component.html.Image;
 import com.vaadin.flow.component.notification.Notification;
 import com.vaadin.flow.component.notification.Notification.Position;
+import com.vaadin.flow.component.orderedlayout.FlexComponent;
 import com.vaadin.flow.component.orderedlayout.HorizontalLayout;
 import com.vaadin.flow.component.orderedlayout.VerticalLayout;
 import com.vaadin.flow.component.textfield.TextField;
@@ -179,15 +180,35 @@ public class PoliticalForm extends FormLayout {
 	}
 
 	private Component createButtonsLayout() {
-		// TODO Auto-generated method stub
-		
-		save.addThemeVariants(ButtonVariant.LUMO_PRIMARY);
-		save.addClickShortcut(Key.ENTER);
-		delete.addThemeVariants(ButtonVariant.LUMO_ERROR);
-		save.addClickListener(event -> validatandSave());
-		delete.addClickListener(event -> fireEvent(new DeleteEvent(this, political)));
-		close.addClickListener(event -> fireEvent(new CloseEvent(this)));
-		return new HorizontalLayout(save, delete, close);
+
+	    save.addThemeVariants(ButtonVariant.LUMO_PRIMARY);
+	    save.addClickShortcut(Key.ENTER);
+
+	    delete.addThemeVariants(ButtonVariant.LUMO_ERROR);
+
+	    save.addClickListener(event -> validatandSave());
+	    delete.addClickListener(event -> fireEvent(new DeleteEvent(this, political)));
+	    close.addClickListener(event -> fireEvent(new CloseEvent(this)));
+
+	    HorizontalLayout buttonsLayout = new HorizontalLayout(save, delete, close);
+
+	    buttonsLayout.setWidthFull();
+	    buttonsLayout.setSpacing(true);
+	    buttonsLayout.setPadding(false);
+	    buttonsLayout.setAlignItems(FlexComponent.Alignment.CENTER);
+
+	    // Responsive wrapping
+	    buttonsLayout.getStyle()
+	            .set("flex-wrap", "wrap")
+	            .set("gap", "var(--lumo-space-s)")
+	            .set("padding-top", "var(--lumo-space-m)");
+
+	    // Fixed / minimum button width
+	    save.setWidth("120px");
+	    delete.setWidth("120px");
+	    close.setWidth("120px");
+
+	    return buttonsLayout;
 	}
 
 	private void validatandSave() {

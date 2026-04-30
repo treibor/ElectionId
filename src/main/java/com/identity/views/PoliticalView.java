@@ -25,6 +25,8 @@ import com.vaadin.flow.component.grid.GridVariant;
 import com.vaadin.flow.component.html.Image;
 import com.vaadin.flow.component.icon.Icon;
 import com.vaadin.flow.component.icon.VaadinIcon;
+import com.vaadin.flow.component.orderedlayout.FlexComponent;
+import com.vaadin.flow.component.orderedlayout.FlexLayout;
 import com.vaadin.flow.component.orderedlayout.HorizontalLayout;
 import com.vaadin.flow.component.orderedlayout.VerticalLayout;
 import com.vaadin.flow.component.textfield.TextField;
@@ -84,7 +86,7 @@ public class PoliticalView extends VerticalLayout {
 	private void configureForm() {
 		// TODO Auto-generated method stub
 		form=new PoliticalForm(dbservice.findPartyBydistrict(), dbservice.findConstBydistrict(), dbservice.findCandidateBydistrict(),dbservic.findCellsBydistrict(), dbservice, dbservic);
-		form.setWidth("25em");
+		form.setWidth("30%");
 		form.addListener(PoliticalForm.SaveEvent.class, this::savePolitical);
 		form.addListener(PoliticalForm.DeleteEvent.class, this::deletePolitical);
 		form.addListener(PoliticalForm.CloseEvent.class, e->closeEditor());
@@ -123,7 +125,26 @@ public class PoliticalView extends VerticalLayout {
 		expButton.addClickListener(e-> export());
 		impButton.setIcon(new Icon(VaadinIcon.HARDDRIVE));
 		impButton.addClickListener(e-> openImportDialog());
-		HorizontalLayout toolbar=new HorizontalLayout(filterText, addButton, impButton,expButton);
+		//HorizontalLayout toolbar=new HorizontalLayout(filterText, addButton, impButton,expButton);
+		FlexLayout toolbar = new FlexLayout(
+	            filterText,
+	            addButton,
+	            impButton,
+	            expButton
+	      
+	    );
+
+	    toolbar.setWidthFull();
+	    toolbar.setFlexWrap(FlexLayout.FlexWrap.WRAP);
+	    toolbar.setAlignItems(FlexComponent.Alignment.BASELINE);
+	    toolbar.getStyle()
+	            .set("gap", "var(--lumo-space-s)")
+	            .set("padding", "var(--lumo-space-s) 0");
+
+	    // Let search field take available space on wide screens
+	    toolbar.setFlexGrow(1, filterText);
+
+	    
 		return toolbar;
 	}
 	
@@ -381,7 +402,7 @@ public class PoliticalView extends VerticalLayout {
     	grid.addColumn(political -> political.getEnteredOn()).setHeader("Entered On").setSortable(true).setResizable(true);
     	//grid.addColumns("enteredOn", "enteredBy");
     	//grid.addThemeVariants(GridVariant.LUMO_COLUMN_BORDERS);
-    	grid.addThemeVariants(GridVariant.LUMO_ROW_STRIPES);
+    	grid.addThemeVariants(GridVariant.LUMO_ROW_STRIPES,GridVariant.LUMO_WRAP_CELL_CONTENT);
     	grid.getColumns().forEach(col-> col.setAutoWidth(true));
 		grid.asSingleSelect().addValueChangeListener(e-> editContact(e.getValue()));
 	}

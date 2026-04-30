@@ -100,7 +100,7 @@ public class DbServicePol {
 	}
 	
 	public long getPoliticalCount() {
-		return polrepo.countBydistrict(getLoggedDistrict());
+		return polrepo.countBydistrictAndEvent(getLoggedDistrict(), getDefaultEvent());
 	}
 	public Districtmaster getDistrictMasterByLabel(String label) {
 		return dmrepo.findByDistrictAndMasterLabel(getLoggedDistrict(), label);
@@ -129,19 +129,19 @@ public class DbServicePol {
 	
 	//**** Begin Report Query
 	public List <Political> findPoliticalByRange(long from, long to, String type){
-		return polrepo.getRangeQuery(from, to, getDistrictMaster(), getDistrictMasterByLabel(type));
+		return polrepo.getRangeQuery(from, to, getDistrictMaster(), getDistrictMasterByLabel(type), getDefaultEvent());
 	}
 	public List <Political> findPoliticalByDate(LocalDate from, LocalDate to, String type){
-		return polrepo.getDatesQuery(from, to, getDistrictMaster(), getDistrictMasterByLabel(type));
+		return polrepo.getDatesQuery(from, to, getDistrictMaster(), getDistrictMasterByLabel(type), getDefaultEvent());
 	}
 	public List <Political> findPoliticalByParty(Party party, String type){
-		return polrepo.getPartyQuery(party, getDistrictMaster(), getDistrictMasterByLabel(type));
+		return polrepo.getPartyQuery(party, getDistrictMaster(), getDistrictMasterByLabel(type), getDefaultEvent());
 	}
 	public List <Political> findPoliticalByCandidate(Candidate candi, String type){
-		return polrepo.getCandiQuery(candi, getDistrictMaster(), getDistrictMasterByLabel(type));
+		return polrepo.getCandiQuery(candi, getDistrictMaster(), getDistrictMasterByLabel(type), getDefaultEvent());
 	}
 	public List <Political> findPoliticalByConstituency(Constituency consti, String type){
-		return polrepo.getConstiQuery(consti, getDistrictMaster(), getDistrictMasterByLabel(type));
+		return polrepo.getConstiQuery(consti, getDistrictMaster(), getDistrictMasterByLabel(type), getDefaultEvent());
 	}
 	
 	//****** End Report Query

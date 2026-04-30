@@ -60,7 +60,7 @@ public class DbService {
 	 */
 
 	public long getEmployeeCount() {
-		return erepo.countBydistrict(getLoggedDistrict());
+		return erepo.countBydistrictAndEvent(getLoggedDistrict(), getDefaultEvent());
 	}
 
 	public boolean isAdmin() {
@@ -107,30 +107,29 @@ public class DbService {
 		return drepo.findAll();
 	}
 
+	
+	
+	//Report Queries
+	
 	public List<Employee> getEmployeesByOffice(Office office, String label) {
-		return erepo.getreportQueryOffice(office, getLoggedDistrict(), getDistrictMasterByLabel(label));
+		return erepo.getreportQueryOffice(office, getLoggedDistrict(), getDistrictMasterByLabel(label), getDefaultEvent());
 
 	}
 
 	public List<Employee> getEmployeesByCell(Cell cell, String label) {
-		return erepo.getreportQueryCell(cell, getLoggedDistrict(), getDistrictMasterByLabel(label));
+		return erepo.getreportQueryCell(cell, getLoggedDistrict(), getDistrictMasterByLabel(label), getDefaultEvent());
 	}
 
 	public List<Employee> getEmployeesBetweenSerials(long fromSerial, long toSerial, String label) {
-		// return erepo.findBySerialNoBetweenAndDistrict(fromSerial, toSerial,
-		// getLoggedDistrict());
-		return erepo.getreportQueryRange(getLoggedDistrict(), fromSerial, toSerial, getDistrictMasterByLabel(label));
+		return erepo.getreportQueryRange(getLoggedDistrict(), fromSerial, toSerial, getDistrictMasterByLabel(label), getDefaultEvent());
 	}
 
 	public List<Employee> getEmployeesBetweenDates(LocalDate fromSerial, LocalDate toSerial, String label) {
-		return erepo.getreportQueryDates(getLoggedDistrict(), fromSerial, toSerial, getDistrictMasterByLabel(label));
+		return erepo.getreportQueryDates(getLoggedDistrict(), fromSerial, toSerial, getDistrictMasterByLabel(label), getDefaultEvent());
 	}
 
-	/*
-	 * public Districtmaster getDistrictMaster() { return
-	 * dmrepo.findByDistrict(getLoggedDistrict()); //return null; }
-	 */
-
+	
+	
 	public Districtmaster getDistrictMasterDistrict() {
 		return dmrepo.findByDistrict(getLoggedDistrict());
 		// return null;
@@ -350,7 +349,14 @@ public class DbService {
 		}
 		eventrepo.save(event);
 	}
-
+	public void deleteEvent(MasterEvent event) {
+		try {
+			eventrepo.delete(event);
+		} catch (Exception e) {
+			// TODO: handle exception
+			Notification.show("Unable to Delete Office. Error Code: " + e, 5000, Position.TOP_CENTER);
+		}
+	}
 	public void deleteCell(Cell cell) {
 		try {
 			crepo.delete(cell);
