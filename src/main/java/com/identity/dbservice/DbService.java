@@ -5,6 +5,7 @@ import java.util.Collections;
 import java.util.List;
 import java.util.Optional;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
@@ -17,6 +18,7 @@ import com.identity.entity.MasterEvent;
 import com.identity.entity.Office;
 import com.identity.entity.State;
 import com.identity.entity.Users;
+import com.identity.repository.AuditRepository;
 import com.identity.repository.CellRepository;
 import com.identity.repository.DistrictmasterRepository;
 import com.identity.repository.DistrictRepository;
@@ -33,6 +35,8 @@ import jakarta.transaction.Transactional;
 
 @Service
 public class DbService {
+	@Autowired
+	AuditService auditService;
 	private final EmployeeRepository erepo;
 	private final OfficeRepository orepo;
 	private final CellRepository crepo;
@@ -41,10 +45,11 @@ public class DbService {
 	private final UsersRepository urepo;
 	private final DistrictmasterRepository dmrepo;
 	private final EventRepository eventrepo;
+	private final AuditRepository auditrepo;
 
 	// Notification notify=new Notification();
 	public DbService(EmployeeRepository erepo, OfficeRepository orepo, CellRepository crepo, DistrictRepository drepo,
-			StateRepository srepo, UsersRepository urepo, DistrictmasterRepository dmrepo, EventRepository eventrepo) {
+			StateRepository srepo, UsersRepository urepo, DistrictmasterRepository dmrepo, EventRepository eventrepo,AuditRepository auditrepo) {
 		this.erepo = erepo;
 		this.orepo = orepo;
 		this.crepo = crepo;
@@ -53,6 +58,7 @@ public class DbService {
 		this.urepo = urepo;
 		this.dmrepo = dmrepo;
 		this.eventrepo = eventrepo;
+		this.auditrepo=auditrepo;
 	}
 	/*
 	 * public List<Employee> getEmployeesForReportByRange(long from, long to){
@@ -262,9 +268,7 @@ public class DbService {
 		return erepo.count();
 	}
 
-	public void deleteEmployee(Employee employee) {
-		erepo.delete(employee);
-	}
+	
 
 	public void saveUser(Users user) {
 		if (user == null) {
@@ -278,7 +282,16 @@ public class DbService {
 	public long getMaxUserId() {
 		return urepo.findMaxSerial();
 	}
-
+	public void deleteEmployee(Employee employee) {
+		try {
+			auditService.saveAudit("Delete", "Personnel", employee.getEid()+" - " +employee.getFirstName()+" - "+employee.getLastName(), getloggeduser());
+			erepo.delete(employee);
+		} catch (Exception e) {
+			// TODO: handle exception
+			Notification.show("Unable to Delete Personnel. Error Code: " + e, 5000, Position.TOP_CENTER);
+		}
+		
+	}
 	public void saveEmployee(Employee employee) {
 		if (employee == null) {
 			Notification.show("No Employee To Save");
@@ -291,21 +304,33 @@ public class DbService {
 
 		employee.setEvent(getDefaultEvent());
 		erepo.save(employee);
-
+		auditService.saveAudit("Save", "Personnel", employee.getEid()+" - " +employee.getFirstName()+" - "+employee.getLastName(), getloggeduser());
 	}
 	public void saveEmployee(List<Employee> employees) {
-		if (employees == null) {
-			Notification.show("No Employee To Save");
-			return;
-		}
-		if (getDefaultEvent() == null) {
-			NotificationUtil.showError("Event Has Not Been Initialized. Please contact your Administrator");
-			return;
-		}
+	    if (employees == null || employees.isEmpty()) {
+	        Notification.show("No Employee To Save");
+	        return;
+	    }
 
-		//employee.setEvent(getDefaultEvent());
-		erepo.saveAll(employees);
+	    if (getDefaultEvent() == null) {
+	        NotificationUtil.showError("Event Has Not Been Initialized. Please contact your Administrator");
+	        return;
+	    }
 
+	    for (Employee employee : employees) {
+	        employee.setEvent(getDefaultEvent());
+	    }
+
+	    List<Employee> savedEmployees = erepo.saveAll(employees);
+
+	    for (Employee employee : savedEmployees) {
+	        auditService.saveAudit(
+	                "Bulk Save",
+	                "Personnel",
+	                employee.getEid() + " - " + employee.getFirstName() + " - " + employee.getLastName(),
+	                getloggeduser()
+	        );
+	    }
 	}
 
 	public void saveOffice(Office office) {
@@ -314,11 +339,12 @@ public class DbService {
 			return;
 		}
 		orepo.save(office);
-
+		auditService.saveAudit("Save", "Office", office.getOid()+" - " +office.getOfficeName(), getloggeduser());
 	}
 
 	public void deleteOffice(Office office) {
 		try {
+			auditService.saveAudit("Delete", "Office", office.getOid()+" - " +office.getOfficeName(), getloggeduser());
 			orepo.delete(office);
 		} catch (Exception e) {
 			// TODO: handle exception
@@ -336,8 +362,18 @@ public class DbService {
 			return;
 		}
 		crepo.save(cell);
+		auditService.saveAudit("Save", "Cell", cell.getCid()+" - " +cell.getCellName(), getloggeduser());
 	}
-
+	public void deleteCell(Cell cell) {
+		try {
+			auditService.saveAudit("Delete", "Cell", cell.getCid()+" - " +cell.getCellName(), getloggeduser());
+			crepo.delete(cell);
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			Notification.show("Unable to Delete Cell. Error Code: " + e, 5000, Position.TOP_CENTER);
+			// e.printStackTrace();
+		}
+	}
 	@Transactional
 	public void saveEvent(MasterEvent event) {
 		if (event == null) {
@@ -348,24 +384,18 @@ public class DbService {
 			eventrepo.clearDefaultForDistrictExcept(event.getDistrict(), event.getId());
 		}
 		eventrepo.save(event);
+		auditService.saveAudit("Save", "Event", event.getId()+" - " +event.getEventName(), getloggeduser());
 	}
 	public void deleteEvent(MasterEvent event) {
 		try {
+			auditService.saveAudit("Delete", "Event", event.getId()+" - " +event.getEventName(), getloggeduser());
 			eventrepo.delete(event);
 		} catch (Exception e) {
 			// TODO: handle exception
 			Notification.show("Unable to Delete Office. Error Code: " + e, 5000, Position.TOP_CENTER);
 		}
 	}
-	public void deleteCell(Cell cell) {
-		try {
-			crepo.delete(cell);
-		} catch (Exception e) {
-			// TODO Auto-generated catch block
-			Notification.show("Unable to Delete Cell. Error Code: " + e, 5000, Position.TOP_CENTER);
-			// e.printStackTrace();
-		}
-	}
+	
 
 	public List<Cell> findAllCells() {
 		return crepo.findAll();

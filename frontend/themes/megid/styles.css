@@ -119,37 +119,50 @@ vaadin-app-layout::part(drawer) {
     text-align: center;
      color: DarkCyan;
 }
+vaadin-radio-group.buttons::part(group-field) {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    gap: 18px 50px; /* row gap, column gap */
+}
+
+/* Each radio-button container */
 vaadin-radio-group.buttons vaadin-radio-button {
-    border: 1pt solid black;
-    border-radius: 4 px;
-    --radio-button-wrapper-display: none; 
-    padding: 10 px;
+    width: auto;
+    height: 130px;
+    margin: 0;
+    padding: 0;
+}
+
+vaadin-radio-group.buttons vaadin-radio-button::part(radio) {
+    display: none;
+}
+
+vaadin-radio-group.buttons vaadin-radio-button::part(label) {
+    padding: 0;
+    margin: 0;
+}
+
+vaadin-radio-group.buttons vaadin-radio-button .id-card-option {
+    width: 165px;
+    height: 120px;
+    border: 1px solid black;
+    box-sizing: border-box;
+    background: white;
     display: flex;
     align-items: center;
     justify-content: center;
     cursor: pointer;
-    margin: 1px;
 }
 
-vaadin-radio-group.buttons vaadin-radio-button[checked] {
-    background: DarkCyan;}
-
-vaadin-radio-group.buttons vaadin-radio-button::part(radio) {
-    display: none; /* Hides the actual radio button */
-}
-vaadin-radio-group.buttons vaadin-radio-button::part(label) {
-    display: none; /* Hides the label (text) */
-}
-vaadin-radio-group.buttons vaadin-radio-button:hover::part(label) {
-    display: block; /* Shows the label when the radio button is hovered */
-    position: absolute;
-    background: white;
-    border: 1pt solid black;
-    padding: 1px;
-    border-radius: 1px;
-    z-index: 10;
+vaadin-radio-group.buttons vaadin-radio-button[checked] .id-card-option {
+    border: 4px solid DarkCyan;
+    background: DarkCyan;
 }
 
+vaadin-radio-group.buttons vaadin-radio-button:hover .id-card-option {
+    border: 3px solid DarkCyan;
+}
 .drawer-tile-item {
     width: 100%;
     padding: var(--lumo-space-s) var(--lumo-space-xs);

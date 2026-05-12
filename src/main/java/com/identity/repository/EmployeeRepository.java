@@ -30,11 +30,12 @@ public interface EmployeeRepository extends JpaRepository<Employee, Long> {
 	String a1 = "select c from Employee c where (:district is null or c.district = :district) and (";
 	String a2 = "lower(c.designation) like lower(concat('%', :searchTerm, '%')) ";
 	String a3 = "or lower(c.office.officeName) like lower(concat('%', :searchTerm, '%')) ";
-	String a4 = "or lower(c.firstName) like lower(concat('%', :searchTerm, '%')) ";
-	String a5 = "or lower(c.lastName) like lower(concat('%', :searchTerm, '%')))";
+	String a4 = "or lower(c.cell.cellName) like lower(concat('%', :searchTerm, '%')) ";
+	String a5 = "or lower(c.firstName) like lower(concat('%', :searchTerm, '%')) ";
+	String a6 = "or lower(c.lastName) like lower(concat('%', :searchTerm, '%')))";
 	
 	
-	@Query(a + a2+ a3+ a4 + a5)
+	@Query(a + a2+ a3+ a4 + a5+a6)
 	List<Employee> search(@Param("searchTerm") String searchTerm, @Param("district") District district, @Param("masterEvent") MasterEvent event);
 	
 	//@Query(a1 +a2+ a4 + a5)

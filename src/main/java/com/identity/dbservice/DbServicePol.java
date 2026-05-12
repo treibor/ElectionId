@@ -3,42 +3,37 @@ package com.identity.dbservice;
 import java.time.LocalDate;
 import java.util.Collections;
 import java.util.List;
-import java.util.Optional;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 
 import com.identity.entity.Candidate;
-import com.identity.entity.Cell;
 import com.identity.entity.Constituency;
 import com.identity.entity.District;
 import com.identity.entity.Districtmaster;
-import com.identity.entity.Employee;
 import com.identity.entity.MasterEvent;
-import com.identity.entity.Office;
 import com.identity.entity.Party;
 import com.identity.entity.Political;
 import com.identity.entity.State;
 import com.identity.entity.Users;
 import com.identity.repository.CandidateRepository;
-import com.identity.repository.CellRepository;
 import com.identity.repository.ConstituencyRepository;
 import com.identity.repository.DistrictRepository;
 import com.identity.repository.DistrictmasterRepository;
-import com.identity.repository.EmployeeRepository;
 import com.identity.repository.EventRepository;
-import com.identity.repository.OfficeRepository;
 import com.identity.repository.PartyRepository;
 import com.identity.repository.PoliticalRepository;
 import com.identity.repository.StateRepository;
 import com.identity.repository.UsersRepository;
 import com.identity.util.NotificationUtil;
 import com.vaadin.flow.component.notification.Notification;
-import com.vaadin.flow.component.notification.Notification.Position;
 
 @Service
 public class DbServicePol {
+	@Autowired
+	AuditService auditService;
 	private final CandidateRepository canrepo;
 	private final ConstituencyRepository conrepo;
 	private final PartyRepository prepo;
@@ -120,7 +115,7 @@ public class DbServicePol {
 	}
 	public void saveDistrict(District district) {
 		if (district==null) {
-			Notification notification = Notification.show("No Employee To Save");
+			NotificationUtil.showError("No Employee To Save");
 			return;
 		}
 		drepo.save(district);
@@ -181,33 +176,47 @@ public class DbServicePol {
 	}
 	public void savePolitical(Political political) {
 		if (political==null) {
-			Notification notification = Notification.show("No Record To Save");
+			NotificationUtil.showError("No Record To Save");
 			return;
 		}
 		political.setEvent(getDefaultEvent());
 		polrepo.save(political);
-		
+		auditService.saveAudit("Save", "Political Agent", political.getPoliticalId()+" - " +political.getFirstName()+" - "+political.getLastName(), getloggeduser());
 	}
 	public void savePolitical(List<Political> employees) {
-		if (employees == null) {
-			Notification.show("No Employee To Save");
-			return;
-		}
-		if (getDefaultEvent() == null) {
-			NotificationUtil.showError("Event Has Not Been Initialized. Please contact your Administrator");
-			return;
-		}
+	    if (employees == null || employees.isEmpty()) {
+	        Notification.show("No Political Agent To Save");
+	        return;
+	    }
 
-		//employee.setEvent(getDefaultEvent());
-		polrepo.saveAll(employees);
+	    if (getDefaultEvent() == null) {
+	        NotificationUtil.showError("Event Has Not Been Initialized. Please contact your Administrator");
+	        return;
+	    }
 
+	    for (Political political : employees) {
+	        political.setEvent(getDefaultEvent());
+	    }
+
+	    List<Political> savedPoliticalList = polrepo.saveAll(employees);
+
+	    for (Political political : savedPoliticalList) {
+	        auditService.saveAudit(
+	                "Bulk Save",
+	                "Political Agent",
+	                political.getPoliticalId() + " - " 
+	                        + political.getFirstName()+" - "+political.getLastName(),
+	                getloggeduser()
+	        );
+	    }
 	}
 	public void deletePolitical(Political political) {
 		try {
+			auditService.saveAudit("Delete", "Political Agent", political.getPoliticalId()+" - " +political.getFirstName()+" - "+political.getLastName(), getloggeduser());
 			polrepo.delete(political);
 		} catch (Exception e) {
 			// TODO: handle exception
-			notify.show("Unable to Delete Constituency. Error Code: " + e, 5000, Position.TOP_CENTER);
+			NotificationUtil.showError("Unable to Delete Constituency. Error Code: " + e);
 		}
 	}
 	public List <Party> findPartyBydistrict(){
@@ -257,51 +266,54 @@ public class DbServicePol {
 	
 	public void saveParty(Party party) {
 		if (party==null) {
-			Notification notification = Notification.show("No Office To Save");
+			NotificationUtil.showError("No Office To Save");
 			return;
 		}
 		prepo.save(party);
-		
+		auditService.saveAudit("Save", "Party", party.getPartyId()+" - " +party.getPartyName(), getloggeduser());
 	}
 	public void deleteParty(Party party) {
 		try {
+			auditService.saveAudit("Delete", "Party", party.getPartyId()+" - " +party.getPartyName(), getloggeduser());
 			prepo.delete(party);
 		} catch (Exception e) {
 			// TODO: handle exception
-			notify.show("Unable to Delete Office. Error Code: " + e, 5000, Position.TOP_CENTER);
+			NotificationUtil.showError("Unable to Delete Office. Error Code: " + e);
 		}
 	}
 	
 	public void saveConstituency(Constituency consti) {
 		if(consti==null) {
-			Notification notification = Notification.show("No Constituency To Save");
-			return;
+			NotificationUtil.showError("Select Contituency " );
 		}
 		conrepo.save(consti);
 	}
 	
 	public void deleteConstituency(Constituency consti) {
 		try {
+			auditService.saveAudit("Delete", "Constituency", consti.getConstituencyId()+" - " +consti.getConstituencyName(), getloggeduser());
 			conrepo.delete(consti);
 		} catch (Exception e) {
 			// TODO: handle exception
-			notify.show("Unable to Delete Constituency. Error Code: " + e, 5000, Position.TOP_CENTER);
+			NotificationUtil.showError("Unable to Delete Constituency. Error Code: " + e);
 		}
 	}
 	public void saveCandidate(Candidate consti) {
 		if(consti==null) {
-			Notification notification = Notification.show("No Candidate To Save");
+			NotificationUtil.showError("No Candidate To Save");
 			return;
 		}
 		canrepo.save(consti);
+		auditService.saveAudit("Save", "Candidate", consti.getCandId()+" - " +consti.getCandidateName(), getloggeduser());
 	}
 	
 	public void deleteCandidate(Candidate consti) {
 		try {
+			auditService.saveAudit("Delete", "Candidate", consti.getCandId()+" - " +consti.getCandidateName(), getloggeduser());
 			canrepo.delete(consti);
 		} catch (Exception e) {
 			// TODO: handle exception
-			notify.show("Unable to Delete Candidate. Error Code: " + e, 5000, Position.TOP_CENTER);
+			NotificationUtil.showError("Unable to Delete Candidate. Error Code: " + e);
 		}
 	}
 	

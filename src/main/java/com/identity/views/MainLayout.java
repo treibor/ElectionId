@@ -96,15 +96,17 @@ public class MainLayout extends AppLayout {
 		SideNavItemWithHelperText distMaster = new SideNavItemWithHelperText( "Printing Master","", MasterDistrictView.class,LineAwesomeIcon.KEYBOARD.create());
 		SideNavItemWithHelperText users = new SideNavItemWithHelperText( "Users","", UsersView.class,LineAwesomeIcon.PEOPLE_CARRY_SOLID.create());
 		SideNavItemWithHelperText districts = new SideNavItemWithHelperText( "Districts","", EntityView.class,LineAwesomeIcon.XBOX.create());
+		SideNavItemWithHelperText audit = new SideNavItemWithHelperText( "Audit Trail","", AuditView.class,LineAwesomeIcon.BALANCE_SCALE_SOLID.create());
 		SideNavItem designer=new SideNavItem("Designer", VaadinIDCardDesignerView.class, LineAwesomeIcon.DOCKER.create());
         //nav.addItem(designer);
 		districts.setVisible(isSuperAdmin());
 		users.setVisible(isAdmin());
 		distMaster.setVisible(isAdmin());
+		audit.setVisible(isAdmin());
 		//omaster.setVisible(isAdmin());
 		//master.setVisible(isAdmin());
 		// Add all the navigation items to the drawer content
-		drawerContent.add(personnel,political,  master,omaster, distMaster, reports, districts,users);
+		drawerContent.add(personnel,political,  master,omaster, distMaster, reports, districts,users, audit);
 
 		// Add the content to the drawer
 		addToDrawer(drawerContent);

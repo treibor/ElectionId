@@ -32,14 +32,13 @@ import com.vaadin.flow.component.formlayout.FormLayout;
 import com.vaadin.flow.component.formlayout.FormLayout.ResponsiveStep;
 import com.vaadin.flow.component.html.Div;
 import com.vaadin.flow.component.html.Image;
-import com.vaadin.flow.component.html.Span;
 import com.vaadin.flow.component.notification.Notification;
-import com.vaadin.flow.component.notification.NotificationVariant;
 import com.vaadin.flow.component.notification.Notification.Position;
+import com.vaadin.flow.component.notification.NotificationVariant;
+import com.vaadin.flow.component.orderedlayout.FlexComponent;
 import com.vaadin.flow.component.orderedlayout.HorizontalLayout;
 import com.vaadin.flow.component.orderedlayout.VerticalLayout;
 import com.vaadin.flow.component.radiobutton.RadioButtonGroup;
-import com.vaadin.flow.component.radiobutton.RadioGroupVariant;
 import com.vaadin.flow.component.textfield.NumberField;
 import com.vaadin.flow.data.renderer.ComponentRenderer;
 import com.vaadin.flow.router.PageTitle;
@@ -147,115 +146,136 @@ public class PrintView2 extends VerticalLayout{
 	
 	
 	public Component createGovtpanel() {
-		HorizontalLayout reportFormat=new HorizontalLayout();
-		reportFormat.setDefaultVerticalComponentAlignment(Alignment.CENTER);  
-		//reportFormat.setJustifyContentMode(JustifyContentMode.CENTER);
-		radioGroup.addClassName("buttons");
-		//radioGroup.addThemeVariants(RadioGroupVariant.LUMO_VERTICAL);
-		radioGroup.setLabel("Id Type");
-		radioGroup.setItems("Landscape1", "Landscape2", "Landscape3", "Landscape4", "Landscape5","Landscape6","Portrait1", "Portrait2");
-		radioGroup.setValue("Landscape1");
-		radioGroup.setRenderer(new ComponentRenderer<>(item -> createItemWithImage(item)));
-		reportFormat.add(radioGroup);
-		FormLayout fl1=new FormLayout();
-		Button printRange=new Button("Print Id");
-		Button printRangelist=new Button("Print List");
-		Button printDates=new Button("Print Id");
-		Button printDateslist=new Button("Print List");
-		Button printCell=new Button("Print");
-		Button printCelllist=new Button("Print List");
-		Button printOffice=new Button("Print ID");
-		Button printOfficelist=new Button("Print List");
-		
-		printRange.addClickListener(e-> printRangeReport("id", "employee"));
-		printRangelist.addClickListener(e-> printRangeReport("list", "employee"));
-		printDates.addClickListener(e-> printDatesReport("id", "employee"));
-		printDateslist.addClickListener(e-> printDatesReport("list", "employee"));
-		fromDate.setPlaceholder("From");
-		toDate.setPlaceholder("To");
-		printCell.addClickListener(e-> printCellReport("id", "employee"));
-		printCelllist.addClickListener(e-> printCellReport("list", "employee"));
-		printOffice.addClickListener(e-> printOfficeReport("id", "employee"));
-		printOfficelist.addClickListener(e-> printOfficeReport("list", "employee"));
-		fl1.add(reportFormat,8);
-		fl1.add(fromRange, 1);
-		fl1.add(toRange, 1);
-		fl1.add(printRange, printRangelist);
-		fl1.add(fromDate, 1);
-		fl1.add(toDate, 1);
-		fl1.add( printDates, printDateslist);
-		fl1.add(cell, 2);
-		fl1.add(printCell, printCelllist);
-		fl1.add(office, 2);
-		fl1.add(printOffice, printOfficelist);
-		fl1.setWidth("auto");
-		fl1.setResponsiveSteps(
-		        new ResponsiveStep("0", 8),
-		        // Use two columns, if layout's width exceeds 500px
-		        new ResponsiveStep("500px", 8)
-		);
-		//Details details=new Details("Election Personnel", fl1);
-		//details.setOpened(false);
-		//return details;
-		return fl1;
+
+	    HorizontalLayout reportFormat = new HorizontalLayout();
+	    reportFormat.setDefaultVerticalComponentAlignment(Alignment.CENTER);
+	    reportFormat.setWidthFull();
+
+	    radioGroup.addClassName("buttons");
+	    radioGroup.setLabel("Id Type");
+	    radioGroup.setItems(
+	            "Landscape1",
+	            "Landscape2",
+	            "Landscape3",
+	            "Landscape4",
+	            "Landscape5",
+	            "Landscape6",
+	            "Portrait1",
+	            "Portrait2"
+	    );
+
+	    radioGroup.setValue("Landscape1");
+	    radioGroup.setWidthFull();
+
+	    radioGroup.setRenderer(new ComponentRenderer<>(item -> createItemWithImage(item)));
+
+	    reportFormat.add(radioGroup);
+
+	    FormLayout fl1 = new FormLayout();
+
+	    Button printRange = new Button("Print Id");
+	    Button printRangelist = new Button("Print List");
+	    Button printDates = new Button("Print Id");
+	    Button printDateslist = new Button("Print List");
+	    Button printCell = new Button("Print");
+	    Button printCelllist = new Button("Print List");
+	    Button printOffice = new Button("Print ID");
+	    Button printOfficelist = new Button("Print List");
+
+	    printRange.addClickListener(e -> printRangeReport("id", "employee"));
+	    printRangelist.addClickListener(e -> printRangeReport("list", "employee"));
+	    printDates.addClickListener(e -> printDatesReport("id", "employee"));
+	    printDateslist.addClickListener(e -> printDatesReport("list", "employee"));
+
+	    fromDate.setPlaceholder("From");
+	    toDate.setPlaceholder("To");
+
+	    printCell.addClickListener(e -> printCellReport("id", "employee"));
+	    printCelllist.addClickListener(e -> printCellReport("list", "employee"));
+	    printOffice.addClickListener(e -> printOfficeReport("id", "employee"));
+	    printOfficelist.addClickListener(e -> printOfficeReport("list", "employee"));
+
+	    fl1.add(reportFormat, 8);
+
+	    fl1.add(fromRange, 1);
+	    fl1.add(toRange, 1);
+	    fl1.add(printRange, printRangelist);
+
+	    fl1.add(fromDate, 1);
+	    fl1.add(toDate, 1);
+	    fl1.add(printDates, printDateslist);
+
+	    fl1.add(cell, 2);
+	    fl1.add(printCell, printCelllist);
+
+	    fl1.add(office, 2);
+	    fl1.add(printOffice, printOfficelist);
+
+	    fl1.setWidthFull();
+
+	    fl1.setResponsiveSteps(
+	            new FormLayout.ResponsiveStep("0", 8),
+	            new FormLayout.ResponsiveStep("500px", 8)
+	    );
+
+	    return fl1;
 	}
 	private Component createItemWithImage(String item) {
-        // Create an image based on the item value
-        Image image = new Image();
-        image.getStyle().set("width", "7px");
-        image.getStyle().set("height", "7px");
-        image.getStyle().set("object-fit", "contain");
-        // Set the image source based on the report type
-        switch (item) {
-            case "Landscape1":
-            	image = new Image("images/landscape.png", "Landscape Image");
-            	//System.out.println("Landscape");
-                break;
-            case "Landscape2":
-            	image = new Image("images/landscape2.jpg", "Landscape Image 2");
-            	//System.out.println("Landscape");
-                break;
-            case "Portrait1":
-            	image = new Image("/images/portrait.jpg", "Portrait Image");
-                break;
-            case "Landscape3":
-            	image = new Image("/images/landscape3.png", "DSC Image");
-                break;
-            case "Landscape4":
-            	image = new Image("/images/landscape4.png", "DSC Image 2");
-                break;
-            case "OTHER":
-                image.setSrc("/images/other.png");
-                break;
-            case "Portrait2":
-            	image = new Image("/images/portrait2.jpeg", "Portrait Image 2");
-                break;
-            case "Landscape5":
-            	image = new Image("/images/landscape5.jpeg", "Landscape Image 5");
-                break;
-            case "Landscape6":
-            	image = new Image("/images/landscape6.jpeg", "Landscape Image 6");
-                break;
-            default:
-                image.setSrc("/images/default.png");
-        }
 
-        //Span label = new Span(item);
+	    String imagePath;
 
-        image.setTitle(item);
-        HorizontalLayout layout = new HorizontalLayout(image);
-        
-        layout.setAlignItems(Alignment.CENTER);  // Align image and text vertically in the center
+	    switch (item) {
+	        case "Landscape1":
+	            imagePath = "images/landscape.png";
+	            break;
+	        case "Landscape2":
+	            imagePath = "images/landscape2.jpg";
+	            break;
+	        case "Portrait1":
+	            imagePath = "images/portrait.jpg";
+	            break;
+	        case "Landscape3":
+	            imagePath = "images/landscape3.png";
+	            break;
+	        case "Landscape4":
+	            imagePath = "images/landscape4.png";
+	            break;
+	        case "Portrait2":
+	            imagePath = "images/portrait2.jpeg";
+	            break;
+	        case "Landscape5":
+	            imagePath = "images/landscape5.jpeg";
+	            break;
+	        case "Landscape6":
+	            imagePath = "images/landscape6.jpeg";
+	            break;
+	        default:
+	            imagePath = "images/default.png";
+	            break;
+	    }
 
-        
-        Div wrapper = new Div(layout);
-        wrapper.getStyle().set("display", "flex");
-        wrapper.getStyle().set("align-items", "center");  // Align items vertically
-        wrapper.getStyle().set("justify-content", "center");  // Center items horizontally
-        wrapper.getStyle().set("width", "100%");
+	    Image image = new Image(imagePath, item);
+	    image.setTitle(item);
 
-        return wrapper;
-    }
+	    image.getStyle().set("width", "150px");
+	    image.getStyle().set("height", "105px");
+	    image.getStyle().set("object-fit", "contain");
+
+	    HorizontalLayout layout = new HorizontalLayout(image);
+	    layout.setPadding(false);
+	    layout.setMargin(false);
+	    layout.setSpacing(false);
+	    layout.setWidthFull();
+	    layout.setHeightFull();
+	    layout.setAlignItems(FlexComponent.Alignment.CENTER);
+	    layout.setJustifyContentMode(FlexComponent.JustifyContentMode.CENTER);
+
+	    Div wrapper = new Div(layout);
+	    wrapper.addClassName("id-card-option");
+
+	    return wrapper;
+	}
+	
 	public Component createPoliticalpanel() {
 		HorizontalLayout reportType=new HorizontalLayout();
 		HorizontalLayout reportFormat=new HorizontalLayout();
